@@ -111,3 +111,4 @@ linter:
     use_named_constants: true
     use_rethrow_when_possible: true
     use_key_in_widget_constructors: false
+    prefer_const_constructors: true
