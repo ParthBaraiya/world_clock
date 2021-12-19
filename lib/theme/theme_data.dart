@@ -6,11 +6,14 @@ abstract class _ThemeData {
   late Color primaryTextColor;
   late Color accentTextColor;
   late Color shadowColor;
+
+  late TextStyle titleStyle;
+  late TextStyle subtitleStyle;
 }
 
 class _LightThemeData implements _ThemeData {
   @override
-  Color backgroundColor = Colors.white;
+  Color backgroundColor = const Color(0xff000000);
 
   @override
   Color clockBackground = const Color(0xffe0e0e0);
@@ -19,15 +22,27 @@ class _LightThemeData implements _ThemeData {
   Color accentTextColor = const Color(0xff2a00ff);
 
   @override
-  Color primaryTextColor = Colors.white;
+  Color primaryTextColor = const Color(0xffffffff);
 
   @override
   Color shadowColor = const Color(0xff040017);
+
+  @override
+  TextStyle titleStyle = const TextStyle(
+    fontSize: 35,
+    color: Colors.white,
+  );
+
+  @override
+  TextStyle subtitleStyle = const TextStyle(
+    color: Color(0xff2a00ff),
+    fontSize: 20,
+  );
 }
 
 class _DarkThemeData implements _ThemeData {
   @override
-  Color backgroundColor = Colors.black;
+  Color backgroundColor = const Color(0xff000000);
 
   @override
   Color clockBackground = const Color(0xff0e0e0e);
@@ -36,8 +51,20 @@ class _DarkThemeData implements _ThemeData {
   Color accentTextColor = const Color(0xff2a00ff);
 
   @override
-  Color primaryTextColor = Colors.white;
+  Color primaryTextColor = const Color(0xffffffff);
 
   @override
   Color shadowColor = const Color(0xff040017);
+
+  @override
+  TextStyle titleStyle = const TextStyle(
+    fontSize: 35,
+    color: Colors.white,
+  );
+
+  @override
+  TextStyle subtitleStyle = const TextStyle(
+    color: Color(0xff2a00ff),
+    fontSize: 20,
+  );
 }

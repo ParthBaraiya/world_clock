@@ -24,6 +24,10 @@ class CustomTheme extends ChangeNotifier {
 
   Color get shadowColor => _data.shadowColor;
 
+  TextStyle get titleStyle => _data.titleStyle;
+
+  TextStyle get subtitleStyle => _data.subtitleStyle;
+
   /// This function will have effect only once.
   void initialize(ThemeMode mode) {
     if (_initialized) return;
@@ -35,7 +39,6 @@ class CustomTheme extends ChangeNotifier {
 
   Future<void> updateThemeMode(ThemeMode mode) async {
     if (_mode != mode) {
-
       await SPService.i.setTheme(mode);
       _mode = mode;
       notifyListeners();
