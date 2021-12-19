@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:world_clock/service/shared_preferences.dart';
 
 part 'theme_data.dart';
 
@@ -32,8 +33,10 @@ class CustomTheme extends ChangeNotifier {
     _initialized = true;
   }
 
-  void updateThemeMode(ThemeMode mode) {
+  Future<void> updateThemeMode(ThemeMode mode) async {
     if (_mode != mode) {
+
+      await SPService.i.setTheme(mode);
       _mode = mode;
       notifyListeners();
     }
