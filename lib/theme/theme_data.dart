@@ -9,6 +9,8 @@ abstract class _ThemeData {
 
   late TextStyle titleStyle;
   late TextStyle subtitleStyle;
+  late TextStyle heading5;
+  late TextStyle heading6;
 }
 
 class _LightThemeData implements _ThemeData {
@@ -38,6 +40,18 @@ class _LightThemeData implements _ThemeData {
     color: Color(0xff2a00ff),
     fontSize: 20,
   );
+
+  @override
+  TextStyle heading5 = const TextStyle(
+    color: Color(0xffffffff),
+    fontSize: 20,
+  );
+
+  @override
+  TextStyle heading6 = const TextStyle(
+    color: Color(0xffffffff),
+    fontSize: 15,
+  );
 }
 
 class _DarkThemeData implements _ThemeData {
@@ -66,5 +80,17 @@ class _DarkThemeData implements _ThemeData {
   TextStyle subtitleStyle = const TextStyle(
     color: Color(0xff2a00ff),
     fontSize: 20,
+  );
+
+  @override
+  TextStyle heading5 = const TextStyle(
+    color: Color(0xffffffff),
+    fontSize: 20,
+  );
+
+  @override
+  TextStyle heading6 = const TextStyle(
+    color: Color(0xffffffff),
+    fontSize: 15,
   );
 }

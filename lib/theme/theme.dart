@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:world_clock/service/shared_preferences.dart';
+import '../service/shared_preferences.dart';
 
 part 'theme_data.dart';
 
 class CustomTheme extends ChangeNotifier {
+
   static final CustomTheme i = CustomTheme._();
+  
   CustomTheme._();
 
   bool _initialized = false;
@@ -27,6 +29,9 @@ class CustomTheme extends ChangeNotifier {
   TextStyle get titleStyle => _data.titleStyle;
 
   TextStyle get subtitleStyle => _data.subtitleStyle;
+
+  TextStyle get heading5 => _data.heading5;
+  TextStyle get heading6 => _data.heading6;
 
   /// This function will have effect only once.
   void initialize(ThemeMode mode) {
