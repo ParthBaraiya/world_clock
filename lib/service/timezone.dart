@@ -21,7 +21,11 @@ class TimeZoneUtility {
   TimeZone get utc => TimeZone.UTC;
 
   Future<void> initialize() async {
-    initializeTimeZones();
+    try {
+      initializeTimeZone();
+    } catch (e) {
+      initializeTimeZones();
+    }
     _locations = timeZoneDatabase.locations;
     _initialized = true;
   }
