@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
 import '../clock/clock.dart';
+import '../extension.dart';
 import '../font_icon/world_clock_icons.dart';
+import '../service/navigation_service.dart';
 import '../theme/theme.dart';
+import '../widget/buttons.dart';
 import '../widget/day_info.dart';
 import '../widget/time_zone_info.dart';
 import '../widget/timer_indictor.dart';
-import 'list.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({
-    Key? key,
-  }) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -38,24 +38,32 @@ class _HomePageState extends State<HomePage> {
                       style: CustomTheme.i.titleStyle,
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => const TimezoneList()),
-                      );
-                    },
-                    child: const Icon(
+                  InkWellButton(
+                    onTap: () => context.pushNamed(
+                      route: RouteNames.timezoneList,
+                    ),
+                    radius: BorderRadius.circular(100.0),
+                    hoverColor: CustomTheme.i.primaryTextColor.withOpacity(0.2),
+                    child: Icon(
                       WorldClock.more,
                       size: 30,
+                      color: CustomTheme.i.primaryTextColor,
                     ),
                   ),
                   const SizedBox(
                     width: 15,
                   ),
-                  const Icon(
-                    WorldClock.exchange,
-                    size: 30,
+                  InkWellButton(
+                    onTap: () => context.pushNamed(
+                      route: RouteNames.timezoneComparizon,
+                    ),
+                    radius: BorderRadius.circular(100.0),
+                    hoverColor: CustomTheme.i.primaryTextColor.withOpacity(0.2),
+                    child: Icon(
+                      WorldClock.exchange,
+                      size: 30,
+                      color: CustomTheme.i.primaryTextColor,
+                    ),
                   ),
                 ],
               ),

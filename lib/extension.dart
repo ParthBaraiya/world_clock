@@ -15,3 +15,10 @@ extension DateFormatExtension on DateTime {
   String get weekName => DateFormat("EEEE").format(this);
   String get dateMonth => DateFormat("d MMM").format(this);
 }
+
+extension NavigationExtension on BuildContext {
+  Future<T?> pushNamed<T>({required String route, Object? argument}) =>
+      Navigator.of(this).pushNamed<T>(route, arguments: argument);
+
+  void pop() => Navigator.of(this).pop();
+}

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'service/navigation_service.dart';
 
 import 'service/shared_preferences.dart';
 import 'service/timezone.dart';
 import 'theme/theme.dart';
-import 'view/home.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,7 +42,8 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      home: const HomePage(),
+      onGenerateRoute: NavigationService.onGenerateRoute,
+      initialRoute: RouteNames.home,
     );
   }
 }

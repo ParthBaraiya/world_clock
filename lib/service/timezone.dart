@@ -14,19 +14,28 @@ class TimeZoneUtility {
 
   bool get initialized => _initialized;
 
-  Map<String, Location> _locations = {};
+  final _locations = <String, Location>{};
 
   Map<String, Location> get locations => _locations;
 
   TimeZone get utc => TimeZone.UTC;
 
   Future<void> initialize() async {
-    try {
-      initializeTimeZone();
-    } catch (e) {
-      initializeTimeZones();
-    }
-    _locations = timeZoneDatabase.locations;
+    initializeTimeZones();
+
+    timeZoneDatabase.locations.forEach((key, value) {
+      if (!(value.currentTimeZone.abbreviation[0]== "+" ||
+          value.currentTimeZone.abbreviation[0]=="-")) {
+        _locations.addAll({
+          key: value,
+        });
+      }
+    });
+
+
+
+    // print(_locations);
+
     _initialized = true;
   }
 }

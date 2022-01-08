@@ -4,9 +4,8 @@ import '../service/shared_preferences.dart';
 part 'theme_data.dart';
 
 class CustomTheme extends ChangeNotifier {
-
   static final CustomTheme i = CustomTheme._();
-  
+
   CustomTheme._();
 
   bool _initialized = false;
@@ -32,6 +31,13 @@ class CustomTheme extends ChangeNotifier {
 
   TextStyle get heading5 => _data.heading5;
   TextStyle get heading6 => _data.heading6;
+
+  TextStyle get timezoneTitleStyle => _data.timezoneTitleStyle;
+  TextStyle get timezoneSubTitleStyle => _data.timezoneSubTitleStyle;
+
+  TextStyle get timezoneTitleAccentStyle => _data.timezoneTitleAccentStyle;
+  TextStyle get timezoneSubTitleAccentStyle =>
+      _data.timezoneSubTitleAccentStyle;
 
   /// This function will have effect only once.
   void initialize(ThemeMode mode) {
