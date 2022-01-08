@@ -1,3 +1,4 @@
+import 'package:timezone/data/latest_all.dart';
 import "package:timezone/standalone.dart"
     if (dart.library.html) "package:timezone/browser.dart";
 
@@ -20,7 +21,7 @@ class TimeZoneUtility {
   TimeZone get utc => TimeZone.UTC;
 
   Future<void> initialize() async {
-    await initializeTimeZone();
+    initializeTimeZones();
     _locations = timeZoneDatabase.locations;
     _initialized = true;
   }
