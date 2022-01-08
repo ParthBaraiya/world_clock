@@ -6,6 +6,7 @@ import '../theme/theme.dart';
 import '../widget/day_info.dart';
 import '../widget/time_zone_info.dart';
 import '../widget/timer_indictor.dart';
+import 'list.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -37,9 +38,17 @@ class _HomePageState extends State<HomePage> {
                       style: CustomTheme.i.titleStyle,
                     ),
                   ),
-                  const Icon(
-                    WorldClock.more,
-                    size: 30,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const TimezoneList()),
+                      );
+                    },
+                    child: const Icon(
+                      WorldClock.more,
+                      size: 30,
+                    ),
                   ),
                   const SizedBox(
                     width: 15,
@@ -121,9 +130,12 @@ class _HomePageState extends State<HomePage> {
                     // TODO: Add Favorites.
                     Row(
                       children: [
-                        const Opacity(
-                          opacity: 0,
-                          child: Text("Time 1"),
+                        Opacity(
+                          opacity: 1,
+                          child: Text(
+                            "Time 1",
+                            style: CustomTheme.i.heading5,
+                          ),
                         ),
                       ],
                     ),
@@ -138,25 +150,11 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class LinePainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final gradient = LinearGradient(
-      colors: [
-        Colors.transparent,
-        CustomTheme.i.accentTextColor,
-        Colors.transparent,
-      ],
-      begin: Alignment.topCenter,
-      end: Alignment.bottomCenter,
-    );
+class FavoriteTimestampTile extends StatelessWidget {
+  const FavoriteTimestampTile({Key? key}) : super(key: key);
 
-    canvas.drawLine(
-        Offset(size.width / 2, 0),
-        Offset(size.width / 2, size.height),
-        Paint()..shader = gradient.createShader(Offset.zero & size));
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }

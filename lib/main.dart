@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'service/shared_preferences.dart';
+import 'service/timezone.dart';
 import 'theme/theme.dart';
 import 'view/home.dart';
 
@@ -25,6 +27,8 @@ Future<void> main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+
+  TimeZoneUtility.i.initialize();
 
   runApp(const MyApp());
 }
