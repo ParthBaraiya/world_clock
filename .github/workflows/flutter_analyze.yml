@@ -7,6 +7,10 @@ name: Analyze
 
 on:
   push:
+    paths:
+      - '**.dart'
+      - '**.yaml'
+      - '**.yml'
     branches: [ develop ]
 
 jobs:
