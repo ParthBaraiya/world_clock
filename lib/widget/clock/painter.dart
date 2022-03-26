@@ -7,10 +7,10 @@ const double _hourAngle = 0.00014542;
 class ClockMarkings extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    final minimun = size.min;
-    final radius = minimun / 2;
+    final minimum = size.min;
+    final radius = minimum / 2;
 
-    final markerSize = minimun * 0.025;
+    final markerSize = minimum * 0.025;
 
     final pointerPaint = Paint()
       ..strokeWidth = markerSize
@@ -37,7 +37,7 @@ class ClockMarkings extends CustomPainter {
       )
       ..drawPoints(
         ui.PointMode.points,
-        pointers.quaterPointers,
+        pointers.quarterPointers,
         pointerPaint..color = CustomTheme.i.accentTextColor,
       );
 
@@ -55,7 +55,7 @@ class ClockMarkings extends CustomPainter {
     for (var i = 1; i < 13; i++) {
       late final Offset offset;
       if (i % 3 == 0) {
-        offset = offsets.quaterPointers[(i ~/ 3) - 1];
+        offset = offsets.quarterPointers[(i ~/ 3) - 1];
       } else {
         offset = offsets.pointers[i - (i ~/ 3) - 1];
       }
@@ -85,7 +85,7 @@ class ClockMarkings extends CustomPainter {
   ClockPointers _getPointerOffsets(double radius, [double factor = 0.9]) {
     final effectiveRadius = radius * factor;
 
-    return ClockPointers(quaterPointers: [
+    return ClockPointers(quarterPointers: [
       Offset(effectiveRadius + radius, radius),
       Offset(radius, radius + effectiveRadius),
       Offset(radius - effectiveRadius, radius),
@@ -184,11 +184,11 @@ class ClockHands extends CustomPainter {
 }
 
 class ClockPointers {
-  final List<Offset> quaterPointers;
+  final List<Offset> quarterPointers;
   final List<Offset> pointers;
 
   ClockPointers({
-    required this.quaterPointers,
+    required this.quarterPointers,
     required this.pointers,
   });
 }

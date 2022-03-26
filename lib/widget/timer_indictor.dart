@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../service/constants.dart';
+import '../service/theme/theme.dart';
 import '../service/timer.dart';
-import '../theme/theme.dart';
 
 class TimeIndicator extends StatefulWidget {
   const TimeIndicator({Key? key}) : super(key: key);

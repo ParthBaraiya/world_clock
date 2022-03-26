@@ -2,9 +2,10 @@ import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import '../extension.dart';
-import '../service/timer.dart';
-import '../theme/theme.dart';
+
+import '../../extension.dart';
+import '../../service/theme/theme.dart';
+import '../../service/timer.dart';
 
 part 'painter.dart';
 

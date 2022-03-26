@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../clock/clock.dart';
 import '../extension.dart';
-import '../font_icon/world_clock_icons.dart';
-import '../service/navigation_service.dart';
-import '../theme/theme.dart';
+import '../service/navigation_service/navigation_service.dart';
+import '../service/theme/theme.dart';
+import '../values/world_clock_icons.dart';
 import '../widget/buttons.dart';
+import '../widget/clock/clock.dart';
 import '../widget/day_info.dart';
 import '../widget/time_zone_info.dart';
 import '../widget/timer_indictor.dart';

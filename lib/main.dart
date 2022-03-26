@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'service/navigation_service.dart';
 
 import 'service/shared_preferences.dart';
+import 'service/theme/theme.dart';
 import 'service/timezone.dart';
-import 'theme/theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

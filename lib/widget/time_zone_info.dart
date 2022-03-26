@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../theme/theme.dart';
+
+import '../service/theme/theme.dart';
 
 class TimeZoneInfo extends StatelessWidget {
   const TimeZoneInfo({Key? key}) : super(key: key);
