@@ -3,7 +3,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
-import '../../extension.dart';
+import '../../service/extension.dart';
 import '../../service/theme/theme.dart';
 import '../../service/timer.dart';
 
@@ -22,6 +22,7 @@ class Clock extends StatelessWidget {
     return SizedBox.fromSize(
       size: Size.square(radius),
       child: CustomPaint(
+        willChange: true,
         painter: ClockMarkings(),
         foregroundPainter: ClockHands(),
       ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'service/navigation_service.dart';
 
+import 'service/navigation_service/navigation_service.dart';
 import 'service/shared_preferences.dart';
 import 'service/theme/theme.dart';
 import 'service/timezone.dart';
@@ -37,13 +37,13 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      onGenerateRoute: NavigationService.onGenerateRoute,
-      initialRoute: RouteNames.home,
+      routerDelegate: NavigationService.instance.delegate,
+      routeInformationParser: NavigationService.instance.routeInformationParser,
     );
   }
 }

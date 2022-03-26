@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../extension.dart';
+import '../service/extension.dart';
 import '../service/navigation_service/navigation_service.dart';
 import '../service/theme/theme.dart';
 import '../values/world_clock_icons.dart';
@@ -8,7 +8,7 @@ import '../widget/buttons.dart';
 import '../widget/clock/clock.dart';
 import '../widget/day_info.dart';
 import '../widget/time_zone_info.dart';
-import '../widget/timer_indictor.dart';
+import '../widget/timer_indicator.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   InkWellButton(
-                    onTap: () => context.pushNamed(
+                    onTap: () => context.goToRoute(
                       route: RouteNames.timezoneList,
                     ),
                     radius: BorderRadius.circular(100.0),
@@ -54,9 +54,7 @@ class _HomePageState extends State<HomePage> {
                     width: 15,
                   ),
                   InkWellButton(
-                    onTap: () => context.pushNamed(
-                      route: RouteNames.timezoneComparizon,
-                    ),
+                    onTap: () {}, // TODO: Add callback
                     radius: BorderRadius.circular(100.0),
                     hoverColor: CustomTheme.i.primaryTextColor.withOpacity(0.2),
                     child: Icon(

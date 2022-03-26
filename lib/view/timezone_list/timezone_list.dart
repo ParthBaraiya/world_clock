@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../extension.dart';
 import '../../service/constants.dart';
+import '../../service/extension.dart';
 import '../../service/theme/theme.dart';
 import '../../service/timezone.dart';
 import '../../values/world_clock_icons.dart';
@@ -43,7 +43,7 @@ class _TimezoneListState extends State<TimezoneList> with TimeZoneListBackend {
             child: Row(
               children: [
                 InkWellButton(
-                  onTap: context.pop,
+                  onTap: context.previousPage,
                   radius: BorderRadius.circular(100.0),
                   hoverColor: CustomTheme.i.primaryTextColor.withOpacity(0.2),
                   child: Icon(
