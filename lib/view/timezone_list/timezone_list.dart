@@ -22,7 +22,7 @@ class _TimezoneListState extends State<TimezoneList> with TimeZoneListBackend {
     final locations = TimeZoneUtility.i.locations.keys.toList();
 
     return Scaffold(
-      backgroundColor: CustomTheme.i.backgroundColor,
+      backgroundColor: CustomTheme.instance.backgroundColor,
       extendBody: true,
       extendBodyBehindAppBar: true,
       body: Column(
@@ -30,11 +30,11 @@ class _TimezoneListState extends State<TimezoneList> with TimeZoneListBackend {
         children: [
           Container(
             decoration: BoxDecoration(
-              color: CustomTheme.i.backgroundColor,
+              color: CustomTheme.instance.backgroundColor,
               boxShadow: [
                 if (_scrolled)
                   BoxShadow(
-                    color: CustomTheme.i.accentTextColor,
+                    color: CustomTheme.instance.accentTextColor,
                     blurRadius: 20,
                     spreadRadius: -10,
                   ),
@@ -45,11 +45,12 @@ class _TimezoneListState extends State<TimezoneList> with TimeZoneListBackend {
                 InkWellButton(
                   onTap: context.previousPage,
                   radius: BorderRadius.circular(100.0),
-                  hoverColor: CustomTheme.i.primaryTextColor.withOpacity(0.2),
+                  hoverColor:
+                      CustomTheme.instance.primaryTextColor.withOpacity(0.2),
                   child: Icon(
                     Icons.chevron_left,
                     size: 40,
-                    color: CustomTheme.i.primaryTextColor,
+                    color: CustomTheme.instance.primaryTextColor,
                   ),
                 ),
               ],
@@ -69,7 +70,7 @@ class _TimezoneListState extends State<TimezoneList> with TimeZoneListBackend {
                         gradient: LinearGradient(
                           colors: [
                             Colors.transparent,
-                            CustomTheme.i.accentTextColor,
+                            CustomTheme.instance.accentTextColor,
                             Colors.transparent,
                           ],
                           begin: const Alignment(-2.2, 0),
@@ -112,7 +113,7 @@ class LocationTile extends StatelessWidget {
           Icon(
             WorldClock.disk,
             size: 10,
-            color: CustomTheme.i.primaryTextColor,
+            color: CustomTheme.instance.primaryTextColor,
           ),
           const SizedBox(width: 10),
           Expanded(
@@ -124,19 +125,19 @@ class LocationTile extends StatelessWidget {
                   children: [
                     Text(
                       Constants.hhMM.format(now),
-                      style: CustomTheme.i.timezoneTitleStyle,
+                      style: CustomTheme.instance.timezoneTitleStyle,
                     ),
                     const SizedBox(width: 10),
                     Text(
                       Constants.a.format(now),
-                      style: CustomTheme.i.timezoneSubTitleStyle,
+                      style: CustomTheme.instance.timezoneSubTitleStyle,
                     ),
                   ],
                 ),
                 const SizedBox(height: 7),
                 Text(
                   Constants.wDdMm.format(now),
-                  style: CustomTheme.i.heading6,
+                  style: CustomTheme.instance.heading6,
                 ),
               ],
             ),
@@ -149,19 +150,19 @@ class LocationTile extends StatelessWidget {
                 children: [
                   Text(
                     "${offset < 0 ? "-" : "+"}${offset.abs()}HRS",
-                    style: CustomTheme.i.timezoneSubTitleAccentStyle,
+                    style: CustomTheme.instance.timezoneSubTitleAccentStyle,
                   ),
                   const SizedBox(width: 10),
                   Text(
                     timezone.abbreviation,
-                    style: CustomTheme.i.timezoneTitleAccentStyle,
+                    style: CustomTheme.instance.timezoneTitleAccentStyle,
                   ),
                 ],
               ),
               const SizedBox(height: 7),
               Text(
                 location.name,
-                style: CustomTheme.i.timezoneSubTitleAccentStyle,
+                style: CustomTheme.instance.timezoneSubTitleAccentStyle,
               ),
             ],
           ),

@@ -17,7 +17,7 @@ Future<void> main() async {
 
   final mode = SPService.i.getThemeMode();
 
-  CustomTheme.i.initialize(mode == ThemeMode.system
+  CustomTheme.instance.initialize(mode == ThemeMode.system
       ? WidgetsBinding.instance?.window.platformBrightness == Brightness.dark
           ? ThemeMode.dark
           : ThemeMode.light

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../view/error_404.dart';
 import '../../view/home.dart';
 import '../../view/timezone_list/timezone_list.dart';
 
@@ -28,11 +29,16 @@ class NavigationService {
     ],
     errorBuilder: (_, state) {
       debugPrint(state.error.toString());
-      return const Scaffold(
-        body: Center(
-          child: Text("No route defined for this url."),
-        ),
-      );
+      if (state.error.toString().split(":")[1].trim() ==
+          "no routes for location") {
+        return const Error404Page();
+      } else {
+        return const Scaffold(
+          body: Center(
+            child: Text('OOPS!!!! Looks like something isn`t right here.'),
+          ),
+        );
+      }
     },
   );
 
@@ -47,4 +53,10 @@ class RouteNames {
   static const home = "home";
   static const timezoneList = "timezone-list";
   static const timezoneComparison = "timezone-comparison";
+
+  static const list = [
+    home,
+    timezoneList,
+    timezoneComparison,
+  ];
 }

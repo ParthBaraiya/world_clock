@@ -5,7 +5,7 @@ import '../shared_preferences.dart';
 part 'theme_data.dart';
 
 class CustomTheme extends ChangeNotifier {
-  static final CustomTheme i = CustomTheme._();
+  static final CustomTheme instance = CustomTheme._();
 
   CustomTheme._();
 

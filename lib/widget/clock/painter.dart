@@ -20,7 +20,7 @@ class ClockMarkings extends CustomPainter {
     final shadow = BoxShadow(
       blurRadius: 35,
       offset: const Offset(4, 4),
-      color: CustomTheme.i.shadowColor,
+      color: CustomTheme.instance.shadowColor,
     ).toPaint();
 
     canvas
@@ -28,17 +28,17 @@ class ClockMarkings extends CustomPainter {
       ..drawCircle(
         size.toOffset() / 2,
         radius,
-        Paint()..color = CustomTheme.i.clockBackground,
+        Paint()..color = CustomTheme.instance.clockBackground,
       )
       ..drawPoints(
         ui.PointMode.points,
         pointers.pointers,
-        pointerPaint..color = CustomTheme.i.primaryTextColor,
+        pointerPaint..color = CustomTheme.instance.primaryTextColor,
       )
       ..drawPoints(
         ui.PointMode.points,
         pointers.quarterPointers,
-        pointerPaint..color = CustomTheme.i.accentTextColor,
+        pointerPaint..color = CustomTheme.instance.accentTextColor,
       );
 
     _drawNumbersPointer(radius, canvas);
@@ -156,7 +156,7 @@ class ClockHands extends CustomPainter {
         Offset(radius + (hourHeight * math.sin(hour * _hourAngle)),
             radius - (hourHeight * math.cos(hour * _hourAngle))),
         paint
-          ..color = CustomTheme.i.accentTextColor
+          ..color = CustomTheme.instance.accentTextColor
           ..strokeWidth = radius * 0.033,
       )
       ..drawLine(
@@ -164,7 +164,7 @@ class ClockHands extends CustomPainter {
         Offset(radius + (minuteHeight * math.sin(minute * _minuteAngle)),
             radius - (minuteHeight * math.cos(minute * _minuteAngle))),
         paint
-          ..color = CustomTheme.i.primaryTextColor
+          ..color = CustomTheme.instance.primaryTextColor
           ..strokeWidth = radius * 0.021,
       )
       ..drawLine(
@@ -172,11 +172,11 @@ class ClockHands extends CustomPainter {
         Offset(radius + (secondHeight * math.sin(second * _secondAngle)),
             radius - (secondHeight * math.cos(second * _secondAngle))),
         paint
-          ..color = CustomTheme.i.primaryTextColor
+          ..color = CustomTheme.instance.primaryTextColor
           ..strokeWidth = radius * 0.01,
       )
       ..drawCircle(center, radius * 0.05,
-          Paint()..color = CustomTheme.i.accentTextColor);
+          Paint()..color = CustomTheme.instance.accentTextColor);
   }
 
   @override

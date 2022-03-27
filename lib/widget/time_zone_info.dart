@@ -13,14 +13,14 @@ class TimeZoneInfo extends StatelessWidget {
       children: [
         Text(
           "Kolkata | India",
-          style: CustomTheme.i.heading5,
+          style: CustomTheme.instance.heading5,
         ),
         const SizedBox(
           height: 10,
         ),
         Text(
           "+12HRS | IST",
-          style: CustomTheme.i.heading6,
+          style: CustomTheme.instance.heading6,
         ),
       ],
     );

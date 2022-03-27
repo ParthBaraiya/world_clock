@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: CustomTheme.i.backgroundColor,
+      backgroundColor: CustomTheme.instance.backgroundColor,
       extendBody: true,
       extendBodyBehindAppBar: true,
       body: SafeArea(
@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
                   Expanded(
                     child: Text(
                       "World Clock",
-                      style: CustomTheme.i.titleStyle,
+                      style: CustomTheme.instance.titleStyle,
                     ),
                   ),
                   InkWellButton(
@@ -43,11 +43,12 @@ class _HomePageState extends State<HomePage> {
                       route: RouteNames.timezoneList,
                     ),
                     radius: BorderRadius.circular(100.0),
-                    hoverColor: CustomTheme.i.primaryTextColor.withOpacity(0.2),
+                    hoverColor:
+                        CustomTheme.instance.primaryTextColor.withOpacity(0.2),
                     child: Icon(
                       WorldClock.more,
                       size: 30,
-                      color: CustomTheme.i.primaryTextColor,
+                      color: CustomTheme.instance.primaryTextColor,
                     ),
                   ),
                   const SizedBox(
@@ -56,11 +57,12 @@ class _HomePageState extends State<HomePage> {
                   InkWellButton(
                     onTap: () {}, // TODO: Add callback
                     radius: BorderRadius.circular(100.0),
-                    hoverColor: CustomTheme.i.primaryTextColor.withOpacity(0.2),
+                    hoverColor:
+                        CustomTheme.instance.primaryTextColor.withOpacity(0.2),
                     child: Icon(
                       WorldClock.exchange,
                       size: 30,
-                      color: CustomTheme.i.primaryTextColor,
+                      color: CustomTheme.instance.primaryTextColor,
                     ),
                   ),
                 ],
@@ -79,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                 gradient: LinearGradient(
                   colors: [
                     Colors.transparent,
-                    CustomTheme.i.accentTextColor,
+                    CustomTheme.instance.accentTextColor,
                     Colors.transparent,
                   ],
                   begin: const Alignment(0, -1.7),
@@ -92,7 +94,7 @@ class _HomePageState extends State<HomePage> {
                   Container(
                     padding: const EdgeInsets.only(right: 50),
                     decoration: BoxDecoration(
-                      color: CustomTheme.i.backgroundColor,
+                      color: CustomTheme.instance.backgroundColor,
                     ),
                     child: const TimeZoneInfo(),
                   ),
@@ -102,7 +104,7 @@ class _HomePageState extends State<HomePage> {
                   Container(
                     padding: const EdgeInsets.only(left: 30),
                     decoration: BoxDecoration(
-                      color: CustomTheme.i.backgroundColor,
+                      color: CustomTheme.instance.backgroundColor,
                     ),
                     child: const DayInfo(),
                   ),
@@ -118,7 +120,7 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Text(
                       "Favorites",
-                      style: CustomTheme.i.titleStyle,
+                      style: CustomTheme.instance.titleStyle,
                     ),
                     Container(
                       height: 1.5,
@@ -126,7 +128,7 @@ class _HomePageState extends State<HomePage> {
                         color: Colors.red,
                         gradient: LinearGradient(
                           colors: [
-                            CustomTheme.i.accentTextColor,
+                            CustomTheme.instance.accentTextColor,
                             Colors.transparent,
                           ],
                         ),
@@ -140,7 +142,7 @@ class _HomePageState extends State<HomePage> {
                           opacity: 1,
                           child: Text(
                             "Time 1",
-                            style: CustomTheme.i.heading5,
+                            style: CustomTheme.instance.heading5,
                           ),
                         ),
                       ],

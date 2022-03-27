@@ -29,14 +29,14 @@ class _DayInfoState extends State<DayInfo> {
       children: [
         Text(
           _timer.currentDate.weekName,
-          style: CustomTheme.i.heading5,
+          style: CustomTheme.instance.heading5,
         ),
         const SizedBox(
           height: 5,
         ),
         Text(
           _timer.currentDate.dateMonth,
-          style: CustomTheme.i.heading5,
+          style: CustomTheme.instance.heading5,
         ),
       ],
     );

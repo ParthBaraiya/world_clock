@@ -39,11 +39,11 @@ class _TimeIndicatorState extends State<TimeIndicator> {
         children: [
           TextSpan(
             text: "${Constants.hhMM.format(_timer.currentDate)} ",
-            style: CustomTheme.i.titleStyle,
+            style: CustomTheme.instance.titleStyle,
           ),
           TextSpan(
             text: _timer.currentDate.hour >= 12 ? 'PM' : 'AM',
-            style: CustomTheme.i.subtitleStyle,
+            style: CustomTheme.instance.subtitleStyle,
           ),
         ],
       ),
