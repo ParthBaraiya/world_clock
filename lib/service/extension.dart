@@ -38,3 +38,19 @@ extension NavigationExtension on BuildContext {
 
   void previousPage() => pop();
 }
+
+extension SplitGradient on Color {
+  LinearGradient createSplitGradient({
+    double top = -1.7,
+    double bottom = 1.7,
+  }) =>
+      LinearGradient(
+        colors: [
+          Colors.transparent,
+          this,
+          Colors.transparent,
+        ],
+        begin: Alignment(0, top),
+        end: Alignment(0, bottom),
+      );
+}

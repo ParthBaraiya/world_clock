@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../view/error_404.dart';
-import '../../view/home.dart';
+import '../../view/home/home.dart';
 import '../../view/timezone_list/timezone_list.dart';
 
 part 'route_arguments.dart';
