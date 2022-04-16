@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../view/error_404.dart';
-import '../../view/home/home.dart';
-import '../../view/timezone_list/timezone_list.dart';
+import '../../feature/error_404.dart';
+import '../../feature/favorites/favorite.dart';
+import '../../feature/home/home.dart';
+import '../../feature/timezones/timezones.dart' show TimezonesPage;
 
 part 'route_arguments.dart';
 
@@ -17,12 +18,17 @@ class NavigationService {
       GoRoute(
         name: RouteNames.home,
         path: '/',
-        builder: (_, __) => const HomePage(),
+        pageBuilder: (_, __) => _getPage(child: const HomePage()),
         routes: [
           GoRoute(
             name: RouteNames.timezoneList,
             path: 'timezones',
-            builder: (_, __) => const TimezoneList(),
+            pageBuilder: (_, __) => _getPage(child: const TimezonesPage()),
+          ),
+          GoRoute(
+            name: RouteNames.favorites,
+            path: 'favorites',
+            pageBuilder: (_, __) => _getPage(child: const FavoritesPage()),
           ),
         ],
       ),
@@ -42,6 +48,10 @@ class NavigationService {
     },
   );
 
+  static Page<void> _getPage({required Widget child}) {
+    return NoTransitionPage(child: child);
+  }
+
   RouterDelegate<Object> get delegate => router.routerDelegate;
   RouteInformationParser<Object> get routeInformationParser =>
       router.routeInformationParser;
@@ -53,6 +63,7 @@ class RouteNames {
   static const home = "home";
   static const timezoneList = "timezone-list";
   static const timezoneComparison = "timezone-comparison";
+  static const favorites = "favorites";
 
   static const list = [
     home,
