@@ -16,7 +16,7 @@ class Favorites extends StatefulWidget {
 class _FavoritesState extends State<Favorites> {
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: Text("Your favorites comes here,..."),
     );
   }
