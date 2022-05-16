@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -18,7 +20,7 @@ Future<void> main() async {
   final mode = SPService.i.getThemeMode();
 
   CustomTheme.instance.initialize(mode == ThemeMode.system
-      ? WidgetsBinding.instance?.window.platformBrightness == Brightness.dark
+      ? WidgetsBinding.instance.window.platformBrightness == Brightness.dark
           ? ThemeMode.dark
           : ThemeMode.light
       : mode);
@@ -42,6 +44,13 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
+      scrollBehavior: const ScrollBehavior().copyWith(
+        dragDevices: {
+          PointerDeviceKind.mouse,
+          PointerDeviceKind.touch,
+          PointerDeviceKind.trackpad,
+        },
+      ),
       routerDelegate: NavigationService.instance.delegate,
       routeInformationParser: NavigationService.instance.routeInformationParser,
     );
