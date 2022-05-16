@@ -140,9 +140,9 @@ class ClockHands extends CustomPainter {
 
     final center = size.toOffset() / 2;
 
-    final hourHeight = radius * 0.4;
-    final minuteHeight = radius * 0.5;
-    final secondHeight = radius * 0.63;
+    final hourHeight = radius * 0.5;
+    final minuteHeight = radius * 0.6;
+    final secondHeight = radius * 0.82;
 
     final second = ClockTimer.timer.second;
     final minute = (ClockTimer.timer.minute * 60) + second;
@@ -157,7 +157,7 @@ class ClockHands extends CustomPainter {
             radius - (hourHeight * math.cos(hour * _hourAngle))),
         paint
           ..color = CustomTheme.instance.accentTextColor
-          ..strokeWidth = radius * 0.033,
+          ..strokeWidth = radius * 0.045,
       )
       ..drawLine(
         center,
@@ -165,7 +165,7 @@ class ClockHands extends CustomPainter {
             radius - (minuteHeight * math.cos(minute * _minuteAngle))),
         paint
           ..color = CustomTheme.instance.primaryTextColor
-          ..strokeWidth = radius * 0.021,
+          ..strokeWidth = radius * 0.03,
       )
       ..drawLine(
         center,
@@ -173,7 +173,7 @@ class ClockHands extends CustomPainter {
             radius - (secondHeight * math.cos(second * _secondAngle))),
         paint
           ..color = CustomTheme.instance.primaryTextColor
-          ..strokeWidth = radius * 0.01,
+          ..strokeWidth = radius * 0.02,
       )
       ..drawCircle(center, radius * 0.05,
           Paint()..color = CustomTheme.instance.accentTextColor);

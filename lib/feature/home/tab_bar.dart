@@ -56,38 +56,41 @@ class _TimeZoneTabState extends State<TimeZoneTab>
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        TabBar(
-          controller: _tabController,
-          isScrollable: true,
-          indicatorSize: TabBarIndicatorSize.label,
-          indicator: _CustomUnderlinedIndicator(
-            borderSide: BorderSide(
-              width: 5,
-              color: CustomTheme.instance.accentTextColor,
+        Padding(
+          padding: const EdgeInsets.only(left: 20),
+          child: TabBar(
+            controller: _tabController,
+            isScrollable: true,
+            indicatorSize: TabBarIndicatorSize.label,
+            indicator: _CustomUnderlinedIndicator(
+              borderSide: BorderSide(
+                width: 5,
+                color: CustomTheme.instance.accentTextColor,
+              ),
             ),
+            tabs: [
+              InkWellButton(
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  child: Text("Favorite"),
+                ),
+                onTap: () {
+                  if (widget.index == 0) return;
+                  _tabController.animateTo(0);
+                },
+              ),
+              InkWellButton(
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  child: Text("Timezones"),
+                ),
+                onTap: () {
+                  if (widget.index == 1) return;
+                  _tabController.animateTo(1);
+                },
+              ),
+            ],
           ),
-          tabs: [
-            InkWellButton(
-              child: const Padding(
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                child: Text("Favorite"),
-              ),
-              onTap: () {
-                if (widget.index == 0) return;
-                _tabController.animateTo(0);
-              },
-            ),
-            InkWellButton(
-              child: const Padding(
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                child: Text("Timezones"),
-              ),
-              onTap: () {
-                if (widget.index == 1) return;
-                _tabController.animateTo(1);
-              },
-            ),
-          ],
         ),
         Expanded(
           child: TabBarView(
