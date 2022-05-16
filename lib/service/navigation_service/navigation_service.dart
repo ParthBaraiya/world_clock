@@ -35,17 +35,8 @@ class NavigationService {
       ),
     ],
     errorBuilder: (_, state) {
-      debugPrint(state.error.toString());
-      if (state.error.toString().split(":")[1].trim() ==
-          "no routes for location") {
-        return const Error404Page();
-      } else {
-        return const Scaffold(
-          body: Center(
-            child: Text('OOPS!!!! Looks like something isn`t right here.'),
-          ),
-        );
-      }
+      // TODO: improve this...
+      return const Error404Page();
     },
   );
 

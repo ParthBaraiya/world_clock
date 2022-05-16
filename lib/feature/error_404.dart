@@ -22,54 +22,57 @@ class Error404Page extends StatelessWidget {
             opacity: 0.1,
             child: Image.asset(
               Images.bg404,
-              fit: BoxFit.fill,
+              fit: BoxFit.cover,
               height: screenSize.height,
               width: screenSize.width,
             ),
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "4:04",
-                style: TextStyle(
-                    fontSize: 180,
-                    color: CustomTheme.instance.accentTextColor,
-                    fontWeight: FontWeight.bold),
-              ),
-              Text(
-                "It looks like you are lost in time.",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 50,
-                    color: CustomTheme.instance.primaryTextColor,
-                    fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 60),
-              Text(
-                "Here are the directions you can try",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 30,
-                  color: CustomTheme.instance.primaryTextColor,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "4:04",
+                  style: TextStyle(
+                      fontSize: 180,
+                      color: CustomTheme.instance.accentTextColor,
+                      fontWeight: FontWeight.bold),
                 ),
-              ),
-              const SizedBox(height: 30),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  _ActionText(
-                    onTap: () => context.goToRoute(route: RouteNames.home),
-                    title: "Home",
+                Text(
+                  "Oops! It looks like we are lost in time.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 50,
+                      color: CustomTheme.instance.primaryTextColor,
+                      fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 60),
+                Text(
+                  "Here are the directions you can try",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 30,
+                    color: CustomTheme.instance.primaryTextColor,
                   ),
-                  _ActionText(
-                    onTap: () =>
-                        context.goToRoute(route: RouteNames.timezoneList),
-                    title: "Timezones",
-                  ),
-                ],
-              ),
-            ],
+                ),
+                const SizedBox(height: 30),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _ActionText(
+                      onTap: () => context.goToRoute(route: RouteNames.home),
+                      title: "Home",
+                    ),
+                    _ActionText(
+                      onTap: () =>
+                          context.goToRoute(route: RouteNames.timezoneList),
+                      title: "Timezones",
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ],
       ),
