@@ -50,6 +50,7 @@ class MyApp extends StatelessWidget {
           PointerDeviceKind.touch,
           PointerDeviceKind.trackpad,
         },
+        scrollbars: true,
       ),
       routerDelegate: NavigationService.instance.delegate,
       routeInformationParser: NavigationService.instance.routeInformationParser,

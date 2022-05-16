@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../../service/constants.dart';
+import '../../service/extension.dart';
 import '../../service/theme/theme.dart';
 import '../../service/timezone.dart';
-import '../../values/breakpoints.dart';
 import '../../values/world_clock_icons.dart';
-import '../../widget/responsive_split_widget.dart';
-import '../home/home.dart';
+import '../../widget/buttons.dart';
 
 part 'backend/timezone_list_backend.dart';
 part 'timezone_list.dart';

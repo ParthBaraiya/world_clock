@@ -14,6 +14,7 @@ import '../../widget/day_info.dart';
 import '../../widget/responsive_split_widget.dart';
 import '../../widget/time_zone_info.dart';
 import '../../widget/timer_indicator.dart';
+import '../favorites/favorite.dart';
 import '../timezones/timezones.dart';
 
 part 'custom_indicator.dart';

@@ -3,8 +3,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../feature/error_404.dart';
 import '../../feature/home/home.dart';
-import '../../feature/timezones/timezones.dart'
-    show TimezoneTabType, TimezonesPage;
 
 part 'route_arguments.dart';
 

@@ -1,5 +1,44 @@
 part of 'home.dart';
 
+enum TimezoneTabType {
+  favorite,
+  list,
+}
+
+class TimezonesPage extends StatelessWidget {
+  final TimezoneTabType tabType;
+
+  const TimezonesPage({
+    Key? key,
+    this.tabType = TimezoneTabType.favorite,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    final clockWidgetWidth = screenWidth < HomeScreenBreakPoints.point800
+        ? screenWidth
+        : screenWidth * 0.45;
+
+    final isMobile = screenWidth < HomeScreenBreakPoints.point800;
+
+    return ResponsiveSplitWidget(
+      priority: ResponsiveSplitPriority.right,
+      left: (_) => HomePageClock(
+        width: clockWidgetWidth,
+      ),
+      right: (_) => isMobile
+          ? tabType == TimezoneTabType.favorite
+              ? const Favorites()
+              : const TimezoneListPage()
+          : TimeZoneTab(
+              index: tabType.index,
+            ),
+    );
+  }
+}
+
 class TimeZoneTab extends StatefulWidget {
   const TimeZoneTab({
     Key? key,
@@ -96,9 +135,7 @@ class _TimeZoneTabState extends State<TimeZoneTab>
           child: TabBarView(
             controller: _tabController,
             children: [
-              const Center(
-                child: Text("Favorite"),
-              ),
+              const Favorites(),
               const TimezoneList(),
             ],
           ),

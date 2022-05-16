@@ -19,7 +19,7 @@ class ClockTimer extends ChangeNotifier {
     _tick();
   }
 
-  int get elepsedSeconds => _counter;
+  int get elapsedSeconds => _counter;
 
   DateTime get currentDate => _date;
 
