@@ -11,7 +11,8 @@ class FavoritesPage extends StatelessWidget {
         ? screenWidth
         : screenWidth * 0.45;
 
-    return ResponsiveSplitRightWidget(
+    return ResponsiveSplitWidget(
+      priority: ResponsiveSplitPriority.right,
       left: (_) => HomePageClock(
         width: clockWidgetWidth,
       ),

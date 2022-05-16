@@ -5,17 +5,24 @@ import '../service/theme/theme.dart';
 
 const _screenBreakPoint = 800.0;
 
-class ResponsiveSplitLeftWidget extends StatelessWidget {
-  const ResponsiveSplitLeftWidget({
+enum ResponsiveSplitPriority {
+  left,
+  right,
+}
+
+class ResponsiveSplitWidget extends StatelessWidget {
+  const ResponsiveSplitWidget({
     Key? key,
     this.breakPoint = _screenBreakPoint,
     required this.left,
     required this.right,
+    this.priority = ResponsiveSplitPriority.left,
   }) : super(key: key);
 
   final WidgetBuilder left;
   final WidgetBuilder right;
   final double breakPoint;
+  final ResponsiveSplitPriority priority;
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +30,38 @@ class ResponsiveSplitLeftWidget extends StatelessWidget {
 
     return _ResponsiveSplitScaffold(
       children: [
-        left(context),
-        if (screenWidth > breakPoint) ...[
-          const SizedBox(
-            width: 1.5,
+        if (priority == ResponsiveSplitPriority.left) ...[
+          DecoratedBox(
+            decoration: BoxDecoration(
+              color: CustomTheme.instance.backgroundColor,
+            ),
+            child: left(context),
           ),
+          if (screenWidth > breakPoint) ...[
+            const SizedBox(
+              width: 1.5,
+            ),
+            Expanded(
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: CustomTheme.instance.backgroundColor,
+                ),
+                child: right(context),
+              ),
+            ),
+          ],
+        ] else ...[
+          if (screenWidth > breakPoint) ...[
+            DecoratedBox(
+              decoration: BoxDecoration(
+                color: CustomTheme.instance.backgroundColor,
+              ),
+              child: left(context),
+            ),
+            const SizedBox(
+              width: 1.5,
+            ),
+          ],
           Expanded(
             child: DecoratedBox(
               decoration: BoxDecoration(
@@ -36,49 +70,7 @@ class ResponsiveSplitLeftWidget extends StatelessWidget {
               child: right(context),
             ),
           ),
-        ],
-      ],
-    );
-  }
-}
-
-class ResponsiveSplitRightWidget extends StatelessWidget {
-  const ResponsiveSplitRightWidget({
-    Key? key,
-    this.breakPoint = _screenBreakPoint,
-    required this.left,
-    required this.right,
-  }) : super(key: key);
-
-  final WidgetBuilder left;
-  final WidgetBuilder right;
-  final double breakPoint;
-
-  @override
-  Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-
-    return _ResponsiveSplitScaffold(
-      children: [
-        if (screenWidth > breakPoint) ...[
-          DecoratedBox(
-            decoration: BoxDecoration(
-              color: CustomTheme.instance.backgroundColor,
-            ),
-            child: left(context),
-          ),
-          const SizedBox(
-            width: 1.5,
-          ),
-        ],
-        Expanded(
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              color: CustomTheme.instance.backgroundColor,
-            ),
-            child: right(context),
-          ),
-        ),
+        ]
       ],
     );
   }

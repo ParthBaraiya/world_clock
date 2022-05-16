@@ -10,13 +10,13 @@ import '../../values/breakpoints.dart';
 import '../../values/world_clock_icons.dart';
 import '../../widget/buttons.dart';
 import '../../widget/clock/clock.dart';
-import '../../widget/custom_tab_bar.dart';
 import '../../widget/day_info.dart';
 import '../../widget/responsive_split_widget.dart';
 import '../../widget/time_zone_info.dart';
 import '../../widget/timer_indicator.dart';
 import '../timezones/timezones.dart';
 
+part 'custom_indicator.dart';
 part 'home_page_clock.dart';
 part 'tab_bar.dart';
 
@@ -31,7 +31,7 @@ class HomePage extends StatelessWidget {
         ? screenWidth
         : screenWidth * 0.45;
 
-    return ResponsiveSplitLeftWidget(
+    return ResponsiveSplitWidget(
       left: (_) => HomePageClock(
         width: clockWidgetWidth,
       ),

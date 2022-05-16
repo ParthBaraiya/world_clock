@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../feature/error_404.dart';
-import '../../feature/favorites/favorite.dart';
 import '../../feature/home/home.dart';
-import '../../feature/timezones/timezones.dart' show TimezonesPage;
+import '../../feature/timezones/timezones.dart'
+    show TimezoneTabType, TimezonesPage;
 
 part 'route_arguments.dart';
 
@@ -23,12 +23,15 @@ class NavigationService {
           GoRoute(
             name: RouteNames.timezoneList,
             path: 'timezones',
-            pageBuilder: (_, __) => _getPage(child: const TimezonesPage()),
+            pageBuilder: (_, __) => _getPage(
+                child: const TimezonesPage(
+              tabType: TimezoneTabType.list,
+            )),
           ),
           GoRoute(
             name: RouteNames.favorites,
             path: 'favorites',
-            pageBuilder: (_, __) => _getPage(child: const FavoritesPage()),
+            pageBuilder: (_, __) => _getPage(child: const TimezonesPage()),
           ),
         ],
       ),

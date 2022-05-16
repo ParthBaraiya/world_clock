@@ -1,7 +1,17 @@
 part of 'timezones.dart';
 
+enum TimezoneTabType {
+  favorite,
+  list,
+}
+
 class TimezonesPage extends StatelessWidget {
-  const TimezonesPage({Key? key}) : super(key: key);
+  final TimezoneTabType tabType;
+
+  const TimezonesPage({
+    Key? key,
+    this.tabType = TimezoneTabType.favorite,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,12 +23,16 @@ class TimezonesPage extends StatelessWidget {
 
     final isMobile = screenWidth < HomeScreenBreakPoints.point800;
 
-    return ResponsiveSplitRightWidget(
+    return ResponsiveSplitWidget(
+      priority: ResponsiveSplitPriority.right,
       left: (_) => HomePageClock(
         width: clockWidgetWidth,
       ),
-      right: (_) =>
-          isMobile ? const TimezoneList() : const TimeZoneTab(index: 1),
+      right: (_) => isMobile
+          ? const TimezoneList()
+          : TimeZoneTab(
+              index: tabType.index,
+            ),
     );
   }
 }
