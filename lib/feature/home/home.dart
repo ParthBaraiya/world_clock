@@ -26,17 +26,62 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-
-    final clockWidgetWidth = screenWidth < HomeScreenBreakPoints.point800
-        ? screenWidth
-        : screenWidth * 0.45;
-
-    return ResponsiveSplitWidget(
-      left: (_) => HomePageClock(
-        width: clockWidgetWidth,
+    return Scaffold(
+      body: Column(
+        children: [
+          const _HomePageAppBar(),
+        ],
       ),
-      right: (_) => const TimeZoneTab(index: 0),
+    );
+  }
+}
+
+class _HomePageAppBar extends StatelessWidget {
+  const _HomePageAppBar({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(
+          top: 20.0, left: 30.0, right: 10.0, bottom: 50.0),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              'World Clock',
+              style: CustomTheme.instance.titleStyle.copyWith(
+                fontSize: 40,
+              ),
+              textAlign: TextAlign.start,
+            ),
+          ),
+          InkWellButton(
+            onTap: () => context.goToRoute(
+              route: RouteNames.timezoneList,
+            ),
+            radius: BorderRadius.circular(100.0),
+            hoverColor: CustomTheme.instance.primaryTextColor.withOpacity(0.2),
+            child: Icon(
+              WorldClock.more,
+              size: 30,
+              color: CustomTheme.instance.primaryTextColor,
+            ),
+          ),
+          const SizedBox(
+            width: 15,
+          ),
+          InkWellButton(
+            onTap: () {}, // TODO: Add callback
+            radius: BorderRadius.circular(100.0),
+            hoverColor: CustomTheme.instance.primaryTextColor.withOpacity(0.2),
+            child: Icon(
+              WorldClock.exchange,
+              size: 30,
+              color: CustomTheme.instance.primaryTextColor,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

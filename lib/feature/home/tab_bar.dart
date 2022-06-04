@@ -16,26 +16,18 @@ class TimezonesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-
-    final clockWidgetWidth = screenWidth < HomeScreenBreakPoints.point800
-        ? screenWidth
-        : screenWidth * 0.45;
-
     final isMobile = screenWidth < HomeScreenBreakPoints.point800;
 
-    return ResponsiveSplitWidget(
-      priority: ResponsiveSplitPriority.right,
-      left: (_) => HomePageClock(
-        width: clockWidgetWidth,
-      ),
-      right: (_) => isMobile
-          ? tabType == TimezoneTabType.favorite
-              ? const Favorites()
-              : const TimezoneListPage()
-          : TimeZoneTab(
+    return isMobile
+        ? tabType == TimezoneTabType.favorite
+            ? const FavoritesPage()
+            : const TimezoneListPage()
+        : SplitWidget(
+            left: const HomePageClock(),
+            right: TimeZoneTab(
               index: tabType.index,
             ),
-    );
+          );
   }
 }
 
@@ -111,7 +103,7 @@ class _TimeZoneTabState extends State<TimeZoneTab>
               InkWellButton(
                 child: const Padding(
                   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                  child: Text("Favorite"),
+                  child: Text('Favorite'),
                 ),
                 onTap: () {
                   if (widget.index == 0) return;
@@ -121,7 +113,7 @@ class _TimeZoneTabState extends State<TimeZoneTab>
               InkWellButton(
                 child: const Padding(
                   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                  child: Text("Timezones"),
+                  child: Text('Timezones'),
                 ),
                 onTap: () {
                   if (widget.index == 1) return;

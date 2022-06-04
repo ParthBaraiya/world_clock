@@ -38,7 +38,7 @@ class _TimeIndicatorState extends State<TimeIndicator> {
       text: TextSpan(
         children: [
           TextSpan(
-            text: "${Constants.hhMM.format(_timer.currentDate)} ",
+            text: '${Constants.hhMM.format(_timer.currentDate)} ',
             style: CustomTheme.instance.titleStyle,
           ),
           TextSpan(

@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../values/breakpoints.dart';
-import '../../widget/responsive_split_widget.dart';
-import '../home/home.dart';
-
 part 'favorite_page.dart';
 
 class Favorites extends StatefulWidget {
@@ -17,7 +13,7 @@ class _FavoritesState extends State<Favorites> {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Text("Your favorites comes here,..."),
+      child: Text('Your favorites comes here,...'),
     );
   }
 }

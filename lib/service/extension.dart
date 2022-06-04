@@ -15,8 +15,8 @@ extension ComparisonExtension on Size {
 }
 
 extension DateFormatExtension on DateTime {
-  String get weekName => DateFormat("EEEE").format(this);
-  String get dateMonth => DateFormat("d MMM").format(this);
+  String get weekName => DateFormat('EEEE').format(this);
+  String get dateMonth => DateFormat('d MMM').format(this);
 }
 
 extension NavigationExtension on BuildContext {

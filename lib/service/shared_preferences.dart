@@ -10,7 +10,7 @@ class SPService {
 
   late SharedPreferences preferences;
 
-  final String themeKey = "SP_THEME";
+  final String themeKey = 'SP_THEME';
 
   Future<void> initialize() async {
     if (_initialized) return;
@@ -26,9 +26,9 @@ class SPService {
     final mode = preferences.getString(themeKey);
 
     switch (mode) {
-      case "ThemeMode.dark":
+      case 'ThemeMode.dark':
         return ThemeMode.dark;
-      case "ThemeMode.light":
+      case 'ThemeMode.light':
         return ThemeMode.light;
       default:
         return ThemeMode.system;

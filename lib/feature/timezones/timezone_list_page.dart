@@ -37,7 +37,7 @@ class TimezoneListPage extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "All Timezones",
+                  'All Timezones',
                   style: CustomTheme.instance.timezoneTitleStyle,
                 ),
               ],

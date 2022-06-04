@@ -42,8 +42,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData.light(),
-      darkTheme: ThemeData.dark(),
+      theme: ThemeData.light().copyWith(
+        scaffoldBackgroundColor: CustomTheme.instance.backgroundColor,
+      ),
+      darkTheme: ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: CustomTheme.instance.backgroundColor,
+
+      ),
       scrollBehavior: const ScrollBehavior().copyWith(
         dragDevices: {
           PointerDeviceKind.mouse,

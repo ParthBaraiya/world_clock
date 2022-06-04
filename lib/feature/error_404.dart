@@ -33,14 +33,14 @@ class Error404Page extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "4:04",
+                  '4:04',
                   style: TextStyle(
                       fontSize: 180,
                       color: CustomTheme.instance.accentTextColor,
                       fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  "Oops! It looks like we are lost in time.",
+                  'Oops! It looks like we are lost in time.',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: 50,
@@ -49,7 +49,7 @@ class Error404Page extends StatelessWidget {
                 ),
                 const SizedBox(height: 60),
                 Text(
-                  "Here are the directions you can try",
+                  'Here are the directions you can try',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 30,
@@ -62,12 +62,12 @@ class Error404Page extends StatelessWidget {
                   children: [
                     _ActionText(
                       onTap: () => context.goToRoute(route: RouteNames.home),
-                      title: "Home",
+                      title: 'Home',
                     ),
                     _ActionText(
                       onTap: () =>
                           context.goToRoute(route: RouteNames.timezoneList),
-                      title: "Timezones",
+                      title: 'Timezones',
                     ),
                   ],
                 ),

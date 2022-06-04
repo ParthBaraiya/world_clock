@@ -63,7 +63,6 @@ class _LightThemeData implements _ThemeData {
   TextStyle timezoneTitleStyle = const TextStyle(
     color: Color(0xffffffff),
     fontWeight: FontWeight.bold,
-
     fontSize: 30,
   );
 

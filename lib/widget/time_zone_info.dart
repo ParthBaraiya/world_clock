@@ -12,14 +12,14 @@ class TimeZoneInfo extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Kolkata | India",
+          'Kolkata | India',
           style: CustomTheme.instance.heading5,
         ),
         const SizedBox(
           height: 10,
         ),
         Text(
-          "+12HRS | IST",
+          '+12HRS | IST',
           style: CustomTheme.instance.heading6,
         ),
       ],

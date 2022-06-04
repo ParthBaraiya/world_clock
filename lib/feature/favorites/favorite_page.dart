@@ -5,18 +5,11 @@ class FavoritesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-
-    final clockWidgetWidth = screenWidth < HomeScreenBreakPoints.point800
-        ? screenWidth
-        : screenWidth * 0.45;
-
-    return ResponsiveSplitWidget(
-      priority: ResponsiveSplitPriority.right,
-      left: (_) => HomePageClock(
-        width: clockWidgetWidth,
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Favorites...'),
       ),
-      right: (_) => const TimeZoneTab(index: 0),
+      body: const Favorites(),
     );
   }
 }
