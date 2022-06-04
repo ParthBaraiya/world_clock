@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
+import '../../gen/assets.gen.dart';
 import '../../service/constants.dart';
 import '../../service/extension.dart';
 import '../../service/theme/theme.dart';

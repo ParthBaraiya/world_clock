@@ -32,8 +32,6 @@ class TimeZoneUtility {
       }
     });
 
-    // print(_locations);
-
     _initialized = true;
   }
 }

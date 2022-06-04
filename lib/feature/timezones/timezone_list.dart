@@ -37,8 +37,29 @@ class _TimezoneListState extends State<TimezoneList> with TimeZoneListBackend {
             ),
             itemCount: TimeZoneUtility.i.locations.length,
           )
-        : const Center(
-            child: CircularProgressIndicator(),
+        : Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    SpinKitRipple(
+                      color: CustomTheme.instance.accentTextColor,
+                      size: 300,
+                    ),
+                    Assets.vectors.locationSearch.svg(height: 200),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  'Loading time zone list...',
+                  style: CustomTheme.instance.timezoneTitleAccentStyle,
+                ),
+              ],
+            ),
           );
   }
 }
