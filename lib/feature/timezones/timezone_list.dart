@@ -18,6 +18,10 @@ class _TimezoneListState extends State<TimezoneList> with TimeZoneListBackend {
             itemBuilder: (_, index) {
               return LocationTile(
                 location: getLocation(locations[index]),
+                selected: false,
+                onBookmark: (isSelected) {
+                  // Bookmarked
+                },
               );
             },
             separatorBuilder: (_, __) => Container(

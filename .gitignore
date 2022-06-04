@@ -48,5 +48,6 @@ app.*.map.json
 
 pubspec.lock
 
-# Generated assets.
+# Generated files.
 lib/gen
+**/*.dart
