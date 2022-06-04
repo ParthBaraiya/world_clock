@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:timezone/data/latest_all.dart';
 import 'package:timezone/standalone.dart'
     if (dart.library.html) 'package:timezone/browser.dart';
@@ -10,9 +11,8 @@ class TimeZoneUtility {
 
   TimeZoneUtility._();
 
-  bool _initialized = false;
-
-  bool get initialized => _initialized;
+  // Gives the status whether timezone utility is initialized or not.
+  final ValueNotifier<bool> initialized = ValueNotifier(false);
 
   final _locations = <String, Location>{};
 
@@ -32,6 +32,6 @@ class TimeZoneUtility {
       }
     });
 
-    _initialized = true;
+    initialized.value = true;
   }
 }

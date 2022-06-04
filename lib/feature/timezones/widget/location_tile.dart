@@ -13,9 +13,10 @@ class LocationTile extends StatelessWidget {
     final timezone = location.currentTimeZone;
     final now = TZDateTime.now(location);
     final offset = timezone.offset / (1000 * 3600);
+    final size = MediaQuery.of(context).size;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
+      padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 30.0),
       child: Row(
         children: [
           Icon(
@@ -25,55 +26,50 @@ class LocationTile extends StatelessWidget {
           ),
           const SizedBox(width: 10),
           Expanded(
+            child: Text(
+              timezone.abbreviation,
+              style: CustomTheme.instance.timezoneTitleAccentStyle,
+            ),
+          ),
+          Text(
+            Constants.hhMM.format(now),
+            style: CustomTheme.instance.timezoneTitleStyle,
+          ),
+          const SizedBox(width: 10),
+          Text(
+            Constants.a.format(now),
+            style: CustomTheme.instance.timezoneSubTitleStyle,
+          ),
+          SizedBox(
+            width: size.width * 0.45 * 0.25,
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Row(
                   children: [
-                    Text(
-                      Constants.hhMM.format(now),
-                      style: CustomTheme.instance.timezoneTitleStyle,
-                    ),
-                    const SizedBox(width: 10),
-                    Text(
-                      Constants.a.format(now),
-                      style: CustomTheme.instance.timezoneSubTitleStyle,
+                    Expanded(
+                      child: Text(
+                        location.name,
+                        style: CustomTheme.instance.timezoneSubTitleAccentStyle,
+                        textAlign: TextAlign.end,
+                      ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 7),
                 Text(
-                  Constants.wDdMm.format(now),
-                  style: CustomTheme.instance.heading6,
+                  "${offset < 0 ? "-" : "+"}${offset.abs()}HRS",
+                  style: CustomTheme.instance.timezoneSubTitleAccentStyle,
                 ),
               ],
             ),
           ),
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Row(
-                children: [
-                  Text(
-                    "${offset < 0 ? "-" : "+"}${offset.abs()}HRS",
-                    style: CustomTheme.instance.timezoneSubTitleAccentStyle,
-                  ),
-                  const SizedBox(width: 10),
-                  Text(
-                    timezone.abbreviation,
-                    style: CustomTheme.instance.timezoneTitleAccentStyle,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 7),
-              Text(
-                location.name,
-                style: CustomTheme.instance.timezoneSubTitleAccentStyle,
-              ),
-            ],
-          ),
+          const SizedBox(width: 20),
+          InkWell(
+            onTap: () {},
+            child: const Icon(WorldClock.arrow_up),
+          )
         ],
       ),
     );

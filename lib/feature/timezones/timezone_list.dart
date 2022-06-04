@@ -12,7 +12,7 @@ class _TimezoneListState extends State<TimezoneList> with TimeZoneListBackend {
   Widget build(BuildContext context) {
     final locations = TimeZoneUtility.i.locations.keys.toList();
 
-    return TimeZoneUtility.i.initialized
+    return TimeZoneUtility.i.initialized.value
         ? ListView.separated(
             controller: _controller,
             itemBuilder: (_, index) {
@@ -32,7 +32,7 @@ class _TimezoneListState extends State<TimezoneList> with TimeZoneListBackend {
                   end: const Alignment(2.2, 0),
                 ),
               ),
-              height: 1,
+              height: 0.2,
               width: double.infinity,
             ),
             itemCount: TimeZoneUtility.i.locations.length,

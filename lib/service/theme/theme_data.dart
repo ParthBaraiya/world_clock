@@ -37,7 +37,7 @@ class _LightThemeData implements _ThemeData {
 
   @override
   TextStyle titleStyle = const TextStyle(
-    fontSize: 40,
+    fontSize: 48,
     color: Colors.white,
   );
 
