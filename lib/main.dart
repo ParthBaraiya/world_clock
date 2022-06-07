@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'World Clock',
       theme: ThemeData.light().copyWith(
         scaffoldBackgroundColor: CustomTheme.instance.backgroundColor,
       ),
