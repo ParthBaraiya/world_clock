@@ -14,14 +14,12 @@ class _TimezoneListState extends State<TimezoneList> with TimeZoneListBackend {
 
     return TimeZoneUtility.i.initialized.value
         ? ListView.separated(
-            controller: _controller,
             itemBuilder: (_, index) {
               return LocationTile(
                 location: getLocation(locations[index]),
                 selected: false,
-                onBookmark: (isSelected) {
-                  // Bookmarked
-                },
+                onBookmark: (location, selected) async =>
+                    _toggleFavorite(location, selected),
               );
             },
             separatorBuilder: (_, __) => Container(

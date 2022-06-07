@@ -50,4 +50,6 @@ pubspec.lock
 
 # Generated files.
 lib/gen
-**/*.dart
+**/*.g.dart
+**/*.chopper.dart
+**/*.freezed.dart

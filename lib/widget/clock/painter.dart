@@ -131,7 +131,7 @@ class ClockMarkings extends CustomPainter {
 }
 
 class ClockHands extends CustomPainter {
-  // Parsing timer will repaint this painter every second.
+  // Passing timer will repaint this painter every second.
   ClockHands() : super(repaint: ClockTimer.timer);
 
   @override

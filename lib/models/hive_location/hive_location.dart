@@ -42,6 +42,48 @@ class HiveLocation extends HiveObject {
 
     return Location(name, transitionAt, transitionZone, timezones);
   }
+
+  @override
+  // ignore: avoid_equals_and_hash_code_on_mutable_classes
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    if (other is! HiveLocation) return false;
+
+    if (name != other.name) return false;
+
+    if (!identical(transitionAt, other.transitionAt) &&
+        transitionAt.length == other.transitionAt.length) {
+      final len = transitionAt.length;
+
+      for (var i = 0; i < len; i++) {
+        if (transitionAt[i] != other.transitionAt[i]) {
+          return false;
+        }
+      }
+    }
+
+    if (!identical(transitionZone, other.transitionZone) &&
+        transitionZone.length == other.transitionZone.length) {
+      final len = transitionZone.length;
+      for (var i = 0; i < len; i++) {
+        if (transitionZone[i] != other.transitionZone[i]) {
+          return false;
+        }
+      }
+    }
+
+    if (!identical(zones, other.zones) && zones.length == other.zones.length) {
+      final len = zones.length;
+      for (var i = 0; i < len; i++) {
+        if (zones[i] != other.zones[i]) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
 }
 
 extension HiveExt on Location {

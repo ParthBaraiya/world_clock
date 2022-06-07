@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../service/constants.dart';
-import '../service/theme/theme.dart';
-import '../service/timezone.dart';
-import '../values/world_clock_icons.dart';
+import '../../service/constants.dart';
+import '../../service/theme/theme.dart';
+import '../../service/timezone.dart';
+import '../../typedefs.dart';
+import '../../values/world_clock_icons.dart';
+
+part 'location_tile_backend.dart';
 
 class LocationTile extends StatefulWidget {
   final Location location;
-  final ValueChanged<bool> onBookmark;
+  final FavoriteChangeCallback onBookmark;
   final bool selected;
 
   const LocationTile({
@@ -21,23 +24,7 @@ class LocationTile extends StatefulWidget {
   State<LocationTile> createState() => _LocationTileState();
 }
 
-class _LocationTileState extends State<LocationTile> {
-  bool selected = false;
-
-  @override
-  void initState() {
-    super.initState();
-
-    selected = widget.selected;
-  }
-
-  @override
-  void didUpdateWidget(LocationTile oldWidget) {
-    super.didUpdateWidget(oldWidget);
-
-    selected = widget.selected;
-  }
-
+class _LocationTileState extends State<LocationTile> with LocationTileBackend {
   @override
   Widget build(BuildContext context) {
     final timezone = widget.location.currentTimeZone;
@@ -132,14 +119,7 @@ class _LocationTileState extends State<LocationTile> {
               ),
               const SizedBox(width: 20),
               InkWell(
-                onTap: () {
-                  if (mounted) {
-                    setState(() {
-                      selected = !selected;
-                    });
-                    widget.onBookmark(selected);
-                  }
-                },
+                onTap: _toggleFavorite,
                 child: Icon(
                   selected ? Icons.bookmark : Icons.bookmark_outline,
                 ),

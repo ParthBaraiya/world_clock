@@ -27,6 +27,14 @@ class HiveTimezone extends HiveObject {
 
   TimeZone get timezone =>
       TimeZone(offset, isDst: isDst, abbreviation: abbreviation);
+
+  @override
+  // ignore: avoid_equals_and_hash_code_on_mutable_classes
+  bool operator ==(Object other) =>
+      other is HiveTimezone &&
+      offset == other.offset &&
+      isDst == other.isDst &&
+      abbreviation == other.abbreviation;
 }
 
 extension HiveExt on TimeZone {
