@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../gen/assets.gen.dart';
 import '../service/constants.dart';
 import '../service/extension.dart';
 import '../service/navigation_service/navigation_service.dart';
 import '../service/theme/theme.dart';
-import '../values/images.dart';
 
 class Error404Page extends StatelessWidget {
   const Error404Page({Key? key}) : super(key: key);
@@ -12,33 +12,34 @@ class Error404Page extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
+
+    final aspectRatio = 860.13137 / 571.14799;
+    late double imageWidth;
+
+    if (screenSize.width > 1000) {
+      imageWidth = 700;
+    } else {
+      imageWidth = screenSize.width * 0.75;
+    }
+
+    final imageHeight = imageWidth / aspectRatio;
+
     return Scaffold(
       backgroundColor: CustomTheme.instance.backgroundColor,
       body: Stack(
         fit: StackFit.expand,
         alignment: Alignment.center,
         children: [
-          Opacity(
-            opacity: 0.1,
-            child: Image.asset(
-              Images.bg404,
-              fit: BoxFit.cover,
-              height: screenSize.height,
-              width: screenSize.width,
-            ),
-          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  '4:04',
-                  style: TextStyle(
-                      fontSize: 180,
-                      color: CustomTheme.instance.accentTextColor,
-                      fontWeight: FontWeight.bold),
+                Assets.vectors.pageNotFound.svg(
+                  width: imageWidth,
+                  height: imageHeight,
                 ),
+                const SizedBox(height: 100),
                 Text(
                   'Oops! It looks like we are lost in time.',
                   textAlign: TextAlign.center,
@@ -64,6 +65,7 @@ class Error404Page extends StatelessWidget {
                       onTap: () => context.goToRoute(route: RouteNames.home),
                       title: 'Home',
                     ),
+                    const SizedBox(width: 30),
                     _ActionText(
                       onTap: () =>
                           context.goToRoute(route: RouteNames.timezoneList),
@@ -96,23 +98,21 @@ class _ActionText extends StatefulWidget {
 
 class _ActionTextState extends State<_ActionText>
     with SingleTickerProviderStateMixin {
-  late final AnimationController _parent;
-  late final Animation<double> _animation;
+  late final AnimationController _animation;
 
   @override
   void initState() {
     super.initState();
 
-    _parent = AnimationController(
+    _animation = AnimationController(
       vsync: this,
       duration: Constants.defaultAnimationDuration,
     );
-    _animation = Tween<double>(begin: 1, end: 1.1).animate(_parent);
   }
 
   @override
   void dispose() {
-    _parent.dispose();
+    _animation.dispose();
 
     super.dispose();
   }
@@ -122,38 +122,69 @@ class _ActionTextState extends State<_ActionText>
     return ValueListenableBuilder<double>(
       valueListenable: _animation,
       builder: (_, value, child) {
-        return Transform.scale(
-          scale: value,
+        return CustomPaint(
           child: child,
+          painter: LinePainter(
+            listenable: _animation,
+            lineColor: CustomTheme.instance.accentTextColor,
+          ),
         );
       },
       child: TextButton(
         onPressed: widget.onTap,
         onHover: (isHover) {
           if (isHover)
-            _parent.forward();
+            _animation.forward();
           else
-            _parent.reverse();
+            _animation.reverse();
         },
         style: ButtonStyle(
-          overlayColor: MaterialStateProperty.all(
-              CustomTheme.instance.primaryTextColor.withOpacity(0.1)),
+          overlayColor: MaterialStateProperty.all(Colors.transparent),
           shape: MaterialStateProperty.all(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(50),
             ),
           ),
           padding: MaterialStateProperty.all(
-              const EdgeInsets.symmetric(horizontal: 20, vertical: 15)),
+            const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+          ),
         ),
         child: Text(
           widget.title,
           style: TextStyle(
-            fontSize: 25,
+            fontSize: 22,
             color: CustomTheme.instance.accentTextColor,
           ),
         ),
       ),
     );
   }
+}
+
+class LinePainter extends CustomPainter {
+  final Animation<double> listenable;
+  final Color lineColor;
+  LinePainter({required this.listenable, required this.lineColor})
+      : super(repaint: listenable);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final lineWidth = size.width * listenable.value;
+    final paint = Paint()
+      ..color = lineColor
+      ..style = PaintingStyle.fill;
+
+    final top = size.height - 4;
+
+    final rect = RRect.fromRectAndRadius(
+      Rect.fromLTRB(0, top, lineWidth, size.height),
+      const Radius.circular(20),
+    );
+
+    canvas.drawRRect(rect, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant LinePainter oldDelegate) =>
+      listenable != oldDelegate.listenable;
 }
