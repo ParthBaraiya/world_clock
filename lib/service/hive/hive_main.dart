@@ -18,22 +18,22 @@ class HiveMain {
     _favoriteLocationsBox = await Hive.openBox('favorites');
   }
 
-  late Box<HiveLocation> _favoriteLocationsBox;
+  late Box<HiveTimezone> _favoriteLocationsBox;
 
-  Box<HiveLocation> get favoriteLocationsBox => _favoriteLocationsBox;
+  Box<HiveTimezone> get favoriteLocationsBox => _favoriteLocationsBox;
 
-  void addFavorite(HiveLocation location) {
+  void addFavorite(HiveTimezone location) {
     if (_locationIndex(location) != -1) _favoriteLocationsBox.add(location);
   }
 
-  void removeFavorite(HiveLocation location) {
+  void removeFavorite(HiveTimezone location) {
     final index = _locationIndex(location);
     if (index != -1) {
       _favoriteLocationsBox.deleteAt(index);
     }
   }
 
-  int _locationIndex(HiveLocation location) {
+  int _locationIndex(HiveTimezone location) {
     final locations = _favoriteLocationsBox.values.toList();
     final length = locations.length;
 

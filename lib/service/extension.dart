@@ -1,7 +1,6 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import 'navigation_service/navigation_service.dart';
@@ -20,23 +19,29 @@ extension DateFormatExtension on DateTime {
 }
 
 extension NavigationExtension on BuildContext {
-  void goToRoute<T>({
-    required String route,
-    SerializableRouteArgument params = const EmptyRouteArgument(),
-    SerializableRouteArgument queryParams = const EmptyRouteArgument(),
-  }) =>
-      goNamed(
-        route,
-        params: params.toJson(),
-        queryParams: queryParams.toJson(),
-      );
+  // void goToRoute<T>({
+  //   required String route,
+  //   SerializableRouteArgument params = const EmptyRouteArgument(),
+  //   SerializableRouteArgument queryParams = const EmptyRouteArgument(),
+  // }) =>
+  //     goNamed(
+  //       route,
+  //       params: params.toJson(),
+  //       queryParams: queryParams.toJson(),
+  //     );
+  //
+  // void goToLocation({
+  //   required String url,
+  // }) =>
+  //     go(url);
+  //
 
-  void goToLocation({
-    required String url,
-  }) =>
-      go(url);
+  void previousPage() => Navigator.of(this).pop();
 
-  void previousPage() => pop();
+  void navigateTo({
+    required WorldClockRouteConfig routeConfig,
+  }) =>
+      NavigationService.instance.delegate.setRouteConfig(routeConfig);
 }
 
 extension SplitGradient on Color {

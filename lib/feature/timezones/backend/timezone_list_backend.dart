@@ -1,15 +1,19 @@
 part of '../timezones.dart';
 
 mixin TimeZoneListBackend on State<TimezoneList> {
+  late final ScrollController _controller;
+
   @override
   void initState() {
     super.initState();
 
+    _controller = ScrollController();
     TimeZoneUtility.i.initialized.addListener(_reload);
   }
 
   @override
   void dispose() {
+    _controller.dispose();
     TimeZoneUtility.i.initialized.removeListener(_reload);
     super.dispose();
   }
@@ -20,17 +24,17 @@ mixin TimeZoneListBackend on State<TimezoneList> {
     }
   }
 
-  bool _toggleFavorite(Location location, bool selected) {
+  bool _toggleFavorite(TimeZone timezone, bool selected) {
     if (selected) {
       try {
-        HiveMain.instance.addFavorite(location.hiveLocation);
+        HiveMain.instance.addFavorite(timezone.hiveTimezone);
         return true;
       } catch (e) {
         debugPrint(e.toString());
       }
     } else {
       try {
-        HiveMain.instance.removeFavorite(location.hiveLocation);
+        HiveMain.instance.removeFavorite(timezone.hiveTimezone);
         return true;
       } catch (e) {
         debugPrint(e.toString());

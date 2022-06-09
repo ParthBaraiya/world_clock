@@ -10,16 +10,17 @@ class TimezoneList extends StatefulWidget {
 class _TimezoneListState extends State<TimezoneList> with TimeZoneListBackend {
   @override
   Widget build(BuildContext context) {
-    final locations = TimeZoneUtility.i.locations.keys.toList();
+    final locations = TimeZoneUtility.i.locationMap.keys.toList();
 
     return TimeZoneUtility.i.initialized.value
         ? ListView.separated(
+            controller: _controller,
             itemBuilder: (_, index) {
-              return LocationTile(
-                location: getLocation(locations[index]),
+              return TimezoneTile(
+                timezone: locations[index],
                 selected: false,
-                onBookmark: (location, selected) async =>
-                    _toggleFavorite(location, selected),
+                onBookmark: (timezone, selected) async =>
+                    _toggleFavorite(timezone, selected),
               );
             },
             separatorBuilder: (_, __) => Container(
@@ -37,7 +38,7 @@ class _TimezoneListState extends State<TimezoneList> with TimeZoneListBackend {
               height: 0.2,
               width: double.infinity,
             ),
-            itemCount: TimeZoneUtility.i.locations.length,
+            itemCount: TimeZoneUtility.i.locationMap.length,
           )
         : Center(
             child: Column(

@@ -5,32 +5,6 @@ enum TimezoneTabType {
   list,
 }
 
-class TimezonesPage extends StatelessWidget {
-  final TimezoneTabType tabType;
-
-  const TimezonesPage({
-    Key? key,
-    this.tabType = TimezoneTabType.favorite,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final isMobile = screenWidth < HomeScreenBreakPoints.point800;
-
-    return isMobile
-        ? tabType == TimezoneTabType.favorite
-            ? const FavoritesPage()
-            : const TimezoneListPage()
-        : SplitWidget(
-            left: const HomePageClock(),
-            right: TimeZoneTab(
-              index: tabType.index,
-            ),
-          );
-  }
-}
-
 class TimeZoneTab extends StatefulWidget {
   const TimeZoneTab({
     Key? key,
@@ -76,9 +50,10 @@ class _TimeZoneTabState extends State<TimeZoneTab>
   }
 
   void _navigate() {
-    context.goNamed(_tabController.index == 0
-        ? RouteNames.favorites
-        : RouteNames.timezoneList);
+    context.navigateTo(
+        routeConfig: _tabController.index == 0
+            ? FavoritesPath.list()
+            : TimezonePath.list());
   }
 
   @override
@@ -105,20 +80,16 @@ class _TimeZoneTabState extends State<TimeZoneTab>
                   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                   child: Text('Favorite'),
                 ),
-                onTap: () {
-                  if (widget.index == 0) return;
-                  _tabController.animateTo(0);
-                },
+                onTap: () => NavigationService.instance.delegate
+                    .setRouteConfig(FavoritesPath.list()),
               ),
               InkWellButton(
                 child: const Padding(
                   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                   child: Text('Timezones'),
                 ),
-                onTap: () {
-                  if (widget.index == 1) return;
-                  _tabController.animateTo(1);
-                },
+                onTap: () => NavigationService.instance.delegate
+                    .setRouteConfig(TimezonePath.list()),
               ),
             ],
           ),

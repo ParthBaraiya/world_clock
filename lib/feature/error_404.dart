@@ -62,13 +62,15 @@ class Error404Page extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     _ActionText(
-                      onTap: () => context.goToRoute(route: RouteNames.home),
+                      onTap: () => context.navigateTo(
+                        routeConfig: HomePagePath(),
+                      ),
                       title: 'Home',
                     ),
                     const SizedBox(width: 30),
                     _ActionText(
                       onTap: () =>
-                          context.goToRoute(route: RouteNames.timezoneList),
+                          context.navigateTo(routeConfig: TimezonePath.list()),
                       title: 'Timezones',
                     ),
                   ],

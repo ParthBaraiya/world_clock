@@ -8,27 +8,29 @@ import '../../values/world_clock_icons.dart';
 
 part 'location_tile_backend.dart';
 
-class LocationTile extends StatefulWidget {
-  final Location location;
+class TimezoneTile extends StatefulWidget {
+  final TimeZone timezone;
   final FavoriteChangeCallback onBookmark;
   final bool selected;
 
-  const LocationTile({
+  const TimezoneTile({
     Key? key,
-    required this.location,
+    required this.timezone,
     required this.onBookmark,
     required this.selected,
   }) : super(key: key);
 
   @override
-  State<LocationTile> createState() => _LocationTileState();
+  State<TimezoneTile> createState() => _TimezoneTileState();
 }
 
-class _LocationTileState extends State<LocationTile> with LocationTileBackend {
+class _TimezoneTileState extends State<TimezoneTile> with LocationTileBackend {
   @override
   Widget build(BuildContext context) {
-    final timezone = widget.location.currentTimeZone;
-    final now = TZDateTime.now(widget.location);
+    final timezone = widget.timezone;
+    final location = TimeZoneUtility.i.locationMap[timezone]![0];
+    final now = TZDateTime.now(location);
+
     final offset = timezone.offset / (1000 * 3600);
 
     return Padding(
@@ -66,7 +68,7 @@ class _LocationTileState extends State<LocationTile> with LocationTileBackend {
           );
 
           final locationWidget = Text(
-            widget.location.name,
+            location.name,
             style: CustomTheme.instance.timezoneSubTitleAccentStyle,
             textAlign: TextAlign.end,
             overflow: TextOverflow.ellipsis,

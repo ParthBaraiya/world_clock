@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../../gen/assets.gen.dart';
-import '../../models/hive_location/hive_location.dart';
+import '../../models/hive_timezone/hive_timezone.dart';
 import '../../service/extension.dart';
 import '../../service/hive/hive_main.dart';
 import '../../service/theme/theme.dart';

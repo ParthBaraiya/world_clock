@@ -39,25 +39,32 @@ class SplitWidget extends StatelessWidget {
   }
 }
 
-class _SplitScaffold extends Scaffold {
-  _SplitScaffold({
+class _SplitScaffold extends StatelessWidget {
+  const _SplitScaffold({
     Key? key,
-    required List<Widget> children,
-  }) : super(
-          key: key,
-          backgroundColor: CustomTheme.instance.backgroundColor,
-          extendBody: true,
-          extendBodyBehindAppBar: true,
-          body: SafeArea(
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: CustomTheme.instance.accentTextColor
-                    .createSplitGradient(bottom: 1, top: -1),
-              ),
-              child: Row(
-                children: children,
-              ),
-            ),
+    required this.children,
+  }) : super(key: key);
+
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      key: key,
+      backgroundColor: CustomTheme.instance.backgroundColor,
+      extendBody: true,
+      extendBodyBehindAppBar: true,
+      body: SafeArea(
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            gradient: CustomTheme.instance.accentTextColor
+                .createSplitGradient(bottom: 1, top: -1),
           ),
-        );
+          child: Row(
+            children: children,
+          ),
+        ),
+      ),
+    );
+  }
 }

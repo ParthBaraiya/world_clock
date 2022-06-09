@@ -14,23 +14,30 @@ class TimeZoneUtility {
   // Gives the status whether timezone utility is initialized or not.
   final ValueNotifier<bool> initialized = ValueNotifier(false);
 
-  final _locations = <String, Location>{};
+  final _locationMap = <TimeZone, List<Location>>{};
 
-  Map<String, Location> get locations => _locations;
+  Map<TimeZone, List<Location>> get locationMap => _locationMap;
 
   TimeZone get utc => TimeZone.UTC;
 
   Future<void> initialize() async {
     initializeTimeZones();
 
-    timeZoneDatabase.locations.forEach((key, value) {
-      if (!(value.currentTimeZone.abbreviation[0] == '+' ||
-          value.currentTimeZone.abbreviation[0] == '-')) {
-        _locations.addAll({
-          key: value,
+    final locations = timeZoneDatabase.locations.values.toList();
+    final length = locations.length;
+
+    for (var i = 0; i < length; i++) {
+      final location = locations[i];
+      final timezone = location.currentTimeZone;
+
+      if (_locationMap[timezone] == null) {
+        _locationMap.addAll({
+          timezone: [location],
         });
+      } else {
+        _locationMap[timezone]!.add(location);
       }
-    });
+    }
 
     initialized.value = true;
   }

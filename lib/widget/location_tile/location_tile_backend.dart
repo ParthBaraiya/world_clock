@@ -1,6 +1,6 @@
 part of 'location_tile.dart';
 
-mixin LocationTileBackend on State<LocationTile> {
+mixin LocationTileBackend on State<TimezoneTile> {
   bool selected = false;
   bool saving = false;
 
@@ -12,7 +12,7 @@ mixin LocationTileBackend on State<LocationTile> {
   }
 
   @override
-  void didUpdateWidget(LocationTile oldWidget) {
+  void didUpdateWidget(TimezoneTile oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     selected = widget.selected;
@@ -25,7 +25,7 @@ mixin LocationTileBackend on State<LocationTile> {
       });
     }
 
-    final success = await widget.onBookmark(widget.location, !selected);
+    final success = await widget.onBookmark(widget.timezone, !selected);
 
     if (mounted) {
       setState(() {

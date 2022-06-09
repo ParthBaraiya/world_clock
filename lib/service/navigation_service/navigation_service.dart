@@ -1,75 +1,28 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../feature/error_404.dart';
-import '../../feature/favorites/favorite.dart';
-import '../../feature/home/home.dart';
-import '../../feature/responsive_home_page.dart';
-import '../../feature/timezones/timezones.dart';
+import '../timezone.dart';
+import 'world_clock_router_delegate.dart';
 
+part 'no_transition_route.dart';
 part 'route_arguments.dart';
+part 'route_info_parser.dart';
+part 'world_clock_pages.dart';
+part 'world_clock_path.dart';
 
 class NavigationService {
   static final instance = NavigationService._();
   NavigationService._();
 
-  final router = GoRouter(
-    urlPathStrategy: UrlPathStrategy.path,
-    routes: [
-      GoRoute(
-        name: RouteNames.home,
-        path: '/',
-        pageBuilder: (_, __) => _getPage(
-          child: const ResponsiveHomePage(
-            mobilePage: HomePage(),
-            index: 0,
-          ),
-        ),
-        routes: [
-          GoRoute(
-            name: RouteNames.timezoneList,
-            path: 'timezones',
-            pageBuilder: (_, __) => _getPage(
-              child: const ResponsiveHomePage(
-                mobilePage: TimezoneListPage(),
-                index: 1,
-              ),
-            ),
-          ),
-          GoRoute(
-            name: RouteNames.favorites,
-            path: 'favorites',
-            pageBuilder: (_, __) => _getPage(
-              child: const ResponsiveHomePage(
-                mobilePage: FavoritesPage(),
-                index: 0,
-              ),
-            ),
-          ),
-        ],
-      ),
-    ],
-    redirect: (state) {
-      if (state.location == '/' && kIsWeb) {
-        return '/${RouteNames.favorites}';
-      }
+  final WorldClockRouterDelegate _delegate = WorldClockRouterDelegate();
+  final WorldClockRouteInformationParser _informationParser =
+      WorldClockRouteInformationParser();
 
-      return null;
-    },
-    errorBuilder: (_, state) {
-      // TODO: improve this...
-      return const Error404Page();
-    },
-  );
+  WorldClockRouterDelegate get delegate => _delegate;
+  WorldClockRouteInformationParser get routeInformationParser =>
+      _informationParser;
 
-  static Page<void> _getPage({required Widget child}) {
-    return NoTransitionPage(child: child);
-  }
-
-  RouterDelegate<Object> get delegate => router.routerDelegate;
-  RouteInformationParser<Object> get routeInformationParser =>
-      router.routeInformationParser;
+  GlobalKey<NavigatorState> get navigatorKey => _delegate.navigatorKey;
 }
 
 class RouteNames {

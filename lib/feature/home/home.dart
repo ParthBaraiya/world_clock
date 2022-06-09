@@ -1,7 +1,8 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+
+// import 'package:go_router/go_router.dart';
 
 import '../../service/extension.dart';
 import '../../service/navigation_service/navigation_service.dart';
@@ -56,8 +57,8 @@ class _HomePageAppBar extends StatelessWidget {
             ),
           ),
           InkWellButton(
-            onTap: () => context.goToRoute(
-              route: RouteNames.timezoneList,
+            onTap: () => context.navigateTo(
+              routeConfig: TimezonePath.list(),
             ),
             radius: BorderRadius.circular(100.0),
             hoverColor: CustomTheme.instance.primaryTextColor.withOpacity(0.2),
