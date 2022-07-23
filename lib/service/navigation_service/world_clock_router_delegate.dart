@@ -11,7 +11,6 @@ class WorldClockRouterDelegate extends RouterDelegate<WorldClockRouteConfig>
     with
         ChangeNotifier,
         PopNavigatorRouterDelegateMixin<WorldClockRouteConfig> {
-
   @override
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -20,7 +19,6 @@ class WorldClockRouterDelegate extends RouterDelegate<WorldClockRouteConfig>
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    debugPrint('Screen width: $width');
     final pages = <Page>[];
 
     Page _getPage(Widget child) => child.page(
@@ -31,18 +29,15 @@ class WorldClockRouterDelegate extends RouterDelegate<WorldClockRouteConfig>
         );
 
     if (_routeConfig is InvalidPath) {
-      debugPrint('Invalid page...');
       pages.add(_getPage(const Error404Page()));
     } else {
       if (width < 800) {
-        debugPrint('Mobile Home page...');
         pages.add(_getPage(const HomePage()));
       } else if (_routeConfig is HomePagePath) {
-        debugPrint('Web Home page...');
         pages.add(
           _getPage(
-            const ResponsiveHomePage(
-              mobilePage: TimezoneListPage(),
+            ResponsiveHomePage(
+              mobilePage: const TimezoneListPage(),
               index: 0,
             ),
           ),
@@ -50,38 +45,36 @@ class WorldClockRouterDelegate extends RouterDelegate<WorldClockRouteConfig>
       }
 
       if (_routeConfig is FavoritesPath) {
-        debugPrint('Favorites Path: $_routeConfig');
+        final path = _routeConfig as FavoritesPath;
         pages.add(
           _getPage(
-            (_routeConfig as FavoritesPath).timezone == null
-                ? const ResponsiveHomePage(
-                    mobilePage: TimezoneListPage(),
+            path.timezone == null
+                ? ResponsiveHomePage(
+                    mobilePage: const TimezoneListPage(),
                     index: 0,
                   )
                 : TimezoneDetails(
-                    timeZone: (_routeConfig as FavoritesPath).timezone!,
+                    timeZone: path.timezone!,
                   ),
           ),
         );
       } else if (_routeConfig is TimezonePath) {
-        debugPrint('TimeZone Path: $_routeConfig');
+        final path = _routeConfig as TimezonePath;
 
         pages.add(
           _getPage(
-            (_routeConfig as TimezonePath).timezone == null
-                ? const ResponsiveHomePage(
-                    mobilePage: TimezoneListPage(),
+            path.timezone == null
+                ? ResponsiveHomePage(
+                    mobilePage: const TimezoneListPage(),
                     index: 1,
                   )
                 : TimezoneDetails(
-                    timeZone: (_routeConfig as TimezonePath).timezone!,
+                    timeZone: path.timezone!,
                   ),
           ),
         );
       }
     }
-
-    print('$pages');
 
     return Navigator(
       key: navigatorKey,

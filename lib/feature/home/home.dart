@@ -7,18 +7,16 @@ import 'package:flutter/material.dart';
 import '../../service/extension.dart';
 import '../../service/navigation_service/navigation_service.dart';
 import '../../service/theme/theme.dart';
-import '../../values/breakpoints.dart';
 import '../../values/world_clock_icons.dart';
 import '../../widget/buttons.dart';
 import '../../widget/clock/clock.dart';
 import '../../widget/day_info.dart';
-import '../../widget/responsive_split_widget.dart';
+import '../../widget/decorations.dart';
 import '../../widget/time_zone_info.dart';
 import '../../widget/timer_indicator.dart';
 import '../favorites/favorite.dart';
 import '../timezones/timezones.dart';
 
-part 'custom_indicator.dart';
 part 'home_page_clock.dart';
 part 'tab_bar.dart';
 

@@ -68,7 +68,7 @@ class _TimeZoneTabState extends State<TimeZoneTab>
             controller: _tabController,
             isScrollable: true,
             indicatorSize: TabBarIndicatorSize.label,
-            indicator: _CustomUnderlinedIndicator(
+            indicator: RoundedUnderlinedIndicator(
               borderSide: BorderSide(
                 width: 5,
                 color: CustomTheme.instance.accentTextColor,

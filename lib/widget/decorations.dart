@@ -1,7 +1,7 @@
-part of 'home.dart';
+import 'package:flutter/material.dart';
 
-class _CustomUnderlinedIndicator extends Decoration {
-  const _CustomUnderlinedIndicator({
+class RoundedUnderlinedIndicator extends Decoration {
+  const RoundedUnderlinedIndicator({
     this.borderSide = const BorderSide(width: 2.0, color: Colors.white),
     this.insets = EdgeInsets.zero,
   });
@@ -11,8 +11,8 @@ class _CustomUnderlinedIndicator extends Decoration {
 
   @override
   Decoration? lerpFrom(Decoration? a, double t) {
-    if (a is _CustomUnderlinedIndicator) {
-      return _CustomUnderlinedIndicator(
+    if (a is RoundedUnderlinedIndicator) {
+      return RoundedUnderlinedIndicator(
         borderSide: BorderSide.lerp(a.borderSide, borderSide, t),
         insets: EdgeInsetsGeometry.lerp(a.insets, insets, t)!,
       );
@@ -22,8 +22,8 @@ class _CustomUnderlinedIndicator extends Decoration {
 
   @override
   Decoration? lerpTo(Decoration? b, double t) {
-    if (b is _CustomUnderlinedIndicator) {
-      return _CustomUnderlinedIndicator(
+    if (b is RoundedUnderlinedIndicator) {
+      return RoundedUnderlinedIndicator(
         borderSide: BorderSide.lerp(borderSide, b.borderSide, t),
         insets: EdgeInsetsGeometry.lerp(insets, b.insets, t)!,
       );
@@ -56,7 +56,7 @@ class _UnderlinePainter extends BoxPainter {
   _UnderlinePainter(this.decoration, VoidCallback? onChanged)
       : super(onChanged);
 
-  final _CustomUnderlinedIndicator decoration;
+  final RoundedUnderlinedIndicator decoration;
 
   @override
   void paint(Canvas canvas, Offset offset, ImageConfiguration configuration) {
