@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 class WorldClock {
   WorldClock._();
 
-  static const _fontFamily = 'WorldClock';
+  static const _fontFamily = 'World Clock';
 
   static const IconData chevron_left =
       IconData(0xe800, fontFamily: _fontFamily);

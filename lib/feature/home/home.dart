@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../service/theme/theme.dart';
 import '../../widget/clock/clock.dart';
 import '../../widget/custom_scaffolds.dart';
+import '../../widget/github_thumb.dart';
 
 part 'backend/home_backend.dart';
 
@@ -17,11 +18,13 @@ class _HomePageState extends State<HomePage> with HomeBackend {
   @override
   Widget build(BuildContext context) {
     return GradientScaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(30.0),
-        child: Stack(
-          children: [
-            Column(
+      body: Stack(
+        alignment: Alignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   'World Clock',
@@ -39,9 +42,14 @@ class _HomePageState extends State<HomePage> with HomeBackend {
                 ),
               ],
             ),
-            // ClipPath()
-          ],
-        ),
+          ),
+          const Align(
+            alignment: Alignment.topRight,
+            child: GithubThumb(
+              size: 100,
+            ),
+          )
+        ],
       ),
     );
   }

@@ -23,13 +23,11 @@ class Clock extends StatelessWidget {
     return SizedBox.square(
       dimension: radius,
       child: FittedBox(
-        child: SizedBox.square(
-          dimension: radius,
-          child: CustomPaint(
-            willChange: true,
-            painter: ClockMarkings(),
-            foregroundPainter: ClockHands(),
-          ),
+        child: CustomPaint(
+          willChange: true,
+          size: Size.square(radius),
+          painter: ClockMarkings(),
+          foregroundPainter: ClockHands(),
         ),
       ),
     );

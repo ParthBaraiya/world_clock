@@ -12,13 +12,40 @@ class GithubThumb extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: size,
-      width: size,
-      decoration: BoxDecoration(
-        color: Color(0xff07002D),
+    return SizedBox.square(
+      dimension: size,
+      child: const CustomPaint(
+        painter: _TrianglePainter(color: Color(0xff07002D)),
+        child: Align(
+          alignment: Alignment(0.6, -0.5),
+          child: Icon(
+            WorldClock.github_fill,
+            size: 35,
+          ),
+        ),
       ),
-      child: Icon(WorldClock.github_fill),
     );
   }
+}
+
+class _TrianglePainter extends CustomPainter {
+  const _TrianglePainter({
+    required this.color,
+  });
+
+  final Color color;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final trianglePath = Path()
+      ..moveTo(0, 0)
+      ..lineTo(size.width, 0)
+      ..lineTo(size.width, size.height)
+      ..close();
+
+    canvas.drawPath(trianglePath, Paint()..color = color);
+  }
+
+  @override
+  bool shouldRepaint(covariant _TrianglePainter oldDelegate) => false;
 }
