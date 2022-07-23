@@ -31,18 +31,9 @@ class WorldClockRouterDelegate extends RouterDelegate<WorldClockRouteConfig>
     if (_routeConfig is InvalidPath) {
       pages.add(_getPage(const Error404Page()));
     } else {
-      if (width < 800) {
-        pages.add(_getPage(const HomePage()));
-      } else if (_routeConfig is HomePagePath) {
-        pages.add(
-          _getPage(
-            ResponsiveHomePage(
-              mobilePage: const TimezoneListPage(),
-              index: 0,
-            ),
-          ),
-        );
-      }
+      pages.add(
+        _getPage(const HomePage()),
+      );
 
       if (_routeConfig is FavoritesPath) {
         final path = _routeConfig as FavoritesPath;

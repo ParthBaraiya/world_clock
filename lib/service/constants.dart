@@ -1,3 +1,4 @@
+import 'package:flutter/animation.dart';
 import 'package:intl/intl.dart';
 
 class Constants {
@@ -8,5 +9,7 @@ class Constants {
   static final DateFormat hhMMa = DateFormat('hh : mm a');
   static final DateFormat wDdMm = DateFormat('EEE, dd/MM');
 
-  static const defaultAnimationDuration = Duration(milliseconds: 200);
+  static const defaultAnimationDuration = Duration(milliseconds: 300);
+  static const duration800 = Duration(milliseconds: 800);
+  static const curveGentle = Cubic(.7, 1.02, .84, .99);
 }

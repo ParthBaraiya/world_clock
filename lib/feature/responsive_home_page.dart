@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../values/breakpoints.dart';
 import '../widget/responsive_split_widget.dart';
 import '../widget/responsive_widgets/breakpoint_page.dart';
-import 'home/home.dart';
+import 'home/home_old.dart';
 
 class ResponsiveHomePage extends TwoBreakPage {
   ResponsiveHomePage({

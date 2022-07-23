@@ -1,4 +1,4 @@
-part of 'home.dart';
+part of 'home_old.dart';
 
 class HomePageClock extends StatelessWidget {
   const HomePageClock({

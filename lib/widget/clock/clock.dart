@@ -3,6 +3,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
+import '../../service/constants.dart';
 import '../../service/extension.dart';
 import '../../service/theme/theme.dart';
 import '../../service/timer.dart';
@@ -19,12 +20,47 @@ class Clock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox.fromSize(
-      size: Size.square(radius),
-      child: CustomPaint(
-        willChange: true,
-        painter: ClockMarkings(),
-        foregroundPainter: ClockHands(),
+    return SizedBox.square(
+      dimension: radius,
+      child: FittedBox(
+        child: SizedBox.square(
+          dimension: radius,
+          child: CustomPaint(
+            willChange: true,
+            painter: ClockMarkings(),
+            foregroundPainter: ClockHands(),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class AnimatedClock extends StatelessWidget {
+  const AnimatedClock({
+    Key? key,
+    required this.radius,
+    this.offset = Offset.zero,
+    this.opacity = 1,
+  }) : super(key: key);
+
+  final double radius;
+  final double opacity;
+  final Offset offset;
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedSlide(
+      curve: Constants.curveGentle,
+      offset: offset,
+      duration: Constants.duration800,
+      child: AnimatedOpacity(
+        opacity: opacity,
+        curve: Constants.curveGentle,
+        duration: Constants.duration800,
+        child: Clock(
+          radius: radius,
+        ),
       ),
     );
   }

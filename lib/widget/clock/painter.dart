@@ -151,14 +151,16 @@ class ClockHands extends CustomPainter {
     final paint = Paint()..strokeCap = ui.StrokeCap.round;
 
     canvas
+      // Draws hour thumb
       ..drawLine(
         center,
         Offset(radius + (hourHeight * math.sin(hour * _hourAngle)),
             radius - (hourHeight * math.cos(hour * _hourAngle))),
         paint
           ..color = CustomTheme.instance.accentTextColor
-          ..strokeWidth = radius * 0.045,
+          ..strokeWidth = radius * 0.06,
       )
+      // Draws minute thumb
       ..drawLine(
         center,
         Offset(radius + (minuteHeight * math.sin(minute * _minuteAngle)),
@@ -167,6 +169,7 @@ class ClockHands extends CustomPainter {
           ..color = CustomTheme.instance.primaryTextColor
           ..strokeWidth = radius * 0.03,
       )
+      // Draws seconds thumb
       ..drawLine(
         center,
         Offset(radius + (secondHeight * math.sin(second * _secondAngle)),

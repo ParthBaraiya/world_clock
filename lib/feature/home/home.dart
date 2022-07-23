@@ -1,85 +1,47 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 
-// import 'package:go_router/go_router.dart';
-
-import '../../service/extension.dart';
-import '../../service/navigation_service/navigation_service.dart';
 import '../../service/theme/theme.dart';
-import '../../values/world_clock_icons.dart';
-import '../../widget/buttons.dart';
 import '../../widget/clock/clock.dart';
-import '../../widget/day_info.dart';
-import '../../widget/decorations.dart';
-import '../../widget/time_zone_info.dart';
-import '../../widget/timer_indicator.dart';
-import '../favorites/favorite.dart';
-import '../timezones/timezones.dart';
+import '../../widget/custom_scaffolds.dart';
 
-part 'home_page_clock.dart';
-part 'tab_bar.dart';
+part 'backend/home_backend.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          const _HomePageAppBar(),
-        ],
-      ),
-    );
-  }
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageAppBar extends StatelessWidget {
-  const _HomePageAppBar({Key? key}) : super(key: key);
-
+class _HomePageState extends State<HomePage> with HomeBackend {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-          top: 20.0, left: 30.0, right: 10.0, bottom: 50.0),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              'World Clock',
-              style: CustomTheme.instance.titleStyle.copyWith(
-                fontSize: 40,
-              ),
-              textAlign: TextAlign.start,
+    return GradientScaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(30.0),
+        child: Stack(
+          children: [
+            Column(
+              children: [
+                Text(
+                  'World Clock',
+                  style: CustomTheme.instance.titleStyle.copyWith(
+                    fontSize: 50,
+                  ),
+                  textAlign: TextAlign.start,
+                ),
+                Expanded(
+                  child: AnimatedClock(
+                    radius: 400,
+                    opacity: _clockOpacity,
+                    offset: _clockOffset,
+                  ),
+                ),
+              ],
             ),
-          ),
-          InkWellButton(
-            onTap: () => context.navigateTo(
-              routeConfig: TimezonePath.list(),
-            ),
-            radius: BorderRadius.circular(100.0),
-            hoverColor: CustomTheme.instance.primaryTextColor.withOpacity(0.2),
-            child: Icon(
-              WorldClock.more,
-              size: 30,
-              color: CustomTheme.instance.primaryTextColor,
-            ),
-          ),
-          const SizedBox(
-            width: 15,
-          ),
-          InkWellButton(
-            onTap: () {}, // TODO: Add callback
-            radius: BorderRadius.circular(100.0),
-            hoverColor: CustomTheme.instance.primaryTextColor.withOpacity(0.2),
-            child: Icon(
-              WorldClock.exchange,
-              size: 30,
-              color: CustomTheme.instance.primaryTextColor,
-            ),
-          ),
-        ],
+            // ClipPath()
+          ],
+        ),
       ),
     );
   }
