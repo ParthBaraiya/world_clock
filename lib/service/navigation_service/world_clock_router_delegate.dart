@@ -11,6 +11,7 @@ class WorldClockRouterDelegate extends RouterDelegate<WorldClockRouteConfig>
     with
         ChangeNotifier,
         PopNavigatorRouterDelegateMixin<WorldClockRouteConfig> {
+
   @override
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -20,14 +21,14 @@ class WorldClockRouterDelegate extends RouterDelegate<WorldClockRouteConfig>
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     debugPrint('Screen width: $width');
+    final pages = <Page>[];
 
     Page _getPage(Widget child) => child.page(
-          key: ValueKey(_routeConfig.getPath()),
+          // Defines when a page can update.
+          key: ValueKey(pages.length),
           routeName: _routeConfig.getPath(),
           config: _routeConfig,
         );
-
-    final pages = <Page>[];
 
     if (_routeConfig is InvalidPath) {
       debugPrint('Invalid page...');

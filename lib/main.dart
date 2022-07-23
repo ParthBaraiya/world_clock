@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
 import 'service/hive/hive_main.dart';
 import 'service/navigation_service/navigation_service.dart';
@@ -10,6 +11,8 @@ import 'service/theme/theme.dart';
 import 'service/timezone.dart';
 
 Future<void> main() async {
+  setUrlStrategy(PathUrlStrategy());
+
   WidgetsFlutterBinding.ensureInitialized();
 
   await SPService.i.initialize();
