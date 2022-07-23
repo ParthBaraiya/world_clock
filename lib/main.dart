@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
 import 'service/hive/hive_main.dart';
@@ -64,6 +66,15 @@ class MyApp extends StatelessWidget {
       ),
       routerDelegate: NavigationService.instance.delegate,
       routeInformationParser: NavigationService.instance.routeInformationParser,
+      localizationsDelegates: [
+        AppLocalizations.delegate, // Add this line
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('en', ''), // English, no country code
+      ],
     );
   }
 }

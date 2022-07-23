@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../service/theme/theme.dart';
 import '../../widget/clock/clock.dart';
@@ -27,7 +28,7 @@ class _HomePageState extends State<HomePage> with HomeBackend {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'World Clock',
+                  AppLocalizations.of(context)!.worldClock,
                   style: CustomTheme.instance.titleStyle.copyWith(
                     fontSize: 50,
                   ),
