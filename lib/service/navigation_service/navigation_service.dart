@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import '../timezone.dart';
 import 'world_clock_router_delegate.dart';
 
-part 'no_transition_route.dart';
+part 'no_transition_page.dart';
 part 'route_arguments.dart';
 part 'route_info_parser.dart';
-part 'world_clock_pages.dart';
 part 'world_clock_path.dart';
 
 class NavigationService {

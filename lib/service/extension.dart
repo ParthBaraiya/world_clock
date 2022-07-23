@@ -5,6 +5,13 @@ import 'package:intl/intl.dart';
 
 import 'navigation_service/navigation_service.dart';
 
+double get _screenHeight =>
+    WidgetsBinding.instance.window.physicalSize.height /
+    WidgetsBinding.instance.window.devicePixelRatio;
+double get _screenWidth =>
+    WidgetsBinding.instance.window.physicalSize.width /
+    WidgetsBinding.instance.window.devicePixelRatio;
+
 extension ComparisonExtension on Size {
   double get max => math.max(width, height);
 
@@ -19,29 +26,14 @@ extension DateFormatExtension on DateTime {
 }
 
 extension NavigationExtension on BuildContext {
-  // void goToRoute<T>({
-  //   required String route,
-  //   SerializableRouteArgument params = const EmptyRouteArgument(),
-  //   SerializableRouteArgument queryParams = const EmptyRouteArgument(),
-  // }) =>
-  //     goNamed(
-  //       route,
-  //       params: params.toJson(),
-  //       queryParams: queryParams.toJson(),
-  //     );
-  //
-  // void goToLocation({
-  //   required String url,
-  // }) =>
-  //     go(url);
-  //
-
   void previousPage() => Navigator.of(this).pop();
 
   void navigateTo({
     required WorldClockRouteConfig routeConfig,
   }) =>
       NavigationService.instance.delegate.setRouteConfig(routeConfig);
+
+  Size get screenSize => MediaQuery.of(this).size;
 }
 
 extension SplitGradient on Color {
@@ -58,4 +50,9 @@ extension SplitGradient on Color {
         begin: Alignment(0, top),
         end: Alignment(0, bottom),
       );
+}
+
+extension ResponsiveSizesExtension on num {
+  double get vh => _screenHeight * (this / 100);
+  double get vw => _screenWidth * (this / 100);
 }

@@ -3,6 +3,7 @@ part of 'location_tile.dart';
 mixin LocationTileBackend on State<TimezoneTile> {
   bool selected = false;
   bool saving = false;
+  bool isExpanded = false;
 
   @override
   void initState() {
@@ -16,6 +17,13 @@ mixin LocationTileBackend on State<TimezoneTile> {
     super.didUpdateWidget(oldWidget);
 
     selected = widget.selected;
+  }
+
+  void _toggleExpanded() {
+    isExpanded = !isExpanded;
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   Future<void> _toggleFavorite() async {

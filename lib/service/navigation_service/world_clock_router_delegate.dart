@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../../feature/error_404.dart';
+import '../../feature/favorites/favorite.dart';
 import '../../feature/home/home.dart';
 import '../../feature/responsive_home_page.dart';
 import '../../feature/timezones/timezone_details.dart';
 import '../../feature/timezones/timezones.dart';
+import '../../values/breakpoints.dart';
 import 'navigation_service.dart';
 
 class WorldClockRouterDelegate extends RouterDelegate<WorldClockRouteConfig>
@@ -31,13 +33,13 @@ class WorldClockRouterDelegate extends RouterDelegate<WorldClockRouteConfig>
     if (_routeConfig is InvalidPath) {
       pages.add(_getPage(const Error404Page()));
     } else {
-      if (width < 800) {
+      if (width < HomeScreenBreakPoints.point800) {
         pages.add(_getPage(const HomePage()));
       } else if (_routeConfig is HomePagePath) {
         pages.add(
           _getPage(
-            ResponsiveHomePage(
-              mobilePage: const TimezoneListPage(),
+            const WebHomePage(
+              widget: TimezoneListPage(),
               index: 0,
             ),
           ),
@@ -49,8 +51,8 @@ class WorldClockRouterDelegate extends RouterDelegate<WorldClockRouteConfig>
         pages.add(
           _getPage(
             path.timezone == null
-                ? ResponsiveHomePage(
-                    mobilePage: const TimezoneListPage(),
+                ? const WebHomePage(
+                    widget: TimezoneListPage(),
                     index: 0,
                   )
                 : TimezoneDetails(
@@ -64,8 +66,8 @@ class WorldClockRouterDelegate extends RouterDelegate<WorldClockRouteConfig>
         pages.add(
           _getPage(
             path.timezone == null
-                ? ResponsiveHomePage(
-                    mobilePage: const TimezoneListPage(),
+                ? const WebHomePage(
+                    widget: TimezoneListPage(),
                     index: 1,
                   )
                 : TimezoneDetails(
@@ -86,7 +88,12 @@ class WorldClockRouterDelegate extends RouterDelegate<WorldClockRouteConfig>
           return false;
         }
 
-        _routeConfig = route.settings.arguments! as WorldClockRouteConfig;
+        if (route.settings.arguments is TimezonePath ||
+            route.settings.arguments is FavoritesPage) {
+          _routeConfig = HomePagePath();
+        } else {
+          _routeConfig = route.settings.arguments! as WorldClockRouteConfig;
+        }
         notifyListeners();
 
         return true;

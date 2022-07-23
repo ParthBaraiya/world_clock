@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 part 'favorite_page.dart';
 
 class Favorites extends StatefulWidget {
-  const Favorites({Key? key}) : super(key: key);
+  const Favorites({super.key});
 
   @override
   State<Favorites> createState() => _FavoritesState();

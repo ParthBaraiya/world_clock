@@ -46,7 +46,7 @@ class ClockMarkings extends CustomPainter {
 
   void _drawNumbersPointer(double radius, Canvas canvas) {
     final style = TextStyle(
-      fontSize: radius * 0.1,
+      fontSize: radius * 0.15,
       color: Colors.white,
     );
 
@@ -76,7 +76,7 @@ class ClockMarkings extends CustomPainter {
       textDirection: TextDirection.ltr,
     )..layout(
         minWidth: 10,
-        maxWidth: 30,
+        maxWidth: 100,
       );
 
     return textPainter;
