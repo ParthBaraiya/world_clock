@@ -10,6 +10,7 @@ class TimezoneList extends StatefulWidget {
 class _TimezoneListState extends State<TimezoneList> with TimeZoneListBackend {
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme;
     final locations = TimeZoneUtility.i.locationMap.keys.toList();
 
     return TimeZoneUtility.i.initialized.value
@@ -28,7 +29,7 @@ class _TimezoneListState extends State<TimezoneList> with TimeZoneListBackend {
                 gradient: LinearGradient(
                   colors: [
                     Colors.transparent,
-                    CustomTheme.instance.accentTextColor,
+                    theme.accentTextColor,
                     Colors.transparent,
                   ],
                   begin: const Alignment(-2.2, 0),
@@ -48,7 +49,7 @@ class _TimezoneListState extends State<TimezoneList> with TimeZoneListBackend {
                   alignment: Alignment.center,
                   children: [
                     SpinKitRipple(
-                      color: CustomTheme.instance.accentTextColor,
+                      color: theme.accentTextColor,
                       size: 300,
                     ),
                     Assets.vectors.locationSearch.svg(height: 200),
@@ -59,7 +60,7 @@ class _TimezoneListState extends State<TimezoneList> with TimeZoneListBackend {
                 ),
                 Text(
                   'Loading time zone list...',
-                  style: CustomTheme.instance.timezoneTitleAccentStyle,
+                  style: theme.timezoneTitleAccentStyle,
                 ),
               ],
             ),

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../../service/theme/theme.dart';
+import '../../service/extension.dart';
+import '../../theme/theme.dart';
 import '../../widget/clock/clock.dart';
 import '../../widget/custom_scaffolds.dart';
 import '../../widget/github_thumb.dart';
@@ -29,7 +30,7 @@ class _HomePageState extends State<HomePage> with HomeBackend {
               children: [
                 Text(
                   AppLocalizations.of(context)!.worldClock,
-                  style: CustomTheme.instance.titleStyle.copyWith(
+                  style: theme.titleStyle.copyWith(
                     fontSize: 50,
                   ),
                   textAlign: TextAlign.start,

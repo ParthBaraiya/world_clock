@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../feature/error_404.dart';
 import '../../feature/home/home.dart';
+import '../../feature/invalid_page/error_404.dart';
 import '../../feature/responsive_home_page.dart';
 import '../../feature/timezones/timezone_details.dart';
 import '../../feature/timezones/timezones.dart';

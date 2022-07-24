@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 import '../../service/constants.dart';
 import '../../service/extension.dart';
-import '../../service/theme/theme.dart';
 import '../../service/timer.dart';
 
 part 'painter.dart';
@@ -20,14 +19,23 @@ class Clock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme;
     return SizedBox.square(
       dimension: radius,
       child: FittedBox(
         child: CustomPaint(
           willChange: true,
           size: Size.square(radius),
-          painter: ClockMarkings(),
-          foregroundPainter: ClockHands(),
+          painter: ClockMarkings(
+            shadowColor: theme.shadowColor,
+            clockBackgroundColor: theme.clockBackground,
+            accentPointColor: theme.accentTextColor,
+            pointColor: theme.primaryTextColor,
+          ),
+          foregroundPainter: ClockHands(
+            pointColor: theme.primaryTextColor,
+            accentPointColor: theme.accentTextColor,
+          ),
         ),
       ),
     );

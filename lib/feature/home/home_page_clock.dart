@@ -7,6 +7,8 @@ class HomePageClock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme;
+
     final screenWidth = MediaQuery.of(context).size.width;
 
     late final double clockSize;
@@ -19,7 +21,7 @@ class HomePageClock extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: CustomTheme.instance.backgroundColor,
+        color: theme.backgroundColor,
       ),
       constraints: BoxConstraints(maxWidth: width),
       alignment: Alignment.topCenter,
@@ -32,7 +34,7 @@ class HomePageClock extends StatelessWidget {
               child: Align(
                 child: Text(
                   'World Clock',
-                  style: CustomTheme.instance.titleStyle.copyWith(
+                  style: theme.titleStyle.copyWith(
                     fontSize: 55,
                   ),
                   textAlign: TextAlign.center,
@@ -50,8 +52,7 @@ class HomePageClock extends StatelessWidget {
             Container(
               margin: const EdgeInsets.only(top: 20),
               decoration: BoxDecoration(
-                gradient:
-                    CustomTheme.instance.accentTextColor.createSplitGradient(),
+                gradient: theme.accentTextColor.createSplitGradient(),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -59,7 +60,7 @@ class HomePageClock extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.only(right: 50),
                     decoration: BoxDecoration(
-                      color: CustomTheme.instance.backgroundColor,
+                      color: theme.backgroundColor,
                     ),
                     child: const TimeZoneInfo(),
                   ),
@@ -69,7 +70,7 @@ class HomePageClock extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.only(left: 30),
                     decoration: BoxDecoration(
-                      color: CustomTheme.instance.backgroundColor,
+                      color: theme.backgroundColor,
                     ),
                     child: const DayInfo(),
                   ),

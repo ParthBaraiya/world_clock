@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
 
-import '../service/theme/theme.dart';
+import '../service/extension.dart';
 
 class TimeZoneInfo extends StatelessWidget {
   const TimeZoneInfo({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme;
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           'Kolkata | India',
-          style: CustomTheme.instance.heading5,
+          style: theme.heading5,
         ),
         const SizedBox(
           height: 10,
         ),
         Text(
           '+12HRS | IST',
-          style: CustomTheme.instance.heading6,
+          style: theme.heading6,
         ),
       ],
     );

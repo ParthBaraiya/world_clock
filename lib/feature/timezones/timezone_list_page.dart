@@ -5,8 +5,10 @@ class TimezoneListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme;
+
     return Scaffold(
-      backgroundColor: CustomTheme.instance.backgroundColor,
+      backgroundColor: theme.backgroundColor,
       extendBody: true,
       extendBodyBehindAppBar: true,
       body: Column(
@@ -17,7 +19,7 @@ class TimezoneListPage extends StatelessWidget {
               // color: CustomTheme.instance.backgroundColor,
               gradient: LinearGradient(
                 colors: [
-                  CustomTheme.instance.backgroundColor,
+                  theme.backgroundColor,
                   Colors.transparent,
                 ],
               ),
@@ -28,17 +30,16 @@ class TimezoneListPage extends StatelessWidget {
                 InkWellButton(
                   onTap: context.previousPage,
                   radius: BorderRadius.circular(100.0),
-                  hoverColor:
-                      CustomTheme.instance.primaryTextColor.withOpacity(0.2),
+                  hoverColor: theme.primaryTextColor.withOpacity(0.2),
                   child: Icon(
                     Icons.chevron_left,
                     size: 40,
-                    color: CustomTheme.instance.primaryTextColor,
+                    color: theme.primaryTextColor,
                   ),
                 ),
                 Text(
                   'All Timezones',
-                  style: CustomTheme.instance.timezoneTitleStyle,
+                  style: theme.timezoneTitleStyle,
                 ),
               ],
             ),

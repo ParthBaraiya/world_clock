@@ -5,6 +5,18 @@ const double _minuteAngle = 0.001745;
 const double _hourAngle = 0.00014542;
 
 class ClockMarkings extends CustomPainter {
+  const ClockMarkings({
+    required this.shadowColor,
+    required this.clockBackgroundColor,
+    required this.pointColor,
+    required this.accentPointColor,
+  });
+
+  final Color shadowColor;
+  final Color clockBackgroundColor;
+  final Color pointColor;
+  final Color accentPointColor;
+
   @override
   void paint(Canvas canvas, Size size) {
     final minimum = size.min;
@@ -20,7 +32,7 @@ class ClockMarkings extends CustomPainter {
     final shadow = BoxShadow(
       blurRadius: 35,
       offset: const Offset(4, 4),
-      color: CustomTheme.instance.shadowColor,
+      color: shadowColor,
     ).toPaint();
 
     canvas
@@ -28,17 +40,17 @@ class ClockMarkings extends CustomPainter {
       ..drawCircle(
         size.toOffset() / 2,
         radius,
-        Paint()..color = CustomTheme.instance.clockBackground,
+        Paint()..color = clockBackgroundColor,
       )
       ..drawPoints(
         ui.PointMode.points,
         pointers.pointers,
-        pointerPaint..color = CustomTheme.instance.primaryTextColor,
+        pointerPaint..color = pointColor,
       )
       ..drawPoints(
         ui.PointMode.points,
         pointers.quarterPointers,
-        pointerPaint..color = CustomTheme.instance.accentTextColor,
+        pointerPaint..color = accentPointColor,
       );
 
     _drawNumbersPointer(radius, canvas);
@@ -132,7 +144,13 @@ class ClockMarkings extends CustomPainter {
 
 class ClockHands extends CustomPainter {
   // Passing timer will repaint this painter every second.
-  ClockHands() : super(repaint: ClockTimer.timer);
+  ClockHands({
+    required this.pointColor,
+    required this.accentPointColor,
+  }) : super(repaint: ClockTimer.timer);
+
+  final Color pointColor;
+  final Color accentPointColor;
 
   @override
   void paint(ui.Canvas canvas, ui.Size size) {
@@ -157,7 +175,7 @@ class ClockHands extends CustomPainter {
         Offset(radius + (hourHeight * math.sin(hour * _hourAngle)),
             radius - (hourHeight * math.cos(hour * _hourAngle))),
         paint
-          ..color = CustomTheme.instance.accentTextColor
+          ..color = accentPointColor
           ..strokeWidth = radius * 0.06,
       )
       // Draws minute thumb
@@ -166,7 +184,7 @@ class ClockHands extends CustomPainter {
         Offset(radius + (minuteHeight * math.sin(minute * _minuteAngle)),
             radius - (minuteHeight * math.cos(minute * _minuteAngle))),
         paint
-          ..color = CustomTheme.instance.primaryTextColor
+          ..color = pointColor
           ..strokeWidth = radius * 0.03,
       )
       // Draws seconds thumb
@@ -175,11 +193,10 @@ class ClockHands extends CustomPainter {
         Offset(radius + (secondHeight * math.sin(second * _secondAngle)),
             radius - (secondHeight * math.cos(second * _secondAngle))),
         paint
-          ..color = CustomTheme.instance.primaryTextColor
+          ..color = pointColor
           ..strokeWidth = radius * 0.02,
       )
-      ..drawCircle(center, radius * 0.05,
-          Paint()..color = CustomTheme.instance.accentTextColor);
+      ..drawCircle(center, radius * 0.05, Paint()..color = accentPointColor);
   }
 
   @override

@@ -4,11 +4,20 @@ mixin LocationTileBackend on State<TimezoneTile> {
   bool selected = false;
   bool saving = false;
 
+  late CustomThemeData theme;
+
   @override
   void initState() {
     super.initState();
 
     selected = widget.selected;
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    theme = context.theme;
   }
 
   @override

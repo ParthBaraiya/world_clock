@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../service/constants.dart';
-import '../../service/theme/theme.dart';
+import '../../service/extension.dart';
 import '../../service/timezone.dart';
+import '../../theme/theme.dart';
 import '../../typedefs.dart';
 import '../../values/world_clock_icons.dart';
 
@@ -52,24 +53,24 @@ class _TimezoneTileState extends State<TimezoneTile> with LocationTileBackend {
             children: [
               Text(
                 Constants.hhMM.format(now),
-                style: CustomTheme.instance.timezoneTitleStyle,
+                style: theme.timezoneTitleStyle,
               ),
               const SizedBox(width: 10),
               Text(
                 Constants.a.format(now),
-                style: CustomTheme.instance.timezoneSubTitleStyle,
+                style: theme.timezoneSubTitleStyle,
               ),
             ],
           );
 
           final offsetWidget = Text(
             "${offset < 0 ? "-" : "+"}${offset.abs()}HRS",
-            style: CustomTheme.instance.timezoneSubTitleAccentStyle,
+            style: theme.timezoneSubTitleAccentStyle,
           );
 
           final locationWidget = Text(
             location.name,
-            style: CustomTheme.instance.timezoneSubTitleAccentStyle,
+            style: theme.timezoneSubTitleAccentStyle,
             textAlign: TextAlign.end,
             overflow: TextOverflow.ellipsis,
           );
@@ -91,7 +92,7 @@ class _TimezoneTileState extends State<TimezoneTile> with LocationTileBackend {
                       padding: const EdgeInsets.symmetric(horizontal: 5),
                       child: Text(
                         '|',
-                        style: CustomTheme.instance.timezoneSubTitleAccentStyle,
+                        style: theme.timezoneSubTitleAccentStyle,
                       ),
                     ),
                     offsetWidget,
@@ -105,13 +106,13 @@ class _TimezoneTileState extends State<TimezoneTile> with LocationTileBackend {
               Icon(
                 WorldClock.disk,
                 size: 10,
-                color: CustomTheme.instance.primaryTextColor,
+                color: theme.primaryTextColor,
               ),
               const SizedBox(width: 10),
               Expanded(
                 child: Text(
                   timezone.abbreviation,
-                  style: CustomTheme.instance.timezoneTitleAccentStyle,
+                  style: theme.timezoneTitleAccentStyle,
                 ),
               ),
               if (isDeskTop) timeWidget,

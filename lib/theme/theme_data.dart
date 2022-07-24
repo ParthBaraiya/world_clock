@@ -1,11 +1,14 @@
-part of 'theme.dart';
+import 'package:flutter/material.dart';
 
-abstract class _ThemeData {
+abstract class CustomThemeData {
+  static final dark = _DarkThemeData();
+
   late Color backgroundColor;
   late Color clockBackground;
   late Color primaryTextColor;
   late Color accentTextColor;
   late Color shadowColor;
+  late Color accentBannerColor;
 
   late TextStyle titleStyle;
   late TextStyle subtitleStyle;
@@ -19,74 +22,7 @@ abstract class _ThemeData {
   late TextStyle timezoneSubTitleAccentStyle;
 }
 
-class _LightThemeData implements _ThemeData {
-  @override
-  Color backgroundColor = const Color(0xff000000);
-
-  @override
-  Color clockBackground = const Color(0xffe0e0e0);
-
-  @override
-  Color accentTextColor = const Color(0xff2a00ff);
-
-  @override
-  Color primaryTextColor = const Color(0xffffffff);
-
-  @override
-  Color shadowColor = const Color(0xff040017);
-
-  @override
-  TextStyle titleStyle = const TextStyle(
-    fontSize: 48,
-    color: Colors.white,
-  );
-
-  @override
-  TextStyle subtitleStyle = const TextStyle(
-    color: Color(0xff2a00ff),
-    fontSize: 20,
-  );
-
-  @override
-  TextStyle heading5 = const TextStyle(
-    color: Color(0xffffffff),
-    fontSize: 20,
-  );
-
-  @override
-  TextStyle heading6 = const TextStyle(
-    color: Color(0xffffffff),
-    fontSize: 15,
-  );
-
-  @override
-  TextStyle timezoneTitleStyle = const TextStyle(
-    color: Color(0xffffffff),
-    fontWeight: FontWeight.bold,
-    fontSize: 30,
-  );
-
-  @override
-  TextStyle timezoneSubTitleStyle = const TextStyle(
-    color: Color(0xff2a00ff),
-    fontSize: 15,
-  );
-
-  @override
-  TextStyle timezoneTitleAccentStyle = const TextStyle(
-    color: Color(0xff2a00ff),
-    fontWeight: FontWeight.bold,
-    fontSize: 30,
-  );
-
-  @override
-  TextStyle timezoneSubTitleAccentStyle = const TextStyle(
-    color: Color(0xffffffff),
-    fontSize: 15,
-  );
-}
-
-class _DarkThemeData implements _ThemeData {
+class _DarkThemeData implements CustomThemeData {
   @override
   Color backgroundColor = const Color(0xff000000);
 
@@ -101,6 +37,9 @@ class _DarkThemeData implements _ThemeData {
 
   @override
   Color shadowColor = const Color(0xff040017);
+
+  @override
+  Color accentBannerColor = const Color(0xff07002d);
 
   @override
   TextStyle titleStyle = const TextStyle(

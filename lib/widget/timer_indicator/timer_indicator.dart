@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../service/constants.dart';
-import '../service/theme/theme.dart';
-import '../service/timer.dart';
+import '../../service/constants.dart';
+import '../../service/extension.dart';
+import '../../service/timer.dart';
+import '../../theme/theme.dart';
+
+part 'timer_indicator_backend.dart';
 
 class TimeIndicator extends StatefulWidget {
   const TimeIndicator({Key? key}) : super(key: key);
@@ -11,27 +14,8 @@ class TimeIndicator extends StatefulWidget {
   _TimeIndicatorState createState() => _TimeIndicatorState();
 }
 
-class _TimeIndicatorState extends State<TimeIndicator> {
-  ClockTimer get _timer => ClockTimer.timer;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _timer.addListener(_reload);
-  }
-
-  @override
-  void dispose() {
-    _timer.removeListener(_reload);
-
-    super.dispose();
-  }
-
-  void _reload() {
-    if (mounted) setState(() {});
-  }
-
+class _TimeIndicatorState extends State<TimeIndicator>
+    with TimeIndicatorBackend {
   @override
   Widget build(BuildContext context) {
     return RichText(
@@ -39,13 +23,13 @@ class _TimeIndicatorState extends State<TimeIndicator> {
         children: [
           TextSpan(
             text: '${Constants.hhMM.format(_timer.currentDate)} ',
-            style: CustomTheme.instance.titleStyle.copyWith(
+            style: theme.titleStyle.copyWith(
               fontSize: 55,
             ),
           ),
           TextSpan(
             text: _timer.currentDate.hour >= 12 ? 'PM' : 'AM',
-            style: CustomTheme.instance.subtitleStyle,
+            style: theme.subtitleStyle,
           ),
         ],
       ),

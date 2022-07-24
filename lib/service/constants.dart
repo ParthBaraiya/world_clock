@@ -12,4 +12,6 @@ class Constants {
   static const defaultAnimationDuration = Duration(milliseconds: 300);
   static const duration800 = Duration(milliseconds: 800);
   static const curveGentle = Cubic(.7, 1.02, .84, .99);
+
+  static const repositoryUrl = 'https://github.com/ParthBaraiya/world_clock';
 }

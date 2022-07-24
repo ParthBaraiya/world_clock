@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../service/extension.dart';
-import '../service/theme/theme.dart';
 
 class SplitWidget extends StatelessWidget {
   const SplitWidget({
@@ -15,11 +14,13 @@ class SplitWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme;
+
     return _SplitScaffold(
       children: [
         DecoratedBox(
           decoration: BoxDecoration(
-            color: CustomTheme.instance.backgroundColor,
+            color: theme.backgroundColor,
           ),
           child: left,
         ),
@@ -29,7 +30,7 @@ class SplitWidget extends StatelessWidget {
         Expanded(
           child: DecoratedBox(
             decoration: BoxDecoration(
-              color: CustomTheme.instance.backgroundColor,
+              color: theme.backgroundColor,
             ),
             child: right,
           ),
@@ -49,16 +50,18 @@ class _SplitScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme;
+
     return Scaffold(
       key: key,
-      backgroundColor: CustomTheme.instance.backgroundColor,
+      backgroundColor: theme.backgroundColor,
       extendBody: true,
       extendBodyBehindAppBar: true,
       body: SafeArea(
         child: DecoratedBox(
           decoration: BoxDecoration(
-            gradient: CustomTheme.instance.accentTextColor
-                .createSplitGradient(bottom: 1, top: -1),
+            gradient:
+                theme.accentTextColor.createSplitGradient(bottom: 1, top: -1),
           ),
           child: Row(
             children: children,

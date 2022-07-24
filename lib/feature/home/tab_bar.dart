@@ -71,7 +71,7 @@ class _TimeZoneTabState extends State<TimeZoneTab>
             indicator: RoundedUnderlinedIndicator(
               borderSide: BorderSide(
                 width: 5,
-                color: CustomTheme.instance.accentTextColor,
+                color: context.theme.accentTextColor,
               ),
             ),
             tabs: [

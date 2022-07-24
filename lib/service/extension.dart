@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../theme/theme.dart';
 import 'navigation_service/navigation_service.dart';
 
 extension ComparisonExtension on Size {
@@ -19,23 +20,6 @@ extension DateFormatExtension on DateTime {
 }
 
 extension NavigationExtension on BuildContext {
-  // void goToRoute<T>({
-  //   required String route,
-  //   SerializableRouteArgument params = const EmptyRouteArgument(),
-  //   SerializableRouteArgument queryParams = const EmptyRouteArgument(),
-  // }) =>
-  //     goNamed(
-  //       route,
-  //       params: params.toJson(),
-  //       queryParams: queryParams.toJson(),
-  //     );
-  //
-  // void goToLocation({
-  //   required String url,
-  // }) =>
-  //     go(url);
-  //
-
   void previousPage() => Navigator.of(this).pop();
 
   void navigateTo({
@@ -58,4 +42,12 @@ extension SplitGradient on Color {
         begin: Alignment(0, top),
         end: Alignment(0, bottom),
       );
+}
+
+extension ThemeExtension on BuildContext {
+  CustomThemeData get theme => CustomTheme.of(this);
+
+  void setThemeMode(ThemeMode mode) {
+    CustomThemeProvider.globalKey.currentState?.updateThemeMode(mode);
+  }
 }
