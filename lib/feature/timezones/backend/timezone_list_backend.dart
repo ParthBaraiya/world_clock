@@ -1,4 +1,4 @@
-part of '../timezones.dart';
+part of '../timezones_old.dart';
 
 mixin TimeZoneListBackend on State<TimezoneList> {
   late final ScrollController _controller;

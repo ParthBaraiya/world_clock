@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../service/constants.dart';
 import '../../service/extension.dart';
 import '../../theme/theme.dart';
-import '../../utils/painters/animated_line_painter.dart';
+import '../../utils/painters/animated_underline_painter.dart';
 
 class ActionText extends StatefulWidget {
   const ActionText({
@@ -55,7 +55,7 @@ class _ActionTextState extends State<ActionText>
       builder: (_, value, child) {
         return CustomPaint(
           child: child,
-          painter: AnimatedLinePainter(
+          painter: AnimatedUnderLinePainter(
             listenable: _animation,
             lineColor: theme.accentTextColor,
           ),

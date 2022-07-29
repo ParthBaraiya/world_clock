@@ -11,6 +11,17 @@ analyzer:
     - test/**
     - windows/**
     - .github/**
+    - icon/**
+    - assets/**
+    - gen/**
+    - fonts/**
+    - .vscode/**
+    - lib/gen/**
+    - lib/generated/**
+    - lib/generated_plugin_registrant.dart
+    - lib/**/*.g.dart
+    - lib/**/*.chopper.dart
+    - lib.**/*.freezed.dart
 
 linter:
   rules:

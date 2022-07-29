@@ -104,7 +104,7 @@ class _TimezoneTileState extends State<TimezoneTile> with LocationTileBackend {
           return Row(
             children: [
               Icon(
-                WorldClock.disk,
+                WorldClockIcons.disk,
                 size: 10,
                 color: theme.primaryTextColor,
               ),

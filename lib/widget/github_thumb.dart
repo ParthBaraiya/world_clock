@@ -31,7 +31,7 @@ class GithubThumb extends StatelessWidget {
             child: const Align(
               alignment: Alignment(0.6, -0.5),
               child: Icon(
-                WorldClock.github_fill,
+                WorldClockIcons.github_fill,
                 size: 35,
               ),
             ),

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-import '../../gen/assets.gen.dart';
-import '../../models/hive_timezone/hive_timezone.dart';
-import '../../service/extension.dart';
-import '../../service/hive/hive_main.dart';
-import '../../service/timezone.dart';
-import '../../widget/buttons.dart';
-import '../../widget/location_tile/location_tile.dart';
+class TimeZones extends StatefulWidget {
+  const TimeZones({Key? key}) : super(key: key);
 
-part 'backend/timezone_list_backend.dart';
-part 'timezone_list.dart';
-part 'timezone_list_page.dart';
+  @override
+  State<TimeZones> createState() => _TimeZonesState();
+}
+
+class _TimeZonesState extends State<TimeZones> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}

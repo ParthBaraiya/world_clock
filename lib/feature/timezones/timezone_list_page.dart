@@ -1,4 +1,4 @@
-part of 'timezones.dart';
+part of 'timezones_old.dart';
 
 class TimezoneListPage extends StatelessWidget {
   const TimezoneListPage({Key? key}) : super(key: key);

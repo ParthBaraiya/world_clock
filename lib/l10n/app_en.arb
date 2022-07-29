@@ -1,3 +1,6 @@
 {
-  "worldClock": "World Clock"
+  "worldClock": "World Clock",
+  "favorites": "Favorites",
+  "timezones": "TimeZones",
+  "compare": "Compare"
 }

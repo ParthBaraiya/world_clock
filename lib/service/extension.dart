@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
 import '../theme/theme.dart';
@@ -46,6 +47,8 @@ extension SplitGradient on Color {
 
 extension ThemeExtension on BuildContext {
   CustomThemeData get theme => CustomTheme.of(this);
+
+  AppLocalizations get localizations => AppLocalizations.of(this)!;
 
   void setThemeMode(ThemeMode mode) {
     CustomThemeProvider.globalKey.currentState?.updateThemeMode(mode);

@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../feature/home/home.dart';
 import '../../feature/invalid_page/error_404.dart';
-import '../../feature/responsive_home_page.dart';
-import '../../feature/timezones/timezone_details.dart';
-import '../../feature/timezones/timezones.dart';
+// import '../../feature/responsive_home_page.dart';
 import 'navigation_service.dart';
 
 class WorldClockRouterDelegate extends RouterDelegate<WorldClockRouteConfig>
@@ -18,7 +16,6 @@ class WorldClockRouterDelegate extends RouterDelegate<WorldClockRouteConfig>
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
     final pages = <Page>[];
 
     Page _getPage(Widget child) => child.page(
@@ -35,36 +32,36 @@ class WorldClockRouterDelegate extends RouterDelegate<WorldClockRouteConfig>
         _getPage(const HomePage()),
       );
 
-      if (_routeConfig is FavoritesPath) {
-        final path = _routeConfig as FavoritesPath;
-        pages.add(
-          _getPage(
-            path.timezone == null
-                ? ResponsiveHomePage(
-                    mobilePage: const TimezoneListPage(),
-                    index: 0,
-                  )
-                : TimezoneDetails(
-                    timeZone: path.timezone!,
-                  ),
-          ),
-        );
-      } else if (_routeConfig is TimezonePath) {
-        final path = _routeConfig as TimezonePath;
-
-        pages.add(
-          _getPage(
-            path.timezone == null
-                ? ResponsiveHomePage(
-                    mobilePage: const TimezoneListPage(),
-                    index: 1,
-                  )
-                : TimezoneDetails(
-                    timeZone: path.timezone!,
-                  ),
-          ),
-        );
-      }
+      // if (_routeConfig is FavoritesPath) {
+      //   final path = _routeConfig as FavoritesPath;
+      //   pages.add(
+      //     _getPage(
+      //       path.timezone == null
+      //           ? ResponsiveHomePage(
+      //               mobilePage: const TimezoneListPage(),
+      //               index: 0,
+      //             )
+      //           : TimezoneDetails(
+      //               timeZone: path.timezone!,
+      //             ),
+      //     ),
+      //   );
+      // } else if (_routeConfig is TimezonePath) {
+      //   final path = _routeConfig as TimezonePath;
+      //
+      //   pages.add(
+      //     _getPage(
+      //       path.timezone == null
+      //           ? ResponsiveHomePage(
+      //               mobilePage: const TimezoneListPage(),
+      //               index: 1,
+      //             )
+      //           : TimezoneDetails(
+      //               timeZone: path.timezone!,
+      //             ),
+      //     ),
+      //   );
+      // }
     }
 
     return Navigator(

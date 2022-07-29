@@ -28,4 +28,10 @@ mixin HomeBackend on State<HomePage> {
       }
     });
   }
+
+  void _onFavorites() {}
+
+  void _onTimezones() {}
+
+  void _onCompare() {}
 }

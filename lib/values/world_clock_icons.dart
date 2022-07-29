@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
-class WorldClock {
-  WorldClock._();
+class WorldClockIcons {
+  WorldClockIcons._();
 
   static const _fontFamily = 'World Clock';
 
