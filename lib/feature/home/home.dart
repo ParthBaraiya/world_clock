@@ -2,11 +2,10 @@ import 'package:flutter/material.dart' hide MenuItem;
 
 import '../../service/extension.dart';
 import '../../theme/theme.dart';
-import '../../values/world_clock_icons.dart';
 import '../../widget/clock/clock.dart';
 import '../../widget/custom_scaffolds.dart';
 import '../../widget/github_thumb.dart';
-import '../../widget/menu_item/menu_item.dart';
+import 'home_menu_bar.dart';
 
 part 'backend/home_backend.dart';
 
@@ -20,6 +19,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with HomeBackend {
   @override
   Widget build(BuildContext context) {
+    const clockRadius = 400.0;
+
     return GradientScaffold(
       body: Stack(
         alignment: Alignment.center,
@@ -37,38 +38,17 @@ class _HomePageState extends State<HomePage> with HomeBackend {
                   textAlign: TextAlign.start,
                 ),
                 Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    alignment: Alignment.center,
                     children: [
                       AnimatedClock(
-                        radius: 400,
+                        radius: clockRadius,
                         opacity: _clockOpacity,
                         offset: _clockOffset,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 200),
-                        child: Wrap(
-                          alignment: WrapAlignment.center,
-                          direction: Axis.vertical,
-                          spacing: 20,
-                          children: [
-                            MenuItem(
-                              title: context.localizations.favorites,
-                              icon: WorldClockIcons.bookmark,
-                              onTap: _onFavorites,
-                            ),
-                            MenuItem(
-                              title: context.localizations.timezones,
-                              icon: WorldClockIcons.bookmark,
-                              onTap: _onTimezones,
-                            ),
-                            MenuItem(
-                              title: context.localizations.compare,
-                              icon: WorldClockIcons.bookmark,
-                              onTap: _onCompare,
-                            ),
-                          ],
-                        ),
+                      const HomeMenuBar(
+                        centerOffset: clockRadius,
                       ),
                     ],
                   ),

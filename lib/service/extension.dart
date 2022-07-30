@@ -50,6 +50,8 @@ extension ThemeExtension on BuildContext {
 
   AppLocalizations get localizations => AppLocalizations.of(this)!;
 
+  MediaQueryData get media => MediaQuery.of(this);
+
   void setThemeMode(ThemeMode mode) {
     CustomThemeProvider.globalKey.currentState?.updateThemeMode(mode);
   }

@@ -20,21 +20,23 @@ class Clock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
-    return SizedBox.square(
-      dimension: radius,
-      child: FittedBox(
-        child: CustomPaint(
-          willChange: true,
-          size: Size.square(radius),
-          painter: ClockMarkings(
-            shadowColor: theme.shadowColor,
-            clockBackgroundColor: theme.clockBackground,
-            accentPointColor: theme.accentTextColor,
-            pointColor: theme.primaryTextColor,
-          ),
-          foregroundPainter: ClockHands(
-            pointColor: theme.primaryTextColor,
-            accentPointColor: theme.accentTextColor,
+    return Center(
+      child: SizedBox.square(
+        dimension: radius,
+        child: FittedBox(
+          child: CustomPaint(
+            willChange: true,
+            size: Size.square(radius),
+            painter: ClockMarkings(
+              shadowColor: theme.shadowColor,
+              clockBackgroundColor: theme.clockBackground,
+              accentPointColor: theme.accentTextColor,
+              pointColor: theme.primaryTextColor,
+            ),
+            foregroundPainter: ClockHands(
+              pointColor: theme.primaryTextColor,
+              accentPointColor: theme.accentTextColor,
+            ),
           ),
         ),
       ),
