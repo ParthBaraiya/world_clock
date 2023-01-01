@@ -60,26 +60,14 @@ class ClockMarkings extends CustomPainter {
         offset = offsets.pointers[i - (i ~/ 3) - 1];
       }
 
-      final painter = _getTextPainter(number: i, style: style);
-
-      painter.paint(canvas,
-          offset - Offset(painter.maxIntrinsicWidth / 2, painter.height / 2));
-    }
-  }
-
-  TextPainter _getTextPainter({required int number, required TextStyle style}) {
-    final textPainter = TextPainter(
-      text: TextSpan(
-        text: '$number',
+      canvas.paintText(
+        text: '$i',
         style: style,
-      ),
-      textDirection: TextDirection.ltr,
-    )..layout(
+        offset: offset,
         minWidth: 10,
-        maxWidth: 100,
+        maxWidth: 200,
       );
-
-    return textPainter;
+    }
   }
 
   ClockPointers _getPointerOffsets(double radius, [double factor = 0.9]) {

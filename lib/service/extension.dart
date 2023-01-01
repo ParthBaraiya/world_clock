@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -33,7 +34,7 @@ extension NavigationExtension on BuildContext {
   }) =>
       NavigationService.instance.delegate.setRouteConfig(routeConfig);
 
-  Size get screenSize => MediaQuery.of(this).size;
+  Size get mediaSize => MediaQuery.of(this).size;
 }
 
 extension SplitGradient on Color {
@@ -55,4 +56,28 @@ extension SplitGradient on Color {
 extension ResponsiveSizesExtension on num {
   double get vh => _screenHeight * (this / 100);
   double get vw => _screenWidth * (this / 100);
+}
+
+extension PainterExtension on Canvas {
+  void paintText({
+    required String text,
+    required TextStyle style,
+    required Offset offset,
+    required int minWidth,
+    required int maxWidth,
+  }) {
+    final painter = TextPainter(
+      text: TextSpan(
+        text: text,
+        style: style,
+      ),
+      textDirection: ui.TextDirection.ltr,
+    )..layout(
+        minWidth: 10,
+        maxWidth: 100,
+      );
+
+    painter.paint(this,
+        offset - Offset(painter.maxIntrinsicWidth / 2, painter.height / 2));
+  }
 }

@@ -11,6 +11,9 @@ analyzer:
     - test/**
     - windows/**
     - .github/**
+    - lib/generated_plugin_registrant.dart
+    - lib/generated/**
+    - lib/gen/**
 
 linter:
   rules:
@@ -78,7 +81,7 @@ linter:
     no_runtimeType_toString: true
     non_constant_identifier_names: true
     prefer_adjacent_string_concatenation: true
-    prefer_asserts_with_message: true
+    prefer_asserts_with_message: false
     prefer_collection_literals: true
     prefer_conditional_assignment: true
     prefer_const_constructors_in_immutables: true

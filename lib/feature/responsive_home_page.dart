@@ -15,7 +15,7 @@ class WebHomePage extends StatelessWidget {
   final Widget widget;
   @override
   Widget build(BuildContext context) {
-    final size = context.screenSize;
+    final size = context.mediaSize;
     late final widget;
     if (size.width < HomeScreenBreakPoints.point800) {
       widget = this.widget;

@@ -1,6 +1,8 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import '../../service/constants.dart';
+import '../../service/extension.dart';
 import '../../service/theme/theme.dart';
 import '../../service/timezone.dart';
 import '../../typedefs.dart';
@@ -8,12 +10,12 @@ import '../../values/world_clock_icons.dart';
 
 part 'location_tile_backend.dart';
 
-class TimezoneTile extends StatefulWidget {
+class LocationTile extends StatefulWidget {
   final TimeZone timezone;
   final FavoriteChangeCallback onBookmark;
   final bool selected;
 
-  const TimezoneTile({
+  const LocationTile({
     Key? key,
     required this.timezone,
     required this.onBookmark,
@@ -21,17 +23,13 @@ class TimezoneTile extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<TimezoneTile> createState() => _TimezoneTileState();
+  State<LocationTile> createState() => _LocationTileState();
 }
 
-class _TimezoneTileState extends State<TimezoneTile> with LocationTileBackend {
+class _LocationTileState extends State<LocationTile> with LocationTileBackend {
   @override
   Widget build(BuildContext context) {
-    final timezone = widget.timezone;
-    final location = TimeZoneUtility.i.locationMap[timezone]![0];
-    final now = TZDateTime.now(location);
-
-    final offset = timezone.offset / (1000 * 3600);
+    final offset = widget.timezone.offset / (1000 * 3600);
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 30.0),
@@ -51,12 +49,12 @@ class _TimezoneTileState extends State<TimezoneTile> with LocationTileBackend {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                Constants.hhMM.format(now),
+                Constants.hhMM.format(_dateTime),
                 style: CustomTheme.instance.timezoneTitleStyle,
               ),
               const SizedBox(width: 10),
               Text(
-                Constants.a.format(now),
+                Constants.a.format(_dateTime),
                 style: CustomTheme.instance.timezoneSubTitleStyle,
               ),
             ],
@@ -68,7 +66,7 @@ class _TimezoneTileState extends State<TimezoneTile> with LocationTileBackend {
           );
 
           final locationWidget = Text(
-            location.name,
+            _locations[0].name,
             style: CustomTheme.instance.timezoneSubTitleAccentStyle,
             textAlign: TextAlign.end,
             overflow: TextOverflow.ellipsis,
@@ -115,7 +113,7 @@ class _TimezoneTileState extends State<TimezoneTile> with LocationTileBackend {
                     const SizedBox(width: 10),
                     Expanded(
                       child: Text(
-                        timezone.abbreviation,
+                        widget.timezone.abbreviation,
                         style: CustomTheme.instance.timezoneTitleAccentStyle,
                       ),
                     ),
@@ -137,15 +135,48 @@ class _TimezoneTileState extends State<TimezoneTile> with LocationTileBackend {
                   duration: const Duration(milliseconds: 300),
                   child: isExpanded
                       ? SizedBox(
-                          height: 50,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (_, index) => CustomPaint(
-                              size: Size(constraints.maxWidth, 50),
-                              painter: ClockPainter(
-                                offset: ValueNotifier(10),
-                                date: Constants.minDate
-                                    .add(Duration(days: index)),
+                          height: 100,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 10,
+                            ),
+                            child: DecoratedBox(
+                              position: DecorationPosition.foreground,
+                              decoration: const BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Colors.black,
+                                    Colors.transparent,
+                                    Colors.transparent,
+                                    Colors.transparent,
+                                    Colors.black
+                                  ],
+                                  stops: [0, 0.3, 0.5, 0.7, 1],
+                                ),
+                              ),
+                              child: LayoutBuilder(
+                                builder: (_, constraints) => PageView.builder(
+                                  controller: _controller,
+                                  pageSnapping: false,
+                                  physics: const BouncingScrollPhysics(),
+                                  dragStartBehavior: DragStartBehavior.down,
+                                  itemCount: TZDateTime.now(_locations[0])
+                                      .difference(
+                                          TZDateTime.fromMillisecondsSinceEpoch(
+                                              _locations[0], 0))
+                                      .inDays,
+                                  itemBuilder: (_, index) => SizedBox(
+                                    height: 50,
+                                    width: 1440,
+                                    child: FittedBox(
+                                      child: CustomPaint(
+                                        size: const Size(1440, 50),
+                                        painter: ClockPainter(),
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
@@ -162,35 +193,42 @@ class _TimezoneTileState extends State<TimezoneTile> with LocationTileBackend {
 }
 
 class ClockPainter extends CustomPainter {
-  ClockPainter({required this.offset, required this.date})
-      : super(repaint: offset);
-
-  final ValueNotifier<int> offset;
-  final DateTime date;
-
   @override
   void paint(Canvas canvas, Size size) {
-    canvas..clipRect(Offset.zero & size);
+    final singleOffset = size.width / 1440;
+
+    final numberStyle = const TextStyle(
+      fontSize: 15,
+      color: Colors.white,
+    );
+
     for (var i = 15; i < 1441; i += 15) {
-      var top = size.height * 0.4;
+      var top = size.height * 0.7;
+      final x = singleOffset * i;
+
       if (i % 60 == 0) {
-        top = size.height * 0.2;
+        final text = '${i ~/ 60}';
+        top = size.height * 0.5;
+        canvas.paintText(
+          text: i == 1440 ? '0' : text,
+          minWidth: 2,
+          maxWidth: 300,
+          offset: Offset(x, top - 12),
+          style: numberStyle,
+        );
       }
 
       canvas.drawLine(
-        Offset(i.toDouble(), top),
-        Offset(i.toDouble(), size.height),
+        Offset(x, top),
+        Offset(x, size.height),
         Paint()
           ..color = Colors.white
-          ..strokeWidth = 3
+          ..strokeWidth = 2
           ..strokeCap = StrokeCap.round,
       );
     }
-    // TODO: implement paint
   }
 
   @override
-  bool shouldRepaint(covariant ClockPainter oldDelegate) {
-    return true;
-  }
+  bool shouldRepaint(covariant ClockPainter oldDelegate) => false;
 }
