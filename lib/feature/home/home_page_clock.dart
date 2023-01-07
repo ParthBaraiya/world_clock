@@ -3,7 +3,10 @@ part of 'home.dart';
 class HomePageClock extends StatelessWidget {
   const HomePageClock({
     Key? key,
+    this.showTitle = true,
   }) : super(key: key);
+
+  final bool showTitle;
 
   @override
   Widget build(BuildContext context) {
@@ -23,15 +26,18 @@ class HomePageClock extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                  top: 20.0, left: 30.0, right: 10.0, bottom: 50.0),
-              child: Text(
-                'World Clock',
-                style: CustomTheme.instance.titleStyle.copyWith(
-                  fontSize: 55,
+            Opacity(
+              opacity: showTitle ? 1 : 0,
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    top: 20.0, left: 30.0, right: 10.0, bottom: 50.0),
+                child: Text(
+                  'World Clock',
+                  style: CustomTheme.instance.titleStyle.copyWith(
+                    fontSize: 55,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
               ),
             ),
             Padding(

@@ -1,12 +1,9 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 
 // import 'package:go_router/go_router.dart';
 
 import '../../service/extension.dart';
 import '../../service/navigation_service/navigation_service.dart';
-import '../../service/screen_utility.dart';
 import '../../service/theme/theme.dart';
 import '../../values/breakpoints.dart';
 import '../../values/world_clock_icons.dart';
@@ -31,8 +28,10 @@ class HomePage extends StatelessWidget {
       body: Column(
         children: [
           const _HomePageAppBar(),
-          Expanded(
-            child: const HomePageClock(),
+          const Expanded(
+            child: HomePageClock(
+              showTitle: false,
+            ),
           ),
         ],
       ),

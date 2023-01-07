@@ -10,6 +10,9 @@ import '../../values/world_clock_icons.dart';
 
 part 'location_tile_backend.dart';
 
+// This defines that there will be 1 pixel every minute.
+const _kTimeLineWidth = 1440.0;
+
 class LocationTile extends StatefulWidget {
   final TimeZone timezone;
   final FavoriteChangeCallback onBookmark;
@@ -141,43 +144,39 @@ class _LocationTileState extends State<LocationTile> with LocationTileBackend {
                               horizontal: 20,
                               vertical: 10,
                             ),
-                            child: DecoratedBox(
-                              position: DecorationPosition.foreground,
-                              decoration: const BoxDecoration(
-                                gradient: LinearGradient(
-                                  colors: [
-                                    Colors.black,
-                                    Colors.transparent,
-                                    Colors.transparent,
-                                    Colors.transparent,
-                                    Colors.black
-                                  ],
-                                  stops: [0, 0.3, 0.5, 0.7, 1],
-                                ),
-                              ),
-                              child: LayoutBuilder(
-                                builder: (_, constraints) => PageView.builder(
-                                  controller: _controller,
-                                  pageSnapping: false,
-                                  physics: const BouncingScrollPhysics(),
-                                  dragStartBehavior: DragStartBehavior.down,
-                                  itemCount: TZDateTime.now(_locations[0])
-                                      .difference(
-                                          TZDateTime.fromMillisecondsSinceEpoch(
-                                              _locations[0], 0))
-                                      .inDays,
-                                  itemBuilder: (_, index) => SizedBox(
-                                    height: 50,
-                                    width: 1440,
-                                    child: FittedBox(
-                                      child: CustomPaint(
-                                        size: const Size(1440, 50),
-                                        painter: ClockPainter(),
-                                      ),
+                            child: Stack(
+                              children: [
+                                DecoratedBox(
+                                  position: DecorationPosition.foreground,
+                                  decoration: const BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Colors.black,
+                                        Colors.transparent,
+                                        Colors.transparent,
+                                        Colors.transparent,
+                                        Colors.black
+                                      ],
+                                      stops: [0, 0.3, 0.5, 0.7, 1],
                                     ),
                                   ),
+                                  child: TimeLinePageView(
+                                    viewPortWidth: width - 40,
+                                    location: _locations[0],
+                                    onTimeChanged: _updateDateTime,
+                                    initialTime: _dateTime,
+                                  ),
                                 ),
-                              ),
+                                const Align(
+                                  child: ColoredBox(
+                                    color: Colors.blue,
+                                    child: SizedBox(
+                                      height: 80,
+                                      width: 1,
+                                    ),
+                                  ),
+                                )
+                              ],
                             ),
                           ),
                         )
@@ -192,7 +191,105 @@ class _LocationTileState extends State<LocationTile> with LocationTileBackend {
   }
 }
 
-class ClockPainter extends CustomPainter {
+class TimeLinePageView extends StatefulWidget {
+  const TimeLinePageView({
+    super.key,
+    required this.viewPortWidth,
+    required this.location,
+    this.onTimeChanged,
+    this.initialTime,
+  });
+
+  final double viewPortWidth;
+  final Location location;
+  final ValueChanged<TZDateTime>? onTimeChanged;
+  final TZDateTime? initialTime;
+
+  @override
+  State<TimeLinePageView> createState() => _TimeLinePageViewState();
+}
+
+class _TimeLinePageViewState extends State<TimeLinePageView> {
+  var _controller = PageController();
+  double _width = 0.0;
+  int itemCount = 1;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _updateController(widget.viewPortWidth);
+  }
+
+  @override
+  void didUpdateWidget(covariant TimeLinePageView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (_width != widget.viewPortWidth ||
+        oldWidget.onTimeChanged != widget.onTimeChanged ||
+        oldWidget.location != widget.location)
+      _updateController(widget.viewPortWidth);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (_width != widget.viewPortWidth) {
+      _updateController(widget.viewPortWidth);
+    }
+  }
+
+  void _updateController(double newWidth) {
+    _controller.dispose();
+    itemCount = DateTime(2072)
+        .difference(DateTime.fromMillisecondsSinceEpoch(0))
+        .inDays;
+    final date = widget.initialTime ?? TZDateTime.now(widget.location);
+    final viewportFraction = _kTimeLineWidth / newWidth;
+    _controller = PageController(viewportFraction: viewportFraction);
+    _controller.addListener(() {
+      final ms = ((_controller.position.pixels + (newWidth / 2)) * 60000 -
+              date.timeZoneOffset.inMilliseconds)
+          .toInt();
+      final dateTime =
+          TZDateTime.fromMillisecondsSinceEpoch(widget.location, ms);
+
+      widget.onTimeChanged?.call(dateTime);
+    });
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final offset =
+          ((date.millisecondsSinceEpoch + date.timeZoneOffset.inMilliseconds) /
+                  60000) -
+              (newWidth / 2);
+      _controller.jumpTo(offset);
+    });
+    _width = newWidth;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return PageView.builder(
+      controller: _controller,
+      pageSnapping: false,
+      physics: const BouncingScrollPhysics(),
+      dragStartBehavior: DragStartBehavior.down,
+      itemCount: itemCount,
+      itemBuilder: (_, index) => SizedBox(
+        height: 50,
+        width: _kTimeLineWidth,
+        child: FittedBox(
+          child: CustomPaint(
+            size: const Size(_kTimeLineWidth, 50),
+            painter: TimeLinePainter(),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class TimeLinePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final singleOffset = size.width / 1440;
@@ -230,5 +327,5 @@ class ClockPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant ClockPainter oldDelegate) => false;
+  bool shouldRepaint(covariant TimeLinePainter oldDelegate) => false;
 }
