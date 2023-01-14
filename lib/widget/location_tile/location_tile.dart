@@ -1,6 +1,5 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/adapters.dart';
 
 import '../../models/hive_timezone/hive_timezone.dart';
 import '../../service/constants.dart';

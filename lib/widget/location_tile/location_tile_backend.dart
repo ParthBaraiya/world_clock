@@ -22,7 +22,6 @@ mixin LocationTileBackend on State<LocationTile> {
     _updateWidgetData();
   }
 
-
   void _updateWidgetData() {
     selected = widget.selected;
     _locations = TimeZoneUtility.i.locationMap[widget.timezone]!;
@@ -50,10 +49,11 @@ mixin LocationTileBackend on State<LocationTile> {
       });
     }
 
-    if(selected){
-     await HiveMain.instance.removeFavoriteTimeZone(widget.timezone.hiveTimezone);
+    if (selected) {
+      await HiveMain.instance
+          .removeFavoriteTimeZone(widget.timezone.hiveTimezone);
     } else {
-     await HiveMain.instance.addFavoriteTimeZone(widget.timezone.hiveTimezone);
+      await HiveMain.instance.addFavoriteTimeZone(widget.timezone.hiveTimezone);
     }
     await widget.onBookmark?.call(widget.timezone, !selected);
 
