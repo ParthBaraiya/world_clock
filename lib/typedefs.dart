@@ -1,4 +1,4 @@
 import 'service/timezone.dart';
 
-typedef FavoriteChangeCallback = Future<bool> Function(
+typedef FavoriteChangeCallback = Future<void> Function(
     TimeZone location, bool selected);

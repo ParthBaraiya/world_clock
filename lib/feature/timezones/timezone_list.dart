@@ -34,10 +34,10 @@ class _TimezoneListState extends State<TimezoneList> with TimeZoneListBackend {
               controller: _controller,
               itemBuilder: (_, index) {
                 return LocationTile(
+                  key: ValueKey(locations[index]),
                   timezone: locations[index],
-                  selected: false,
-                  onBookmark: (timezone, selected) async =>
-                      _toggleFavorite(timezone, selected),
+                  selected: HiveMain.instance.favoriteLocationsBox.values
+                      .contains(locations[index].hiveTimezone),
                 );
               },
               separatorBuilder: (_, __) => Container(

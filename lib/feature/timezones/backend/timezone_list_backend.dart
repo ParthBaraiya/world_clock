@@ -23,24 +23,4 @@ mixin TimeZoneListBackend on State<TimezoneList> {
       setState(() {});
     }
   }
-
-  bool _toggleFavorite(TimeZone timezone, bool selected) {
-    if (selected) {
-      try {
-        HiveMain.instance.addFavorite(timezone.hiveTimezone);
-        return true;
-      } catch (e) {
-        debugPrint(e.toString());
-      }
-    } else {
-      try {
-        HiveMain.instance.removeFavorite(timezone.hiveTimezone);
-        return true;
-      } catch (e) {
-        debugPrint(e.toString());
-      }
-    }
-
-    return false;
-  }
 }

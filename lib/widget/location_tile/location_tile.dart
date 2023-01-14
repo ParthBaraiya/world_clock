@@ -1,8 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
 
+import '../../models/hive_timezone/hive_timezone.dart';
 import '../../service/constants.dart';
 import '../../service/extension.dart';
+import '../../service/hive/hive_main.dart';
 import '../../service/theme/theme.dart';
 import '../../service/timezone.dart';
 import '../../typedefs.dart';
@@ -15,14 +18,15 @@ const _kTimeLineWidth = 1440.0;
 
 class LocationTile extends StatefulWidget {
   final TimeZone timezone;
-  final FavoriteChangeCallback onBookmark;
+  final FavoriteChangeCallback? onBookmark;
   final bool selected;
 
   const LocationTile({
     Key? key,
     required this.timezone,
-    required this.onBookmark,
     required this.selected,
+    this.onBookmark,
+
   }) : super(key: key);
 
   @override

@@ -81,3 +81,14 @@ extension PainterExtension on Canvas {
         offset - Offset(painter.maxIntrinsicWidth / 2, painter.height / 2));
   }
 }
+
+abstract class PrintUtility {
+  static void debugLog(String Function() function) {
+    assert((){
+      try {
+        debugPrint(function());
+      } catch(e) {} // Suppress exception...
+      return true;
+    }());
+  }
+}

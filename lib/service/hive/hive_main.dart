@@ -2,6 +2,7 @@ import 'package:hive_flutter/adapters.dart';
 
 import '../../models/hive_location/hive_location.dart';
 import '../../models/hive_timezone/hive_timezone.dart';
+import '../extension.dart';
 
 class HiveMain {
   static final HiveMain instance = HiveMain._();
@@ -22,14 +23,17 @@ class HiveMain {
 
   Box<HiveTimezone> get favoriteLocationsBox => _favoriteLocationsBox;
 
-  void addFavorite(HiveTimezone location) {
-    if (_locationIndex(location) != -1) _favoriteLocationsBox.add(location);
+  Future<void> addFavoriteTimeZone(HiveTimezone location) async {
+    if (_locationIndex(location) == -1) {
+      final result = await _favoriteLocationsBox.add(location);
+      PrintUtility.debugLog(() => '$result');
+    }
   }
 
-  void removeFavorite(HiveTimezone location) {
+  Future<void> removeFavoriteTimeZone(HiveTimezone location) async {
     final index = _locationIndex(location);
     if (index != -1) {
-      _favoriteLocationsBox.deleteAt(index);
+      await _favoriteLocationsBox.deleteAt(index);
     }
   }
 

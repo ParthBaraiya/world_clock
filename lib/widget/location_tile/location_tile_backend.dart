@@ -12,14 +12,18 @@ mixin LocationTileBackend on State<LocationTile> {
   void initState() {
     super.initState();
 
-    _locations = TimeZoneUtility.i.locationMap[widget.timezone]!;
-    _dateTime = TZDateTime.now(_locations[0]);
+    _updateWidgetData();
   }
 
   @override
   void didUpdateWidget(LocationTile oldWidget) {
     super.didUpdateWidget(oldWidget);
 
+    _updateWidgetData();
+  }
+
+
+  void _updateWidgetData() {
     selected = widget.selected;
     _locations = TimeZoneUtility.i.locationMap[widget.timezone]!;
     _dateTime = TZDateTime.now(_locations[0]);
@@ -46,12 +50,17 @@ mixin LocationTileBackend on State<LocationTile> {
       });
     }
 
-    final success = await widget.onBookmark(widget.timezone, !selected);
+    if(selected){
+     await HiveMain.instance.removeFavoriteTimeZone(widget.timezone.hiveTimezone);
+    } else {
+     await HiveMain.instance.addFavoriteTimeZone(widget.timezone.hiveTimezone);
+    }
+    await widget.onBookmark?.call(widget.timezone, !selected);
 
     if (mounted) {
       setState(() {
         saving = false;
-        if (success) selected = !selected;
+        selected = !selected;
       });
     }
   }
