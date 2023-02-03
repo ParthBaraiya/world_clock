@@ -6,9 +6,13 @@ import '../../service/constants.dart';
 import '../../service/extension.dart';
 import '../../service/hive/hive_main.dart';
 import '../../service/theme/theme.dart';
+import '../../service/timer.dart';
 import '../../service/timezone.dart';
 import '../../typedefs.dart';
+import '../../values/enumerations.dart';
 import '../../values/world_clock_icons.dart';
+import '../listenable_builder.dart';
+import 'location_tile_expansion_settings.dart';
 
 part 'location_tile_backend.dart';
 
@@ -25,7 +29,6 @@ class LocationTile extends StatefulWidget {
     required this.timezone,
     required this.selected,
     this.onBookmark,
-
   }) : super(key: key);
 
   @override
@@ -111,16 +114,38 @@ class _LocationTileState extends State<LocationTile> with LocationTileBackend {
               children: [
                 Row(
                   children: [
-                    Icon(
-                      WorldClock.disk,
-                      size: 10,
-                      color: CustomTheme.instance.primaryTextColor,
-                    ),
+                    if (isExpanded)
+                      Icon(
+                        WorldClock.arrow_down,
+                        size: 15,
+                        color: CustomTheme.instance.primaryTextColor,
+                      )
+                    else
+                      Icon(
+                        WorldClock.arrow_up,
+                        size: 15,
+                        color: CustomTheme.instance.primaryTextColor,
+                      ),
                     const SizedBox(width: 10),
                     Expanded(
-                      child: Text(
-                        widget.timezone.abbreviation,
-                        style: CustomTheme.instance.timezoneTitleAccentStyle,
+                      child: Row(
+                        children: [
+                          Text(
+                            widget.timezone.abbreviation,
+                            style:
+                                CustomTheme.instance.timezoneTitleAccentStyle,
+                          ),
+                          Tooltip(
+                            message: 'Reset',
+                            child: IconButton(
+                              onPressed: _resetTimeLine,
+                              icon: const Icon(
+                                Icons.refresh_rounded,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     if (isDeskTop) timeWidget,
@@ -140,48 +165,12 @@ class _LocationTileState extends State<LocationTile> with LocationTileBackend {
                 AnimatedSize(
                   duration: const Duration(milliseconds: 300),
                   child: isExpanded
-                      ? SizedBox(
-                          height: 100,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 20,
-                              vertical: 10,
-                            ),
-                            child: Stack(
-                              children: [
-                                DecoratedBox(
-                                  position: DecorationPosition.foreground,
-                                  decoration: const BoxDecoration(
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        Colors.black,
-                                        Colors.transparent,
-                                        Colors.transparent,
-                                        Colors.transparent,
-                                        Colors.black
-                                      ],
-                                      stops: [0, 0.3, 0.5, 0.7, 1],
-                                    ),
-                                  ),
-                                  child: TimeLinePageView(
-                                    viewPortWidth: width - 40,
-                                    location: _locations[0],
-                                    onTimeChanged: _updateDateTime,
-                                    initialTime: _dateTime,
-                                  ),
-                                ),
-                                const Align(
-                                  child: ColoredBox(
-                                    color: Colors.blue,
-                                    child: SizedBox(
-                                      height: 80,
-                                      width: 1,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
+                      ? TimeLinePageView(
+                          viewPortWidth: width - 40,
+                          location: _locations[0],
+                          onTimeChanged: _updateDateTime,
+                          initialTime: _dateTime,
+                          timezone: widget.timezone,
                         )
                       : const SizedBox.shrink(),
                 ),
@@ -201,12 +190,14 @@ class TimeLinePageView extends StatefulWidget {
     required this.location,
     this.onTimeChanged,
     this.initialTime,
+    required this.timezone,
   });
 
   final double viewPortWidth;
   final Location location;
   final ValueChanged<TZDateTime>? onTimeChanged;
   final TZDateTime? initialTime;
+  final TimeZone timezone;
 
   @override
   State<TimeLinePageView> createState() => _TimeLinePageViewState();
@@ -216,6 +207,7 @@ class _TimeLinePageViewState extends State<TimeLinePageView> {
   var _controller = PageController();
   double _width = 0.0;
   int itemCount = 1;
+  late TZDateTime _scrolledDate;
 
   @override
   void initState() {
@@ -225,13 +217,21 @@ class _TimeLinePageViewState extends State<TimeLinePageView> {
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   void didUpdateWidget(covariant TimeLinePageView oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     if (_width != widget.viewPortWidth ||
         oldWidget.onTimeChanged != widget.onTimeChanged ||
-        oldWidget.location != widget.location)
+        oldWidget.location != widget.location ||
+        oldWidget.initialTime != widget.initialTime) {
       _updateController(widget.viewPortWidth);
+    }
   }
 
   @override
@@ -245,26 +245,24 @@ class _TimeLinePageViewState extends State<TimeLinePageView> {
 
   void _updateController(double newWidth) {
     _controller.dispose();
-    itemCount = DateTime(2072)
-        .difference(DateTime.fromMillisecondsSinceEpoch(0))
-        .inDays;
-    final date = widget.initialTime ?? TZDateTime.now(widget.location);
+    itemCount = AppTimeConfigs.instance.timelineDays;
+    _scrolledDate = widget.initialTime ?? TZDateTime.now(widget.location);
     final viewportFraction = _kTimeLineWidth / newWidth;
     _controller = PageController(viewportFraction: viewportFraction);
     _controller.addListener(() {
       final ms = ((_controller.position.pixels + (newWidth / 2)) * 60000 -
-              date.timeZoneOffset.inMilliseconds)
+              _scrolledDate.timeZoneOffset.inMilliseconds)
           .toInt();
-      final dateTime =
+      _scrolledDate =
           TZDateTime.fromMillisecondsSinceEpoch(widget.location, ms);
 
-      widget.onTimeChanged?.call(dateTime);
+      widget.onTimeChanged?.call(_scrolledDate);
     });
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      final offset =
-          ((date.millisecondsSinceEpoch + date.timeZoneOffset.inMilliseconds) /
-                  60000) -
-              (newWidth / 2);
+      final offset = ((_scrolledDate.millisecondsSinceEpoch +
+                  _scrolledDate.timeZoneOffset.inMilliseconds) /
+              60000) -
+          (newWidth / 2);
       _controller.jumpTo(offset);
     });
     _width = newWidth;
@@ -272,27 +270,107 @@ class _TimeLinePageViewState extends State<TimeLinePageView> {
 
   @override
   Widget build(BuildContext context) {
-    return PageView.builder(
-      controller: _controller,
-      pageSnapping: false,
-      physics: const BouncingScrollPhysics(),
-      dragStartBehavior: DragStartBehavior.down,
-      itemCount: itemCount,
-      itemBuilder: (_, index) => SizedBox(
-        height: 50,
-        width: _kTimeLineWidth,
-        child: FittedBox(
-          child: CustomPaint(
-            size: const Size(_kTimeLineWidth, 50),
-            painter: TimeLinePainter(),
-          ),
+    return SizedBox(
+      height: 110,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 20,
+          vertical: 10,
+        ),
+        child: Stack(
+          alignment: Alignment.topCenter,
+          children: [
+            DecoratedBox(
+              position: DecorationPosition.foreground,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.black,
+                    Colors.transparent,
+                    Colors.transparent,
+                    Colors.transparent,
+                    Colors.black
+                  ],
+                  stops: [0, 0.3, 0.5, 0.7, 1],
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: SizedBox(
+                  height: 50,
+                  child: PageView.builder(
+                    controller: _controller,
+                    pageSnapping: false,
+                    physics: const BouncingScrollPhysics(),
+                    dragStartBehavior: DragStartBehavior.down,
+                    itemCount: itemCount,
+                    itemBuilder: (_, index) => SizedBox(
+                      height: 50,
+                      width: _kTimeLineWidth,
+                      child: FittedBox(
+                        child: CustomPaint(
+                          size: const Size(_kTimeLineWidth, 50),
+                          painter: TimeLinePainter(
+                            timeZone: widget.timezone,
+                            format: TimeFormat.hour12,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const Center(
+              child: ColoredBox(
+                color: Colors.blue,
+                child: SizedBox(
+                  height: 90,
+                  width: 1.5,
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: FractionalTranslation(
+                translation: const Offset(0.5, 0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    ListenableBuilder(
+                      listenable: _controller,
+                      builder: (_) {
+                        return Text(
+                          _scrolledDate.descriptiveDate,
+                          style:
+                              CustomTheme.instance.timezoneSubTitleAccentStyle,
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
+// TODO: Update this logic to paint the canvas baed on timezone offset.
 class TimeLinePainter extends CustomPainter {
+  final TimeZone timeZone;
+  final TimeFormat format;
+
+  TimeLinePainter({
+    required this.timeZone,
+    required this.format,
+  });
+
   @override
   void paint(Canvas canvas, Size size) {
     final singleOffset = size.width / 1440;
@@ -307,10 +385,10 @@ class TimeLinePainter extends CustomPainter {
       final x = singleOffset * i;
 
       if (i % 60 == 0) {
-        final text = '${i ~/ 60}';
+        final text = '${((i ~/ 60) % format.maxPossibleTime)}';
         top = size.height * 0.5;
         canvas.paintText(
-          text: i == 1440 ? '0' : text,
+          text: text == '0' && i != 1440 ? '12' : text,
           minWidth: 2,
           maxWidth: 300,
           offset: Offset(x, top - 12),

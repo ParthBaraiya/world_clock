@@ -120,7 +120,7 @@ class ClockMarkings extends CustomPainter {
 
 class ClockHands extends CustomPainter {
   // Passing timer will repaint this painter every second.
-  ClockHands() : super(repaint: ClockTimer.timer);
+  ClockHands() : super(repaint: CustomTicker.secondTicker);
 
   @override
   void paint(ui.Canvas canvas, ui.Size size) {
@@ -132,9 +132,12 @@ class ClockHands extends CustomPainter {
     final minuteHeight = radius * 0.6;
     final secondHeight = radius * 0.82;
 
-    final second = ClockTimer.timer.second;
-    final minute = (ClockTimer.timer.minute * 60) + second;
-    final hour = ((ClockTimer.timer.hour % 12) * 3600) + minute;
+
+    final now = DateTime.now();
+
+    final second = now.second;
+    final minute = (now.minute * 60) + second;
+    final hour = ((now.hour % 12) * 3600) + minute;
 
     final paint = Paint()..strokeCap = ui.StrokeCap.round;
 

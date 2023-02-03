@@ -12,7 +12,7 @@ class TimeIndicator extends StatefulWidget {
 }
 
 class _TimeIndicatorState extends State<TimeIndicator> {
-  ClockTimer get _timer => ClockTimer.timer;
+  CustomTicker get _timer => CustomTicker.secondTicker;
 
   @override
   void initState() {
@@ -38,13 +38,13 @@ class _TimeIndicatorState extends State<TimeIndicator> {
       text: TextSpan(
         children: [
           TextSpan(
-            text: '${Constants.hhMM.format(_timer.currentDate)} ',
+            text: '${Constants.hhMM.format(DateTime.now())} ',
             style: CustomTheme.instance.titleStyle.copyWith(
               fontSize: 55,
             ),
           ),
           TextSpan(
-            text: _timer.currentDate.hour >= 12 ? 'PM' : 'AM',
+            text: DateTime.now().hour >= 12 ? 'PM' : 'AM',
             style: CustomTheme.instance.subtitleStyle,
           ),
         ],

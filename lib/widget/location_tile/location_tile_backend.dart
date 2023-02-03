@@ -11,8 +11,14 @@ mixin LocationTileBackend on State<LocationTile> {
   @override
   void initState() {
     super.initState();
-
+    CustomTicker.minuteTicker.addListener(_tickerCallback);
     _updateWidgetData();
+  }
+
+  @override
+  void dispose() {
+    CustomTicker.minuteTicker.removeListener(_tickerCallback);
+    super.dispose();
   }
 
   @override
@@ -20,6 +26,19 @@ mixin LocationTileBackend on State<LocationTile> {
     super.didUpdateWidget(oldWidget);
 
     _updateWidgetData();
+    _updateExpansion();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _updateExpansion();
+  }
+
+  void _updateExpansion() {
+    isExpanded = !LocationTileExpansionSettings.of(context)
+        .shrinkedZones
+        .contains(widget.timezone);
   }
 
   void _updateWidgetData() {
@@ -35,8 +54,21 @@ mixin LocationTileBackend on State<LocationTile> {
     }
   }
 
+  void _tickerCallback() {
+    _updateDateTime(TZDateTime.now(_locations[0]));
+  }
+
   void _toggleExpanded() {
     isExpanded = !isExpanded;
+    if (isExpanded) {
+      LocationTileExpansionSettings.of(context).expand(widget.timezone);
+    } else {
+      LocationTileExpansionSettings.of(context).shrink(widget.timezone);
+    }
+  }
+
+  void _resetTimeLine() {
+    _updateWidgetData();
     if (mounted) {
       setState(() {});
     }

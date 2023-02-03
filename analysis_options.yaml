@@ -14,6 +14,8 @@ analyzer:
     - lib/generated_plugin_registrant.dart
     - lib/generated/**
     - lib/gen/**
+  errors:
+    unused_element: ignore
 
 linter:
   rules:
@@ -47,7 +49,6 @@ linter:
     empty_statements: true
     empty_constructor_bodies: true
     hash_and_equals: false
-    invariant_booleans: true
     iterable_contains_unrelated_type: true
     list_remove_unrelated_type: true
     literal_only_boolean_expressions: true

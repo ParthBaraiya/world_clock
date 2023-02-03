@@ -24,6 +24,7 @@ extension ComparisonExtension on Size {
 extension DateFormatExtension on DateTime {
   String get weekName => DateFormat('EEEE').format(this);
   String get dateMonth => DateFormat('d MMM').format(this);
+  String get descriptiveDate => DateFormat('d MMMM yyyy').format(this);
 }
 
 extension NavigationExtension on BuildContext {
@@ -84,10 +85,10 @@ extension PainterExtension on Canvas {
 
 abstract class PrintUtility {
   static void debugLog(String Function() function) {
-    assert((){
+    assert(() {
       try {
         debugPrint(function());
-      } catch(e) {} // Suppress exception...
+      } catch (e) {} // Suppress exception...
       return true;
     }());
   }

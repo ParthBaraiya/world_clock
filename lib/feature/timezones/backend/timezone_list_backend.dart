@@ -1,6 +1,7 @@
 part of '../timezones.dart';
 
-mixin TimeZoneListBackend on State<TimezoneList> {
+mixin TimeZoneListBackend
+    on State<TimezoneList> {
   late final ScrollController _controller;
 
   @override

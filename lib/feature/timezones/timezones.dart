@@ -9,6 +9,7 @@ import '../../service/theme/theme.dart';
 import '../../service/timezone.dart';
 import '../../widget/buttons.dart';
 import '../../widget/location_tile/location_tile.dart';
+import '../../widget/location_tile/location_tile_expansion_settings.dart';
 
 part 'backend/timezone_list_backend.dart';
 part 'timezone_list.dart';

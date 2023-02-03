@@ -2,36 +2,27 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 
-class ClockTimer extends ChangeNotifier {
-  static final ClockTimer timer = ClockTimer._();
+class CustomTicker extends ChangeNotifier {
+  static final secondTicker =
+      CustomTicker(duration: const Duration(seconds: 1));
+  static final minuteTicker =
+      CustomTicker(duration: const Duration(minutes: 1));
 
-  final _duration = const Duration(seconds: 1);
+  final Duration duration;
 
-  late DateTime _date;
+  late final Timer _timer;
 
-  int _counter = 0;
-
-  late Timer _timer;
-
-  ClockTimer._() {
-    _date = DateTime.now();
-    _timer = Timer(_duration, () {});
+  CustomTicker({required this.duration}) {
     _tick();
   }
 
-  int get elapsedSeconds => _counter;
-
-  DateTime get currentDate => _date;
-
-  int get hour => _date.hour;
-  int get minute => _date.minute;
-  int get second => _date.second;
-
   void _tick() {
+    _timer = Timer.periodic(duration, (_) => notifyListeners());
+  }
+
+  @override
+  void dispose() {
     _timer.cancel();
-    _counter++;
-    _date = DateTime.now();
-    _timer = Timer(_duration, _tick);
-    notifyListeners();
+    super.dispose();
   }
 }
