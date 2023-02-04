@@ -120,7 +120,11 @@ class ClockMarkings extends CustomPainter {
 
 class ClockHands extends CustomPainter {
   // Passing timer will repaint this painter every second.
-  ClockHands() : super(repaint: CustomTicker.secondTicker);
+  ClockHands({
+    required this.location,
+  }) : super(repaint: CustomTicker.secondTicker);
+
+  final Location? location;
 
   @override
   void paint(ui.Canvas canvas, ui.Size size) {
@@ -132,8 +136,7 @@ class ClockHands extends CustomPainter {
     final minuteHeight = radius * 0.6;
     final secondHeight = radius * 0.82;
 
-
-    final now = DateTime.now();
+    final now = location == null ? DateTime.now() : TZDateTime.now(location!);
 
     final second = now.second;
     final minute = (now.minute * 60) + second;

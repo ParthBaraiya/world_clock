@@ -4,18 +4,35 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        {
-            "name": "web-chrome",
-            "request": "launch",
-            "type": "dart",
-            "args": ["-d", "chrome"]
-        },
+      {
+        "name": "chrome",
+        "request": "launch",
+        "type": "dart",
+        "flutterMode": "debug",
+        "args": ["-d", "chrome"]
+      },
 
-        {
-            "name": "windows",
-            "request": "launch",
-            "type": "dart",
-            "args": ["-d", "windows"]
-        }
+      {
+        "name": "profile-chrome",
+        "request": "launch",
+        "type": "dart",
+        "flutterMode": "profile",
+        "args": ["-d", "chrome"]
+      },
+
+      {
+        "name": "windows",
+        "request": "launch",
+        "type": "dart",
+        "flutterMode": "debug",
+        "args": ["-d", "windows"]
+      },
+      {
+        "name": "profile-windows",
+        "request": "launch",
+        "type": "dart",
+        "flutterMode": "profile",
+        "args": ["-d", "windows"]
+      }
     ]
 }

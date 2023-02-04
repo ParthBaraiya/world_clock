@@ -6,15 +6,18 @@ import 'package:flutter/material.dart';
 import '../../service/extension.dart';
 import '../../service/theme/theme.dart';
 import '../../service/timer.dart';
+import '../../service/timezone.dart';
 
 part 'painter.dart';
 
 class Clock extends StatelessWidget {
   final double radius;
+  final Location? location;
 
   const Clock({
     Key? key,
     required this.radius,
+    this.location,
   }) : super(key: key);
 
   @override
@@ -24,7 +27,9 @@ class Clock extends StatelessWidget {
       child: CustomPaint(
         willChange: true,
         painter: ClockMarkings(),
-        foregroundPainter: ClockHands(),
+        foregroundPainter: ClockHands(
+          location: location,
+        ),
       ),
     );
   }

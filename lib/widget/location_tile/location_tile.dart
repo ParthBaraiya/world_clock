@@ -54,125 +54,146 @@ class _LocationTileState extends State<LocationTile> with LocationTileBackend {
             zoneWidth = width * 0.5;
           }
 
-          final timeWidget = Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                Constants.hhMM.format(_dateTime),
-                style: CustomTheme.instance.timezoneTitleStyle,
-              ),
-              const SizedBox(width: 10),
-              Text(
-                Constants.a.format(_dateTime),
-                style: CustomTheme.instance.timezoneSubTitleStyle,
-              ),
-            ],
-          );
-
-          final offsetWidget = Text(
-            "${offset < 0 ? "-" : "+"}${offset.abs()}HRS",
-            style: CustomTheme.instance.timezoneSubTitleAccentStyle,
-          );
-
-          final locationWidget = Text(
-            _locations[0].name,
-            style: CustomTheme.instance.timezoneSubTitleAccentStyle,
-            textAlign: TextAlign.end,
-            overflow: TextOverflow.ellipsis,
-          );
-
-          final zoneDetails = Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              if (isDeskTop) locationWidget else timeWidget,
-              const SizedBox(height: 7),
-              if (isDeskTop)
-                offsetWidget
-              else
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Expanded(child: locationWidget),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      child: Text(
-                        '|',
-                        style: CustomTheme.instance.timezoneSubTitleAccentStyle,
-                      ),
-                    ),
-                    offsetWidget,
-                  ],
-                ),
-            ],
-          );
-
           return InkWell(
             onTap: _toggleExpanded,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Row(
-                  children: [
-                    if (isExpanded)
-                      Icon(
-                        WorldClock.arrow_down,
-                        size: 15,
-                        color: CustomTheme.instance.primaryTextColor,
-                      )
-                    else
-                      Icon(
-                        WorldClock.arrow_up,
-                        size: 15,
-                        color: CustomTheme.instance.primaryTextColor,
-                      ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Row(
+                ValueListenableBuilder(
+                    valueListenable: _dateTime,
+                    builder: (_, value, __) {
+                      final timeWidget = Row(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            widget.timezone.abbreviation,
-                            style:
-                                CustomTheme.instance.timezoneTitleAccentStyle,
+                            Constants.hhMM.format(_dateTime.value),
+                            style: CustomTheme.instance.timezoneTitleStyle,
                           ),
-                          Tooltip(
-                            message: 'Reset',
-                            child: IconButton(
-                              onPressed: _resetTimeLine,
-                              icon: const Icon(
-                                Icons.refresh_rounded,
-                                color: Colors.white,
-                              ),
-                            ),
+                          const SizedBox(width: 10),
+                          Text(
+                            Constants.a.format(_dateTime.value),
+                            style: CustomTheme.instance.timezoneSubTitleStyle,
                           ),
                         ],
-                      ),
-                    ),
-                    if (isDeskTop) timeWidget,
-                    SizedBox(
-                      width: zoneWidth,
-                      child: zoneDetails,
-                    ),
-                    const SizedBox(width: 20),
-                    InkWell(
-                      onTap: _toggleFavorite,
-                      child: Icon(
-                        selected ? Icons.bookmark : Icons.bookmark_outline,
-                      ),
-                    )
-                  ],
-                ),
-                AnimatedSize(
-                  duration: const Duration(milliseconds: 300),
-                  child: isExpanded
-                      ? TimeLinePageView(
-                          viewPortWidth: width - 40,
-                          location: _locations[0],
-                          onTimeChanged: _updateDateTime,
-                          initialTime: _dateTime,
-                          timezone: widget.timezone,
-                        )
-                      : const SizedBox.shrink(),
+                      );
+
+                      final offsetWidget = Text(
+                        "${offset < 0 ? "-" : "+"}${offset.abs()}HRS",
+                        style: CustomTheme.instance.timezoneSubTitleAccentStyle,
+                      );
+
+                      final locationWidget = Text(
+                        _locations[0].name,
+                        style: CustomTheme.instance.timezoneSubTitleAccentStyle,
+                        textAlign: TextAlign.end,
+                        overflow: TextOverflow.ellipsis,
+                      );
+
+                      final zoneDetails = Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          if (isDeskTop) locationWidget else timeWidget,
+                          const SizedBox(height: 7),
+                          if (isDeskTop)
+                            offsetWidget
+                          else
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Expanded(child: locationWidget),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 5),
+                                  child: Text(
+                                    '|',
+                                    style: CustomTheme
+                                        .instance.timezoneSubTitleAccentStyle,
+                                  ),
+                                ),
+                                offsetWidget,
+                              ],
+                            ),
+                        ],
+                      );
+                      return Row(
+                        children: [
+                          ValueListenableBuilder(
+                            valueListenable: isExpanded,
+                            builder: (_, value, __) {
+                              return Icon(
+                                value
+                                    ? WorldClock.arrow_down
+                                    : WorldClock.arrow_up,
+                                size: 15,
+                                color: CustomTheme.instance.primaryTextColor,
+                              );
+                            },
+                          ),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Text(
+                                  widget.timezone.abbreviation,
+                                  style: CustomTheme
+                                      .instance.timezoneTitleAccentStyle,
+                                ),
+                                Tooltip(
+                                  message: 'Reset',
+                                  child: IconButton(
+                                    onPressed: _updateWidgetData,
+                                    icon: const Icon(
+                                      Icons.refresh_rounded,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          if (isDeskTop) timeWidget,
+                          SizedBox(
+                            width: zoneWidth,
+                            child: zoneDetails,
+                          ),
+                          const SizedBox(width: 20),
+                          InkWell(
+                            onTap: _toggleFavorite,
+                            child: ValueListenableBuilder(
+                              valueListenable: isFavorite,
+                              builder: (_, value, __) {
+                                return Icon(
+                                  value
+                                      ? Icons.bookmark
+                                      : Icons.bookmark_outline,
+                                );
+                              },
+                            ),
+                          )
+                        ],
+                      );
+                    }),
+                ValueListenableBuilder(
+                  valueListenable: isExpanded,
+                  builder: (_, value, __) {
+                    return AnimatedSize(
+                      duration: const Duration(milliseconds: 300),
+                      child: value
+                          ? ValueListenableBuilder(
+                              valueListenable: _dateTime,
+                              builder: (_, value, __) {
+                                return TimeLinePageView(
+                                  viewPortWidth: width - 40,
+                                  location: _locations[0],
+                                  onTimeChanged: _updateDateTime,
+                                  initialTime: _dateTime.value,
+                                  timezone: widget.timezone,
+                                );
+                              })
+                          : const SizedBox.shrink(),
+                    );
+                  },
                 ),
               ],
             ),
@@ -213,7 +234,7 @@ class _TimeLinePageViewState extends State<TimeLinePageView> {
   void initState() {
     super.initState();
 
-    _updateController(widget.viewPortWidth);
+    _updateController(widget.viewPortWidth, shouldAnimate: false);
   }
 
   @override
@@ -229,8 +250,11 @@ class _TimeLinePageViewState extends State<TimeLinePageView> {
     if (_width != widget.viewPortWidth ||
         oldWidget.onTimeChanged != widget.onTimeChanged ||
         oldWidget.location != widget.location ||
-        oldWidget.initialTime != widget.initialTime) {
-      _updateController(widget.viewPortWidth);
+        _scrolledDate != widget.initialTime) {
+      _updateController(
+        widget.viewPortWidth,
+        shouldAnimate: oldWidget.initialTime != widget.initialTime,
+      );
     }
   }
 
@@ -243,7 +267,7 @@ class _TimeLinePageViewState extends State<TimeLinePageView> {
     }
   }
 
-  void _updateController(double newWidth) {
+  void _updateController(double newWidth, {bool shouldAnimate = true}) {
     _controller.dispose();
     itemCount = AppTimeConfigs.instance.timelineDays;
     _scrolledDate = widget.initialTime ?? TZDateTime.now(widget.location);
@@ -263,7 +287,15 @@ class _TimeLinePageViewState extends State<TimeLinePageView> {
                   _scrolledDate.timeZoneOffset.inMilliseconds) /
               60000) -
           (newWidth / 2);
-      _controller.jumpTo(offset);
+      if (shouldAnimate) {
+        _controller.animateTo(
+          offset,
+          duration: Constants.defaultAnimationDurationLong,
+          curve: Constants.defaultAnimationCurve,
+        );
+      } else {
+        _controller.jumpTo(offset);
+      }
     });
     _width = newWidth;
   }
@@ -361,7 +393,7 @@ class _TimeLinePageViewState extends State<TimeLinePageView> {
   }
 }
 
-// TODO: Update this logic to paint the canvas baed on timezone offset.
+// TODO: Update this logic to paint the canvas based on timezone offset.
 class TimeLinePainter extends CustomPainter {
   final TimeZone timeZone;
   final TimeFormat format;

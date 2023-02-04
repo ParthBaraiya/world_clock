@@ -1,12 +1,12 @@
 part of 'location_tile.dart';
 
 mixin LocationTileBackend on State<LocationTile> {
-  bool selected = false;
-  bool saving = false;
-  bool isExpanded = true;
+  final saving = ValueNotifier(false);
+  final isExpanded = ValueNotifier(true);
 
+  late final isFavorite = ValueNotifier<bool>(widget.selected);
   late List<Location> _locations;
-  late TZDateTime _dateTime;
+  late final _dateTime = ValueNotifier(TZDateTime.now(_locations[0]));
 
   @override
   void initState() {
@@ -18,6 +18,10 @@ mixin LocationTileBackend on State<LocationTile> {
   @override
   void dispose() {
     CustomTicker.minuteTicker.removeListener(_tickerCallback);
+    saving.dispose();
+    isExpanded.dispose();
+    isFavorite.dispose();
+    _dateTime.dispose();
     super.dispose();
   }
 
@@ -36,22 +40,19 @@ mixin LocationTileBackend on State<LocationTile> {
   }
 
   void _updateExpansion() {
-    isExpanded = !LocationTileExpansionSettings.of(context)
+    isExpanded.value = !LocationTileExpansionSettings.of(context)
         .shrinkedZones
         .contains(widget.timezone);
   }
 
   void _updateWidgetData() {
-    selected = widget.selected;
+    isFavorite.value = widget.selected;
     _locations = TimeZoneUtility.i.locationMap[widget.timezone]!;
-    _dateTime = TZDateTime.now(_locations[0]);
+    _dateTime.value = TZDateTime.now(_locations[0]);
   }
 
   void _updateDateTime(TZDateTime newDate) {
-    _dateTime = newDate;
-    if (mounted) {
-      setState(() {});
-    }
+    _dateTime.value = newDate;
   }
 
   void _tickerCallback() {
@@ -59,41 +60,26 @@ mixin LocationTileBackend on State<LocationTile> {
   }
 
   void _toggleExpanded() {
-    isExpanded = !isExpanded;
-    if (isExpanded) {
+    isExpanded.value = !isExpanded.value;
+    if (isExpanded.value) {
       LocationTileExpansionSettings.of(context).expand(widget.timezone);
     } else {
       LocationTileExpansionSettings.of(context).shrink(widget.timezone);
     }
   }
 
-  void _resetTimeLine() {
-    _updateWidgetData();
-    if (mounted) {
-      setState(() {});
-    }
-  }
-
   Future<void> _toggleFavorite() async {
-    if (mounted) {
-      setState(() {
-        saving = true;
-      });
-    }
+    saving.value = true;
 
-    if (selected) {
+    if (isFavorite.value) {
       await HiveMain.instance
           .removeFavoriteTimeZone(widget.timezone.hiveTimezone);
     } else {
       await HiveMain.instance.addFavoriteTimeZone(widget.timezone.hiveTimezone);
     }
-    await widget.onBookmark?.call(widget.timezone, !selected);
+    await widget.onBookmark?.call(widget.timezone, !isFavorite.value);
 
-    if (mounted) {
-      setState(() {
-        saving = false;
-        selected = !selected;
-      });
-    }
+    saving.value = false;
+    isFavorite.value = !isFavorite.value;
   }
 }

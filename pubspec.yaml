@@ -39,10 +39,8 @@ dependencies:
   hive_flutter: ^1.1.0
   flutter_web_plugins:
     sdk: flutter
-
-#  responsive_framework: ^0.1.7
   # Enable this in future.
-#  bitsdojo_window: ^0.1.1+1
+  #  bitsdojo_window: ^0.1.1+1
 
 dev_dependencies:
   flutter_test:

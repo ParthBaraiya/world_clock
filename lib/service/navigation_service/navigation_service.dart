@@ -21,6 +21,10 @@ class NavigationService {
       _informationParser;
 
   GlobalKey<NavigatorState> get navigatorKey => _delegate.navigatorKey;
+
+  void setPathConfig(WorldClockRouteConfig config) {
+    _delegate.setRouteConfig(config);
+  }
 }
 
 class RouteNames {

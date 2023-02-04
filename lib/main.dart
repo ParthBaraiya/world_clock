@@ -1,27 +1,23 @@
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
 import 'service/hive/hive_main.dart';
 import 'service/navigation_service/navigation_service.dart';
 import 'service/shared_preferences.dart';
 import 'service/theme/theme.dart';
 import 'service/timezone.dart';
+import 'service/web_services/web_services.dart';
 
 Future<void> main() async {
-  setUrlStrategy(PathUrlStrategy());
-
   WidgetsFlutterBinding.ensureInitialized();
+  setWebPathStrategy();
 
   await SPService.i.initialize();
 
   await HiveMain.instance.initialize();
-
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor: Colors.transparent,
-  ));
 
   final mode = SPService.i.getThemeMode();
 
@@ -31,10 +27,16 @@ Future<void> main() async {
           : ThemeMode.light
       : mode);
 
-  await SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);
+  if (!kIsWeb) {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+    ));
+
+    await SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+  }
 
   TimeZoneUtility.i.initialize();
 
