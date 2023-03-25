@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -9,16 +8,19 @@ import 'service/navigation_service/navigation_service.dart';
 import 'service/shared_preferences.dart';
 import 'service/theme/theme.dart';
 import 'service/timezone.dart';
-import 'service/web_services/web_services.dart';
+import 'service/universal_services/universal_services.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  setWebPathStrategy();
+  UniversalServices.i.setWebPathStrategy();
 
+  // Initialize Shared Preferences.
   await SPService.i.initialize();
 
+  // Initialize hive database
   await HiveMain.instance.initialize();
 
+  // Gets theme mode and set the theme data...
   final mode = SPService.i.getThemeMode();
 
   CustomTheme.instance.initialize(mode == ThemeMode.system
@@ -27,7 +29,8 @@ Future<void> main() async {
           : ThemeMode.light
       : mode);
 
-  if (!kIsWeb) {
+  if (UniversalServices.i.isMobile) {
+    // Set System UI overlay for Mobile devices.
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ));
@@ -38,6 +41,7 @@ Future<void> main() async {
     ]);
   }
 
+  // Initializes the timezone.
   TimeZoneUtility.i.initialize();
 
   runApp(const MyApp());
@@ -45,11 +49,13 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'World Clock',
+      // TODO: Set this data from theme...
       theme: ThemeData.light().copyWith(
         scaffoldBackgroundColor: CustomTheme.instance.backgroundColor,
       ),
