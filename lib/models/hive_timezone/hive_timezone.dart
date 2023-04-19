@@ -5,7 +5,7 @@ import '../../service/timezone.dart';
 
 part 'hive_timezone.g.dart';
 
-@HiveType(typeId: HiveMain.hiveTimeZoneBoxID)
+@HiveType(typeId: HiveBoxes.hiveTimeZoneBoxID)
 class HiveTimezone extends HiveObject {
   /// Milliseconds east of UTC.
   @HiveField(0)

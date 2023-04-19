@@ -3,42 +3,68 @@ import 'package:hive_flutter/adapters.dart';
 import '../../models/hive_location/hive_location.dart';
 import '../../models/hive_timezone/hive_timezone.dart';
 import '../extension.dart';
+import '../world_clock_service.dart';
 
-class HiveMain {
-  static final HiveMain instance = HiveMain._();
+class HiveService extends WorldClockService<Box<HiveTimezone>> {
+  HiveService({
+    required this.favoritesBox,
+  }) : super(retries: 10);
 
-  HiveMain._();
+  final String favoritesBox;
 
-  Future<void> initialize() async {
-    await Hive.initFlutter();
+  int _iteration = 0;
 
-    Hive
-      ..registerAdapter(HiveTimezoneAdapter())
-      ..registerAdapter(HiveLocationAdapter());
+  void initialize() {
+    if (value != null) return;
 
-    _favoriteLocationsBox = await Hive.openBox('favorites');
+    initializeService(() async {
+      await Hive.initFlutter();
+
+      Hive
+        ..registerAdapter(HiveTimezoneAdapter())
+        ..registerAdapter(HiveLocationAdapter());
+
+      value = await Hive.openBox(favoritesBox);
+    });
   }
 
-  late Box<HiveTimezone> _favoriteLocationsBox;
+  Future<Box<HiveTimezone>> get _favoriteLocationsBoxAsync =>
+      _getFavoriteLocationBox();
 
-  Box<HiveTimezone> get favoriteLocationsBox => _favoriteLocationsBox;
+  Future<Box<HiveTimezone>> _getFavoriteLocationBox() async {
+    if (await isInitialized && value != null) {
+      _iteration = 0;
+      return value!;
+    } else {
+      if (_iteration >= retries) {
+        throw 'Hive box is not initialized.';
+      }
+      _iteration++;
+      initialize();
+      return _getFavoriteLocationBox();
+    }
+  }
 
   Future<void> addFavoriteTimeZone(HiveTimezone location) async {
-    if (_locationIndex(location) == -1) {
-      final result = await _favoriteLocationsBox.add(location);
+    final box = await _favoriteLocationsBoxAsync;
+
+    if (_locationIndex(box, location) == -1) {
+      final result = await box.add(location);
       PrintUtility.debugLog(() => '$result');
     }
   }
 
   Future<void> removeFavoriteTimeZone(HiveTimezone location) async {
-    final index = _locationIndex(location);
+    final box = await _favoriteLocationsBoxAsync;
+
+    final index = _locationIndex(box, location);
     if (index != -1) {
-      await _favoriteLocationsBox.deleteAt(index);
+      await box.deleteAt(index);
     }
   }
 
-  int _locationIndex(HiveTimezone location) {
-    final locations = _favoriteLocationsBox.values.toList();
+  int _locationIndex(Box<HiveTimezone> box, HiveTimezone location) {
+    final locations = box.values.toList();
     final length = locations.length;
 
     for (var i = 0; i < length; i++) {
@@ -47,7 +73,9 @@ class HiveMain {
 
     return -1;
   }
+}
 
+class HiveBoxes {
   static const hiveLocationBoxID = 0;
   static const hiveTimeZoneBoxID = 1;
 }

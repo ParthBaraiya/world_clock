@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../app_services.dart';
 import '../../models/hive_timezone/hive_timezone.dart';
-import '../../service/hive/hive_main.dart';
+import '../../service/theme/theme.dart';
 import '../../widget/location_tile/location_tile.dart';
 import '../../widget/location_tile/location_tile_expansion_settings.dart';
 
@@ -12,13 +13,20 @@ class Favorites extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: HiveMain.instance.favoriteLocationsBox.watch(),
-      builder: (_, snapshot) {
-      
-        return _LocationTileList(
-          timezones: HiveMain.instance.favoriteLocationsBox.values.toList(),
-        );
+    return ValueListenableBuilder(
+      valueListenable: AppServices.hive,
+      builder: (_, value, __) {
+        if (value != null) {
+          return StreamBuilder(
+            stream: value.watch(),
+            builder: (_, __) {
+              return _LocationTileList(
+                timezones: value.values.toList(),
+              );
+            },
+          );
+        }
+        return const Text('Hive is not initialized.');
       },
     );
   }
@@ -40,15 +48,23 @@ class _LocationTileListState extends State<_LocationTileList>
     with LocationTileExpansionSettingsMixin {
   @override
   Widget build(BuildContext context) {
+    if (widget.timezones.isEmpty) {
+      return Center(
+        child: Text(
+          'No timezone found...',
+          style: CustomTheme.instance.titleStyle,
+        ),
+      );
+    }
     return LocationTileExpansionSettings(
       child: ListView.builder(
-          itemBuilder: (_, index) {
-            return LocationTile(
+        itemBuilder: (_, index) {
+          return LocationTile(
             key: ValueKey(widget.timezones[index].timezone),
             timezone: widget.timezones[index].timezone,
-              selected: true,
-            );
-          },
+            selected: true,
+          );
+        },
         itemCount: widget.timezones.length,
       ),
       shrinkedZones: shrinkedZones,

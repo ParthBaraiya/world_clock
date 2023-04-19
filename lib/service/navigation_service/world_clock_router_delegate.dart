@@ -65,13 +65,6 @@ class WorldClockRouterDelegate extends RouterDelegate<WorldClockRouteConfig>
     _pages.clear();
     _pages = <Page>[];
 
-    Page _getPage(Widget child) => child.page(
-          // Defines when a page can update.
-          key: ValueKey(pages.length),
-          routeName: _routeConfig.getPath(),
-          config: _routeConfig,
-        );
-
     if (_routeConfig is InvalidPath) {
       _pages.add(_getPage(const Error404Page()));
       return;
@@ -121,6 +114,15 @@ class WorldClockRouterDelegate extends RouterDelegate<WorldClockRouteConfig>
       );
     }
   }
+
+  // Local method.
+  //
+  Page _getPage(Widget child) => child.page(
+        // Defines when a page can update.
+        key: ValueKey(pages.length),
+        routeName: _routeConfig.getPath(),
+        config: _routeConfig,
+      );
 
   /// Gets called whenever user pops a page from the stack...
   bool _onPopPage(Route<dynamic> route, dynamic result) {

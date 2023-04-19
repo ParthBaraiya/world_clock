@@ -72,10 +72,10 @@ mixin LocationTileBackend on State<LocationTile> {
     saving.value = true;
 
     if (isFavorite.value) {
-      await HiveMain.instance
+      await AppServices.hive
           .removeFavoriteTimeZone(widget.timezone.hiveTimezone);
     } else {
-      await HiveMain.instance.addFavoriteTimeZone(widget.timezone.hiveTimezone);
+      await AppServices.hive.addFavoriteTimeZone(widget.timezone.hiveTimezone);
     }
     await widget.onBookmark?.call(widget.timezone, !isFavorite.value);
 

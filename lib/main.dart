@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'app_services.dart';
 import 'service/hive/hive_main.dart';
 import 'service/navigation_service/navigation_service.dart';
 import 'service/shared_preferences.dart';
@@ -17,8 +18,9 @@ Future<void> main() async {
   // Initialize Shared Preferences.
   await SPService.i.initialize();
 
-  // Initialize hive database
-  await HiveMain.instance.initialize();
+  AppServices.init(
+    hive: HiveService(favoritesBox: 'favorites')..initialize(),
+  );
 
   // Gets theme mode and set the theme data...
   final mode = SPService.i.getThemeMode();

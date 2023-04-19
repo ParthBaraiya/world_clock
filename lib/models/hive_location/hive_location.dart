@@ -6,7 +6,7 @@ import '../hive_timezone/hive_timezone.dart';
 
 part 'hive_location.g.dart';
 
-@HiveType(typeId: HiveMain.hiveLocationBoxID)
+@HiveType(typeId: HiveBoxes.hiveLocationBoxID)
 class HiveLocation extends HiveObject {
   /// [Location] name.
   @HiveField(0)
