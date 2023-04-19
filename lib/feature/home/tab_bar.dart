@@ -73,7 +73,7 @@ class _TimeZoneTabState extends State<TimeZoneTab>
                 width: 5,
                 color: CustomTheme.instance.accentTextColor,
               ),
-              insets: EdgeInsets.symmetric(horizontal: 30),
+              insets: const EdgeInsets.symmetric(horizontal: 30),
             ),
             tabs: [
               InkWellButton(

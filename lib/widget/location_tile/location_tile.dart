@@ -5,7 +5,6 @@ import '../../app_services.dart';
 import '../../models/hive_timezone/hive_timezone.dart';
 import '../../service/constants.dart';
 import '../../service/extension.dart';
-import '../../service/hive/hive_main.dart';
 import '../../service/theme/theme.dart';
 import '../../service/timer.dart';
 import '../../service/timezone.dart';

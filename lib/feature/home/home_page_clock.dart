@@ -64,7 +64,7 @@ class HomePageClock extends StatelessWidget {
                       ),
                       child: Row(
                         children: [
-                          Spacer(),
+                          const Spacer(),
                           const TimeZoneInfo(),
                         ],
                       ),
@@ -82,7 +82,7 @@ class HomePageClock extends StatelessWidget {
                       child: Row(
                         children: [
                           const DayInfo(),
-                          Spacer(),
+                          const Spacer(),
                         ],
                       ),
                     ),

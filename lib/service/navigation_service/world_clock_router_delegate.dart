@@ -34,9 +34,6 @@ class WorldClockRouterDelegate extends RouterDelegate<WorldClockRouteConfig>
     // Generate new navigator stack.
     _generateNavigatorStack(context);
 
-    print("Pages: ${_pages.length}");
-    _pages.forEach((e) => debugPrint(e.toString()));
-
     return Navigator(
       key: navigatorKey,
       pages: pages,
