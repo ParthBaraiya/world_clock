@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 
 import '../../feature/error_404.dart';
+import '../../feature/favorites/favorites_list_page.dart';
 import '../../feature/home/home.dart';
 import '../../feature/responsive_home_page.dart';
 import '../../feature/timezones/timezone_details.dart';
@@ -103,7 +104,7 @@ class WorldClockRouterDelegate extends RouterDelegate<WorldClockRouteConfig>
         _getPage(
           path.timezone == null
               ? const WebHomePage(
-                  widget: TimezoneListPage(),
+                  widget: FavoritesListPage(),
                   index: 0,
                 )
               : TimezoneDetails(

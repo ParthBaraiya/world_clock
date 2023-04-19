@@ -74,11 +74,13 @@ class _HomePageAppBar extends StatelessWidget {
             width: 15,
           ),
           InkWellButton(
-            onTap: () {}, // TODO: Add callback
+            onTap: () => context.navigateTo(
+              routeConfig: FavoritesPath.list(),
+            ),
             radius: BorderRadius.circular(100.0),
             hoverColor: CustomTheme.instance.primaryTextColor.withOpacity(0.2),
             child: Icon(
-              WorldClock.exchange,
+              Icons.bookmark_outline,
               size: 30,
               color: CustomTheme.instance.primaryTextColor,
             ),
