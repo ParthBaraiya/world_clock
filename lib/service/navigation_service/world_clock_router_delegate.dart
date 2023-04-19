@@ -33,6 +33,9 @@ class WorldClockRouterDelegate extends RouterDelegate<WorldClockRouteConfig>
     // Generate new navigator stack.
     _generateNavigatorStack(context);
 
+    print("Pages: ${_pages.length}");
+    _pages.forEach((e) => debugPrint(e.toString()));
+
     return Navigator(
       key: navigatorKey,
       pages: pages,
@@ -59,6 +62,16 @@ class WorldClockRouterDelegate extends RouterDelegate<WorldClockRouteConfig>
   //#endregion
 
   //#region Private Methods
+
+  // Local method.
+  //
+  Page _getPage(Widget child, WorldClockRouteConfig config) => child.page(
+        // Defines when a page can update.
+        key: ValueKey(pages.length),
+        routeName: config.getPath(),
+        config: config,
+      );
+
   /// Generates the navigator stack and store it in pages variable.
   void _generateNavigatorStack(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -66,12 +79,12 @@ class WorldClockRouterDelegate extends RouterDelegate<WorldClockRouteConfig>
     _pages = <Page>[];
 
     if (_routeConfig is InvalidPath) {
-      _pages.add(_getPage(const Error404Page()));
+      _pages.add(_getPage(const Error404Page(), InvalidPath()));
       return;
     }
 
     if (width < HomeScreenBreakPoints.point800) {
-      _pages.add(_getPage(const HomePage()));
+      _pages.add(_getPage(const HomePage(), HomePagePath()));
     } else if (_routeConfig is HomePagePath) {
       _pages.add(
         _getPage(
@@ -79,6 +92,7 @@ class WorldClockRouterDelegate extends RouterDelegate<WorldClockRouteConfig>
             widget: TimezoneListPage(),
             index: 0,
           ),
+          _routeConfig,
         ),
       );
     }
@@ -95,6 +109,7 @@ class WorldClockRouterDelegate extends RouterDelegate<WorldClockRouteConfig>
               : TimezoneDetails(
                   timeZone: path.timezone!,
                 ),
+          _routeConfig,
         ),
       );
     } else if (_routeConfig is TimezonePath) {
@@ -110,19 +125,11 @@ class WorldClockRouterDelegate extends RouterDelegate<WorldClockRouteConfig>
               : TimezoneDetails(
                   timeZone: path.timezone!,
                 ),
+          _routeConfig,
         ),
       );
     }
   }
-
-  // Local method.
-  //
-  Page _getPage(Widget child) => child.page(
-        // Defines when a page can update.
-        key: ValueKey(pages.length),
-        routeName: _routeConfig.getPath(),
-        config: _routeConfig,
-      );
 
   /// Gets called whenever user pops a page from the stack...
   bool _onPopPage(Route<dynamic> route, dynamic result) {

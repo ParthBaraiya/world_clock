@@ -55,24 +55,37 @@ class HomePageClock extends StatelessWidget {
                     CustomTheme.instance.accentTextColor.createSplitGradient(),
               ),
               child: Row(
-                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Container(
-                    padding: const EdgeInsets.only(right: 50),
-                    decoration: BoxDecoration(
-                      color: CustomTheme.instance.backgroundColor,
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.only(right: 50),
+                      decoration: BoxDecoration(
+                        color: CustomTheme.instance.backgroundColor,
+                      ),
+                      child: Row(
+                        children: [
+                          Spacer(),
+                          const TimeZoneInfo(),
+                        ],
+                      ),
                     ),
-                    child: const TimeZoneInfo(),
                   ),
                   const SizedBox(
                     width: 1.5,
                   ),
-                  Container(
-                    padding: const EdgeInsets.only(left: 30),
-                    decoration: BoxDecoration(
-                      color: CustomTheme.instance.backgroundColor,
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.only(left: 30),
+                      decoration: BoxDecoration(
+                        color: CustomTheme.instance.backgroundColor,
+                      ),
+                      child: Row(
+                        children: [
+                          const DayInfo(),
+                          Spacer(),
+                        ],
+                      ),
                     ),
-                    child: const DayInfo(),
                   ),
                 ],
               ),

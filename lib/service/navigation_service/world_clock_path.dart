@@ -54,7 +54,7 @@ class FavoritesPath extends TimezonePath {
 }
 
 class InvalidPath extends WorldClockRouteConfig {
-  static const pathFragment = '/invalid-url';
+  static const pathFragment = '/invalid';
   @override
   final String domain = pathFragment;
 }
