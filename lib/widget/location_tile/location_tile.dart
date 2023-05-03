@@ -38,8 +38,6 @@ class LocationTile extends StatefulWidget {
 class _LocationTileState extends State<LocationTile> with LocationTileBackend {
   @override
   Widget build(BuildContext context) {
-    final offset = widget.timezone.offset / (1000 * 3600);
-
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 30.0),
       child: LayoutBuilder(
@@ -56,6 +54,12 @@ class _LocationTileState extends State<LocationTile> with LocationTileBackend {
 
           return InkWell(
             onTap: _toggleExpanded,
+            onDoubleTap: () {
+              // TODO: Improve this...
+              if (_locations.isNotEmpty) {
+                AppServices.app.currentState?.setLocation(_locations.first);
+              }
+            },
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -66,7 +70,7 @@ class _LocationTileState extends State<LocationTile> with LocationTileBackend {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            Constants.hhMM.format(_dateTime.value),
+                            _dateTime.value.format(Constants.hhMM),
                             style: CustomTheme.instance.timezoneTitleStyle,
                           ),
                           const SizedBox(width: 10),
@@ -78,7 +82,7 @@ class _LocationTileState extends State<LocationTile> with LocationTileBackend {
                       );
 
                       final offsetWidget = Text(
-                        "${offset < 0 ? "-" : "+"}${offset.abs()}HRS",
+                        '${widget.timezone.offsetInHour} HRS',
                         style: CustomTheme.instance.timezoneSubTitleAccentStyle,
                       );
 

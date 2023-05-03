@@ -17,7 +17,10 @@ Future<void> main() async {
   await SPService.i.initialize();
 
   AppServices.init(
-    hive: HiveService(favoritesBox: 'favorites')..initialize(),
+    hive: HiveService(
+      favoritesBox: 'favorites',
+      appLocationBox: 'selected-app-location',
+    )..initialize(),
   );
 
   // Gets theme mode and set the theme data...

@@ -17,6 +17,8 @@ class HomePageClock extends StatelessWidget {
 
     final clockSize = (width - 40).clamp(200, 500).toDouble();
 
+    final time = TZDateTime.now(CurrentLocationProvider.of(context).location);
+
     return Container(
       decoration: BoxDecoration(
         color: CustomTheme.instance.backgroundColor,
@@ -30,7 +32,11 @@ class HomePageClock extends StatelessWidget {
               opacity: showTitle ? 1 : 0,
               child: Padding(
                 padding: const EdgeInsets.only(
-                    top: 20.0, left: 30.0, right: 10.0, bottom: 50.0),
+                  top: 20.0,
+                  left: 30.0,
+                  right: 10.0,
+                  bottom: 50.0,
+                ),
                 child: Text(
                   'World Clock',
                   style: CustomTheme.instance.titleStyle.copyWith(
@@ -44,6 +50,7 @@ class HomePageClock extends StatelessWidget {
               padding: const EdgeInsets.all(20),
               child: Clock(
                 radius: clockSize,
+                location: CurrentLocationProvider.of(context).location,
               ),
             ),
             const SizedBox(height: 50),
@@ -81,7 +88,23 @@ class HomePageClock extends StatelessWidget {
                       ),
                       child: Row(
                         children: [
-                          const DayInfo(),
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                time.weekName,
+                                style: CustomTheme.instance.heading5,
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                time.dateMonth,
+                                style: CustomTheme.instance.heading5,
+                              ),
+                            ],
+                          ),
                           const Spacer(),
                         ],
                       ),

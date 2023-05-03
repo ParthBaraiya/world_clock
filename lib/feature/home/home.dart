@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:timezone/timezone.dart';
 
 // import 'package:go_router/go_router.dart';
 
+import '../../providers/current_location_provider.dart';
 import '../../service/extension.dart';
 import '../../service/navigation_service/navigation_service.dart';
 import '../../service/theme/theme.dart';
@@ -9,7 +11,6 @@ import '../../values/breakpoints.dart';
 import '../../values/world_clock_icons.dart';
 import '../../widget/buttons.dart';
 import '../../widget/clock/clock.dart';
-import '../../widget/day_info.dart';
 import '../../widget/decorations.dart';
 import '../../widget/time_zone_info.dart';
 import '../../widget/timer_indicator.dart';

@@ -3,6 +3,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:timezone/timezone.dart';
 
 import 'navigation_service/navigation_service.dart';
 
@@ -25,6 +26,8 @@ extension DateFormatExtension on DateTime {
   String get weekName => DateFormat('EEEE').format(this);
   String get dateMonth => DateFormat('d MMM').format(this);
   String get descriptiveDate => DateFormat('d MMMM yyyy').format(this);
+
+  String format(String pattern) => DateFormat(pattern).format(this);
 }
 
 extension NavigationExtension on BuildContext {
@@ -80,6 +83,14 @@ extension PainterExtension on Canvas {
 
     painter.paint(this,
         offset - Offset(painter.maxIntrinsicWidth / 2, painter.height / 2));
+  }
+}
+
+extension TimeZoneExtension on TimeZone {
+  String get offsetInHour {
+    final offset = this.offset / (1000 * 3600);
+
+    return '${offset < 0 ? "-" : "+"}${offset.abs()}';
   }
 }
 
