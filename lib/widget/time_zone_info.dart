@@ -23,7 +23,8 @@ class TimeZoneInfo extends StatelessWidget {
           height: 10,
         ),
         Text(
-          '${location.currentTimeZone.offsetInHour} HRS | ${location.currentTimeZone.abbreviation}',
+          '${location.currentTimeZone.offsetInHour} HRS | '
+          '${location.currentTimeZone.abbreviation}',
           style: CustomTheme.instance.heading6,
         ),
       ],

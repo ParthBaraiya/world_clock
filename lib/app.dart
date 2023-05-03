@@ -30,8 +30,8 @@ class AppState extends State<App> {
           // TODO: Add route settings...
           // routeSettings: ,
           builder: (_) {
-            return Dialog(
-              child: Text("No locations are saved..."),
+            return const Dialog(
+              child: Text('No locations are saved...'),
             );
           },
         ).then((value) {
