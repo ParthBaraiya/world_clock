@@ -3,9 +3,9 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
+import '../../service/custom_ticker.dart';
 import '../../service/extension.dart';
 import '../../service/theme/theme.dart';
-import '../../service/timer.dart';
 import '../../service/timezone.dart';
 
 part 'painter.dart';

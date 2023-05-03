@@ -1,18 +1,31 @@
+import 'package:flutter/cupertino.dart';
+
+import 'app.dart';
 import 'service/hive/hive_main.dart';
 
 class AppServices {
+  //#region Static Fields
   static AppServices? _instance;
 
-  HiveService? _hive;
+  static HiveService get hive => _instance!._hive;
+  static GlobalKey<AppState> get app => _instance!._app;
+  //#endregion
 
-  static HiveService get hive => _instance!._hive!;
+  late HiveService _hive;
+  late GlobalKey<AppState> _app;
 
   AppServices._({
     required HiveService hive,
-  }) : _hive = hive;
+    required GlobalKey<AppState> app,
+  })  : _hive = hive,
+        _app = app;
 
   factory AppServices.init({
     required HiveService hive,
   }) =>
-      _instance ?? (_instance = AppServices._(hive: hive));
+      _instance ??
+      (_instance = AppServices._(
+        hive: hive,
+        app: GlobalKey<AppState>(),
+      ));
 }

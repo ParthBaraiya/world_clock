@@ -11,8 +11,10 @@ class WebHomePage extends StatelessWidget {
     required this.index,
     required this.widget,
   });
+
   final int index;
   final Widget widget;
+
   @override
   Widget build(BuildContext context) {
     final size = context.mediaSize;

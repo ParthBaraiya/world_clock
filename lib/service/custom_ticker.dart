@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 
 class CustomTicker extends ChangeNotifier {
-  static final secondTicker =
+  static late final secondTicker =
       CustomTicker(duration: const Duration(seconds: 1));
-  static final minuteTicker =
+  static late final minuteTicker =
       CustomTicker(duration: const Duration(minutes: 1));
 
   final Duration duration;
