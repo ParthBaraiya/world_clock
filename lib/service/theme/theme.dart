@@ -30,6 +30,7 @@ class CustomTheme extends ChangeNotifier {
 
   TextStyle get subtitleStyle => _data.subtitleStyle;
 
+  TextStyle get heading4 => _data.heading4;
   TextStyle get heading5 => _data.heading5;
   TextStyle get heading6 => _data.heading6;
 

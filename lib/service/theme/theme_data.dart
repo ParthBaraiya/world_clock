@@ -11,6 +11,7 @@ abstract class _ThemeData {
   late TextStyle subtitleStyle;
   late TextStyle heading5;
   late TextStyle heading6;
+  late TextStyle heading4;
 
   late TextStyle timezoneTitleStyle;
   late TextStyle timezoneSubTitleStyle;
@@ -51,6 +52,12 @@ class _LightThemeData implements _ThemeData {
   TextStyle heading5 = const TextStyle(
     color: Color(0xffffffff),
     fontSize: 20,
+  );
+
+  @override
+  TextStyle heading4 = const TextStyle(
+    color: Color(0xffffffff),
+    fontSize: 24,
   );
 
   @override
@@ -118,6 +125,12 @@ class _DarkThemeData implements _ThemeData {
   TextStyle heading5 = const TextStyle(
     color: Color(0xffffffff),
     fontSize: 20,
+  );
+
+  @override
+  TextStyle heading4 = const TextStyle(
+    color: Color(0xffffffff),
+    fontSize: 24,
   );
 
   @override

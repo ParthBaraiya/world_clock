@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:timezone/data/latest_all.dart';
 import 'package:timezone/standalone.dart'
@@ -16,9 +18,11 @@ class TimeZoneUtility {
 
   final _locationMap = <TimeZone, List<Location>>{};
 
-  Map<TimeZone, List<Location>> get locationMap => _locationMap;
+  UnmodifiableMapView<TimeZone, List<Location>> get locationMap =>
+      UnmodifiableMapView(_locationMap);
 
-  TimeZone get utc => TimeZone.UTC;
+  UnmodifiableListView<Location> get locations =>
+      UnmodifiableListView(timeZoneDatabase.locations.values);
 
   Future<void> initialize() async {
     initializeTimeZones();

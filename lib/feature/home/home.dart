@@ -66,7 +66,7 @@ class _HomePageAppBar extends StatelessWidget {
             radius: BorderRadius.circular(100.0),
             hoverColor: CustomTheme.instance.primaryTextColor.withOpacity(0.2),
             child: Icon(
-              WorldClock.more,
+              WorldClockIcons.more,
               size: 30,
               color: CustomTheme.instance.primaryTextColor,
             ),

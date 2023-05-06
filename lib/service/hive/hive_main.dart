@@ -56,7 +56,7 @@ class HiveService extends WorldClockService<Box<HiveTimezone>> {
     Location? location;
 
     if (box.isNotEmpty) {
-      location = box.get(1)?.location;
+      location = box.get(0)?.location;
     }
     await box.close();
 

@@ -127,8 +127,8 @@ class _LocationTileState extends State<LocationTile> with LocationTileBackend {
                             builder: (_, value, __) {
                               return Icon(
                                 value
-                                    ? WorldClock.arrow_down
-                                    : WorldClock.arrow_up,
+                                    ? WorldClockIcons.chevron_down
+                                    : WorldClockIcons.chevron_up,
                                 size: 15,
                                 color: CustomTheme.instance.primaryTextColor,
                               );
