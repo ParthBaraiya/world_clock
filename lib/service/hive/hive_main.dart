@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:timezone/timezone.dart';
 
@@ -6,7 +7,7 @@ import '../../models/hive_timezone/hive_timezone.dart';
 import '../extension.dart';
 import '../world_clock_service.dart';
 
-class HiveService extends WorldClockService<Box<HiveTimezone>> {
+class HiveService extends WorldClockService<bool> {
   HiveService({
     required this.favoritesBox,
     required this.appLocationBox,
@@ -17,6 +18,8 @@ class HiveService extends WorldClockService<Box<HiveTimezone>> {
 
   int _iteration = 0;
 
+  final favoriteTimezonesBox = ValueNotifier<Box<HiveTimezone>?>(null);
+
   void initialize() {
     if (value != null) return;
 
@@ -26,8 +29,9 @@ class HiveService extends WorldClockService<Box<HiveTimezone>> {
       Hive
         ..registerAdapter(HiveTimezoneAdapter())
         ..registerAdapter(HiveLocationAdapter());
-
-      value = await Hive.openBox(favoritesBox);
+      value = true;
+      Hive.openBox<HiveTimezone>(favoritesBox)
+          .then((value) => favoriteTimezonesBox.value = value);
     });
   }
 

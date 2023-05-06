@@ -34,9 +34,19 @@ class _TimezoneListState extends State<TimezoneList>
                   stops: [0, 0.15, 0.5, 0.9, 1],
                 ),
               ),
-              child: ValueListenableBuilder(
-                  valueListenable: AppServices.hive,
+              child: ValueListenableBuilder<bool?>(
+                valueListenable: AppServices.hive,
+                builder: (_, value, child) {
+                  if (value ?? false) return child!;
+
+                  return const Text('Hive is not initialized.');
+                },
+                child: ValueListenableBuilder(
+                  valueListenable: AppServices.hive.favoriteTimezonesBox,
                   builder: (_, value, __) {
+                    if (value == null) {
+                      return const Text('Loading favorites...');
+                    }
                     return ListView.separated(
                       padding: const EdgeInsets.symmetric(vertical: 50),
                       controller: _controller,
@@ -44,9 +54,8 @@ class _TimezoneListState extends State<TimezoneList>
                         return LocationTile(
                           key: ValueKey(locations[index]),
                           timezone: locations[index],
-                          selected: value?.values
-                                  .contains(locations[index].hiveTimezone) ??
-                              false,
+                          selected: value.values
+                              .contains(locations[index].hiveTimezone),
                         );
                       },
                       separatorBuilder: (_, __) => Container(
@@ -66,7 +75,9 @@ class _TimezoneListState extends State<TimezoneList>
                       ),
                       itemCount: TimeZoneUtility.i.locationMap.length,
                     );
-                  }),
+                  },
+                ),
+              ),
             ),
           )
         : Center(

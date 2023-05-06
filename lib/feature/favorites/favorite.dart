@@ -13,27 +13,35 @@ class Favorites extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
+    return ValueListenableBuilder<bool?>(
       valueListenable: AppServices.hive,
-      builder: (_, value, __) {
-        if (value != null) {
+      builder: (_, value, child) {
+        if (value ?? false) return child!;
+
+        return const Text('Hive is not initialized.');
+      },
+      child: ValueListenableBuilder(
+        valueListenable: AppServices.hive.favoriteTimezonesBox,
+        builder: (_, value, __) {
+          if (value == null) {
+            return const Text('Loading favorites...');
+          }
           return StreamBuilder(
             stream: value.watch(),
             builder: (_, __) {
-              return _LocationTileList(
+              return TimeZoneTileList(
                 timezones: value.values.toList(),
               );
             },
           );
-        }
-        return const Text('Hive is not initialized.');
-      },
+        },
+      ),
     );
   }
 }
 
-class _LocationTileList extends StatefulWidget {
-  const _LocationTileList({
+class TimeZoneTileList extends StatefulWidget {
+  const TimeZoneTileList({
     super.key,
     required this.timezones,
   });
@@ -41,10 +49,10 @@ class _LocationTileList extends StatefulWidget {
   final List<HiveTimezone> timezones;
 
   @override
-  State<_LocationTileList> createState() => _LocationTileListState();
+  State<TimeZoneTileList> createState() => _TimeZoneTileListState();
 }
 
-class _LocationTileListState extends State<_LocationTileList>
+class _TimeZoneTileListState extends State<TimeZoneTileList>
     with LocationTileExpansionSettingsMixin {
   @override
   Widget build(BuildContext context) {
