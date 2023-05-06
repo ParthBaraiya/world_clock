@@ -24,6 +24,17 @@ class TimeZoneUtility {
   UnmodifiableListView<Location> get locations =>
       UnmodifiableListView(timeZoneDatabase.locations.values);
 
+  Iterable<Location> getFilteredLocations(String query) {
+    if (query.isEmpty) return locations;
+
+    final q = query.toLowerCase();
+
+    return locations.where((element) {
+      return element.name.toLowerCase().contains(q) ||
+          element.currentTimeZone.abbreviation.toLowerCase().contains(q);
+    });
+  }
+
   Future<void> initialize() async {
     initializeTimeZones();
 

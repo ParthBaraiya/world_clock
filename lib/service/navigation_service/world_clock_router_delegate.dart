@@ -3,11 +3,12 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 
 import '../../feature/error_404.dart';
-import '../../feature/favorites/favorites_list_page.dart';
+import '../../feature/favorites/favorites_web_page.dart';
 import '../../feature/home/home.dart';
 import '../../feature/responsive_home_page.dart';
 import '../../feature/timezones/timezone_details.dart';
 import '../../feature/timezones/timezones.dart';
+import '../../feature/timezones/timezones_web_page.dart';
 import '../../values/breakpoints.dart';
 import 'navigation_service.dart';
 
@@ -81,12 +82,13 @@ class WorldClockRouterDelegate extends RouterDelegate<WorldClockRouteConfig>
       return;
     }
 
+    // Add home page if width is less then 800 px or current route is HomePage.
     if (width < HomeScreenBreakPoints.point800) {
       _pages.add(_getPage(const HomePage(), HomePagePath()));
     } else if (_routeConfig is HomePagePath) {
       _pages.add(
         _getPage(
-          const WebHomePage(
+          const DesktopHomePage(
             widget: TimezoneListPage(),
             index: 0,
           ),
@@ -97,13 +99,11 @@ class WorldClockRouterDelegate extends RouterDelegate<WorldClockRouteConfig>
 
     if (_routeConfig is FavoritesPath) {
       final path = _routeConfig as FavoritesPath;
+
       _pages.add(
         _getPage(
           path.timezone == null
-              ? const WebHomePage(
-                  widget: FavoritesListPage(),
-                  index: 0,
-                )
+              ? const FavoritesDesktopPage()
               : TimezoneDetails(
                   timeZone: path.timezone!,
                 ),
@@ -116,10 +116,7 @@ class WorldClockRouterDelegate extends RouterDelegate<WorldClockRouteConfig>
       _pages.add(
         _getPage(
           path.timezone == null
-              ? const WebHomePage(
-                  widget: TimezoneListPage(),
-                  index: 1,
-                )
+              ? const TimezonesDesktopPage()
               : TimezoneDetails(
                   timeZone: path.timezone!,
                 ),

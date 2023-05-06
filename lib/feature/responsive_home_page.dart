@@ -5,8 +5,8 @@ import '../service/theme/theme.dart';
 import '../values/breakpoints.dart';
 import 'home/home.dart';
 
-class WebHomePage extends StatelessWidget {
-  const WebHomePage({
+class DesktopHomePage extends StatelessWidget {
+  const DesktopHomePage({
     super.key,
     required this.index,
     required this.widget,
