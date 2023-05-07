@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 import '../app_services.dart';
 import '../service/mixins.dart';
-import '../service/navigation_service/navigation_service.dart';
 import '../service/theme/theme.dart';
 import '../service/timezone.dart';
 import '../values/world_clock_icons.dart';
@@ -75,8 +74,7 @@ class _LocationSelectorDialogState extends State<LocationSelectorDialog> {
                           ),
                           const Spacer(),
                           InkWell(
-                            onTap: () => NavigationService
-                                .instance.navigatorKey.currentState
+                            onTap: () => AppServices.navigationService.navigator
                                 ?.pop(_locations.value.first),
                             child: Icon(
                               WorldClockIcons.close,
@@ -140,8 +138,9 @@ class _LocationSelectorDialogState extends State<LocationSelectorDialog> {
 
                                 return InkWell(
                                   onTap: () {
-                                    final navigator = NavigationService
-                                        .instance.navigatorKey.currentState;
+                                    final navigator =
+                                        AppServices.navigationService.navigator;
+
                                     AppServices.app.currentState
                                         ?.setLocation(location)
                                         .then((value) {

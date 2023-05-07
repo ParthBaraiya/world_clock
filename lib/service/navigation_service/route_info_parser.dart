@@ -1,9 +1,9 @@
 part of 'navigation_service.dart';
 
 class WorldClockRouteInformationParser
-    extends RouteInformationParser<WorldClockRouteConfig> {
+    extends RouteInformationParser<AppRouteConfig> {
   @override
-  Future<WorldClockRouteConfig> parseRouteInformation(
+  Future<AppRouteConfig> parseRouteInformation(
       RouteInformation routeInformation) async {
     final uri = Uri.parse(routeInformation.location ?? '');
     final pathSegments = uri.pathSegments;
@@ -35,8 +35,7 @@ class WorldClockRouteInformationParser
   }
 
   @override
-  RouteInformation restoreRouteInformation(
-      WorldClockRouteConfig configuration) {
+  RouteInformation restoreRouteInformation(AppRouteConfig configuration) {
     return RouteInformation(location: configuration.getPath());
   }
 

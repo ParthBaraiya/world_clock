@@ -5,7 +5,6 @@ import 'package:timezone/timezone.dart';
 
 import 'app_services.dart';
 import 'providers/current_location_provider.dart';
-import 'service/navigation_service/navigation_service.dart';
 import 'service/theme/theme.dart';
 import 'service/timezone.dart';
 import 'widget/location_selector_dialog.dart';
@@ -76,9 +75,9 @@ class AppState extends State<App> {
           },
           scrollbars: true,
         ),
-        routerDelegate: NavigationService.instance.delegate,
+        routerDelegate: AppServices.navigationService.delegate,
         routeInformationParser:
-            NavigationService.instance.routeInformationParser,
+            AppServices.navigationService.routeInformationParser,
       ),
     );
   }

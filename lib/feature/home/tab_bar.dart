@@ -50,10 +50,8 @@ class _TimeZoneTabState extends State<TimeZoneTab>
   }
 
   void _navigate() {
-    context.navigateTo(
-        routeConfig: _tabController.index == 0
-            ? FavoritesPath.list()
-            : TimezonePath.list());
+    AppServices.navigationService.navigate(
+        _tabController.index == 0 ? FavoritesPath.list() : TimezonePath.list());
   }
 
   @override
@@ -81,16 +79,16 @@ class _TimeZoneTabState extends State<TimeZoneTab>
                   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                   child: Text('Favorite'),
                 ),
-                onTap: () => NavigationService.instance.delegate
-                    .setRouteConfig(FavoritesPath.list()),
+                onTap: () => AppServices.navigationService
+                    .navigate(FavoritesPath.list()),
               ),
               InkWellButton(
                 child: const Padding(
                   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                   child: Text('Timezones'),
                 ),
-                onTap: () => NavigationService.instance.delegate
-                    .setRouteConfig(TimezonePath.list()),
+                onTap: () =>
+                    AppServices.navigationService.navigate(TimezonePath.list()),
               ),
             ],
           ),

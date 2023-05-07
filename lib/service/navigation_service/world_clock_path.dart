@@ -1,20 +1,6 @@
 part of 'navigation_service.dart';
 
-@immutable
-abstract class WorldClockRouteConfig {
-  static const pathFragment = '';
-
-  final String domain = pathFragment;
-
-  String getPath() => domain;
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is WorldClockRouteConfig && domain == other.domain;
-}
-
-class TimezonePath extends WorldClockRouteConfig {
+class TimezonePath extends AppRouteConfig {
   static const pathFragment = 'timezone';
   static const subPathFragment = 'list';
 
@@ -53,13 +39,13 @@ class FavoritesPath extends TimezonePath {
       : super.details(timezone: timezone);
 }
 
-class InvalidPath extends WorldClockRouteConfig {
+class InvalidPath extends AppRouteConfig {
   static const pathFragment = '/invalid';
   @override
   final String domain = pathFragment;
 }
 
-class HomePagePath extends WorldClockRouteConfig {
+class HomePagePath extends AppRouteConfig {
   static const pathFragment = '/';
 
   @override

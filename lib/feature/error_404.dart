@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../app_services.dart';
 import '../gen/assets.gen.dart';
 import '../service/constants.dart';
-import '../service/extension.dart';
 import '../service/navigation_service/navigation_service.dart';
 import '../service/theme/theme.dart';
 
@@ -62,15 +62,15 @@ class Error404Page extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     _ActionText(
-                      onTap: () => context.navigateTo(
-                        routeConfig: HomePagePath(),
+                      onTap: () => AppServices.navigationService.navigate(
+                        HomePagePath(),
                       ),
                       title: 'Home',
                     ),
                     const SizedBox(width: 30),
                     _ActionText(
-                      onTap: () =>
-                          context.navigateTo(routeConfig: TimezonePath.list()),
+                      onTap: () => AppServices.navigationService
+                          .navigate(TimezonePath.list()),
                       title: 'Timezones',
                     ),
                   ],

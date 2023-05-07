@@ -3,6 +3,7 @@ import 'package:timezone/timezone.dart';
 
 // import 'package:go_router/go_router.dart';
 
+import '../../app_services.dart';
 import '../../providers/current_location_provider.dart';
 import '../../service/extension.dart';
 import '../../service/navigation_service/navigation_service.dart';
@@ -60,8 +61,8 @@ class _HomePageAppBar extends StatelessWidget {
             ),
           ),
           InkWellButton(
-            onTap: () => context.navigateTo(
-              routeConfig: TimezonePath.list(),
+            onTap: () => AppServices.navigationService.navigate(
+              TimezonePath.list(),
             ),
             radius: BorderRadius.circular(100.0),
             hoverColor: CustomTheme.instance.primaryTextColor.withOpacity(0.2),
@@ -75,8 +76,8 @@ class _HomePageAppBar extends StatelessWidget {
             width: 15,
           ),
           InkWellButton(
-            onTap: () => context.navigateTo(
-              routeConfig: FavoritesPath.list(),
+            onTap: () => AppServices.navigationService.navigate(
+              FavoritesPath.list(),
             ),
             radius: BorderRadius.circular(100.0),
             hoverColor: CustomTheme.instance.primaryTextColor.withOpacity(0.2),

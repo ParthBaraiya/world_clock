@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'app.dart';
 import 'app_services.dart';
 import 'service/hive/hive_main.dart';
+import 'service/navigation_service/navigation_service.dart';
 import 'service/shared_preferences.dart';
 import 'service/theme/theme.dart';
 import 'service/timezone.dart';
@@ -21,6 +22,7 @@ Future<void> main() async {
       favoritesBox: 'favorites',
       appLocationBox: 'selected-app-location',
     )..initialize(),
+    navigator: WorldClockNavigationService(),
   );
 
   // Gets theme mode and set the theme data...

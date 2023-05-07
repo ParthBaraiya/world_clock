@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'navigation_service/navigation_service.dart';
+import '../app_services.dart';
 
 mixin ShowDialogMixin<T extends Object> on Widget {
   Future<T?> show() {
     return showDialog(
-      context: NavigationService.instance.navigatorKey.currentState!.context,
+      context: AppServices.navigationService.navigator!.context,
       barrierDismissible: barrierDismissible,
       barrierColor: Colors.transparent,
       routeSettings: settings,

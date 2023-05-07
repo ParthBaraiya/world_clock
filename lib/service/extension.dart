@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:timezone/timezone.dart';
 
-import 'navigation_service/navigation_service.dart';
-
 double get _screenHeight =>
     WidgetsBinding.instance.window.physicalSize.height /
     WidgetsBinding.instance.window.devicePixelRatio;
@@ -32,11 +30,6 @@ extension DateFormatExtension on DateTime {
 
 extension NavigationExtension on BuildContext {
   void previousPage() => Navigator.of(this).pop();
-
-  void navigateTo({
-    required WorldClockRouteConfig routeConfig,
-  }) =>
-      NavigationService.instance.delegate.setRouteConfig(routeConfig);
 
   Size get mediaSize => MediaQuery.of(this).size;
 }

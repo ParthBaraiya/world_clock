@@ -65,7 +65,7 @@ extension PageExtension on Widget {
   Page page({
     required LocalKey key,
     required String routeName,
-    required WorldClockRouteConfig config,
+    required AppRouteConfig config,
   }) {
     return NoTransitionPage(
       key: key,
