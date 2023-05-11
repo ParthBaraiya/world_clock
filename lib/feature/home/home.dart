@@ -26,11 +26,11 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Column(
         children: [
-          const _HomePageAppBar(),
-          const Expanded(
+          _HomePageAppBar(),
+          Expanded(
             child: HomePageClock(
               showTitle: false,
             ),

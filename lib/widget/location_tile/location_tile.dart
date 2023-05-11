@@ -11,7 +11,6 @@ import '../../service/timezone.dart';
 import '../../typedefs.dart';
 import '../../values/enumerations.dart';
 import '../../values/world_clock_icons.dart';
-import '../listenable_builder.dart';
 import 'location_tile_expansion_settings.dart';
 
 part 'location_tile_backend.dart';
@@ -378,7 +377,7 @@ class _TimeLinePageViewState extends State<TimeLinePageView> {
                     ),
                     ListenableBuilder(
                       listenable: _controller,
-                      builder: (_) {
+                      builder: (_, __) {
                         return Text(
                           _scrolledDate.descriptiveDate,
                           style:

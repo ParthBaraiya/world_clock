@@ -1,16 +1,25 @@
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:timezone/timezone.dart';
 
+// TODO: Use proper way to get the height and width data...
 double get _screenHeight =>
+    //ignore: deprecated_member_use
     WidgetsBinding.instance.window.physicalSize.height /
+    //ignore: deprecated_member_use
     WidgetsBinding.instance.window.devicePixelRatio;
 double get _screenWidth =>
+    //ignore: deprecated_member_use
     WidgetsBinding.instance.window.physicalSize.width /
+    //ignore: deprecated_member_use
     WidgetsBinding.instance.window.devicePixelRatio;
+
+Brightness get platformBrightness =>
+    PlatformDispatcher.instance.platformBrightness;
 
 extension ComparisonExtension on Size {
   double get max => math.max(width, height);

@@ -5,11 +5,11 @@ import 'app.dart';
 import 'app_services.dart';
 import 'service/extension.dart';
 import 'service/hive/hive_main.dart';
-import 'service/navigation_service/navigation_service.dart';
 import 'service/shared_preferences.dart';
 import 'service/theme/theme.dart';
 import 'service/timezone.dart';
 import 'service/universal_services/universal_services.dart';
+import 'tests/services/navigation_service/navigation_service/test_navigation_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,10 +20,10 @@ Future<void> main() async {
 
   AppServices.init(
     hive: HiveService(
-      favoritesBox: 'favorites',
-      appLocationBox: 'selected-app-location',
+      favoritesBox: 'favorites-test',
+      appLocationBox: 'selected-app-location-test',
     )..initialize(),
-    navigator: WorldClockNavigationService(),
+    navigator: TestNavigationService(),
   );
 
   // Gets theme mode and set the theme data...

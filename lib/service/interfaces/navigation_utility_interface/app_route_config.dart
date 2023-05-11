@@ -13,3 +13,9 @@ abstract class AppRouteConfig {
       identical(this, other) ||
       other is AppRouteConfig && domain == other.domain;
 }
+
+class InvalidPath extends AppRouteConfig {
+  static const pathFragment = '/invalid';
+  @override
+  final String domain = pathFragment;
+}

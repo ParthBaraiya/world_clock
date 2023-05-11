@@ -39,12 +39,6 @@ class FavoritesPath extends TimezonePath {
       : super.details(timezone: timezone);
 }
 
-class InvalidPath extends AppRouteConfig {
-  static const pathFragment = '/invalid';
-  @override
-  final String domain = pathFragment;
-}
-
 class HomePagePath extends AppRouteConfig {
   static const pathFragment = '/';
 

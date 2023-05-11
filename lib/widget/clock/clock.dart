@@ -24,11 +24,14 @@ class Clock extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox.fromSize(
       size: Size.square(radius),
-      child: CustomPaint(
-        willChange: true,
-        painter: ClockMarkings(),
-        foregroundPainter: ClockHands(
-          location: location,
+      child: FittedBox(
+        child: CustomPaint(
+          size: Size.square(radius),
+          willChange: true,
+          painter: ClockMarkings(),
+          foregroundPainter: ClockHands(
+            location: location,
+          ),
         ),
       ),
     );

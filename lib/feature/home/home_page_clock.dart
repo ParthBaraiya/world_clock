@@ -69,10 +69,10 @@ class HomePageClock extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: CustomTheme.instance.backgroundColor,
                       ),
-                      child: Row(
+                      child: const Row(
                         children: [
-                          const Spacer(),
-                          const TimeZoneInfo(),
+                          Spacer(),
+                          TimeZoneInfo(),
                         ],
                       ),
                     ),
