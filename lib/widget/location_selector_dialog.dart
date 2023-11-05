@@ -8,6 +8,7 @@ import '../service/mixins.dart';
 import '../service/theme/theme.dart';
 import '../service/timezone.dart';
 import '../values/world_clock_icons.dart';
+import 'world_clock_searchbar.dart';
 
 class LocationSelectorDialog extends StatefulWidget
     with ShowDialogMixin<Location> {
@@ -94,32 +95,10 @@ class _LocationSelectorDialogState extends State<LocationSelectorDialog> {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      Row(
-                        children: [
-                          Icon(
-                            WorldClockIcons.search,
-                            color: CustomTheme.instance.primaryTextColor,
-                            size: 30,
-                          ),
-                          const SizedBox(width: 20),
-                          Expanded(
-                            child: TextField(
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                disabledBorder: InputBorder.none,
-                                enabledBorder: InputBorder.none,
-                                errorBorder: InputBorder.none,
-                                focusedBorder: InputBorder.none,
-                                focusedErrorBorder: InputBorder.none,
-                                hintText: 'Search location',
-                                hintStyle: CustomTheme.instance.subtitleStyle,
-                              ),
-                              onChanged: (value) => _locations.value =
-                                  TimeZoneUtility.i
-                                      .getFilteredLocations(value.trim()),
-                            ),
-                          )
-                        ],
+                      WorldClockSearchBar(
+                        onSearch: (value) => _locations.value = TimeZoneUtility
+                            .i
+                            .getFilteredLocations(value.trim()),
                       ),
                       Expanded(
                         child: ValueListenableBuilder(

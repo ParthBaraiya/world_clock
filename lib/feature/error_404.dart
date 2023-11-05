@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:world_clock/service/extension.dart';
 
 import '../app_services.dart';
 import '../gen/assets.gen.dart';
@@ -11,7 +12,7 @@ class Error404Page extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
+    final screenSize = context.mediaSize;
 
     final aspectRatio = 860.13137 / 571.14799;
     late double imageWidth;

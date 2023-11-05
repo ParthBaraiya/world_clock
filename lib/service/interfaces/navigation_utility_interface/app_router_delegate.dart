@@ -7,7 +7,10 @@ import 'app_route_config.dart';
 abstract class AppRouterDelegate extends RouterDelegate<AppRouteConfig>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<AppRouteConfig> {
   AppRouterDelegate({required AppRouteConfig initialPage})
-      : _routeConfig = initialPage;
+      : _routeConfig = initialPage,
+        _initialRoute = initialPage.getPath();
+
+  final String _initialRoute;
 
   AppRouteConfig _routeConfig;
 

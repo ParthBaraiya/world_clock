@@ -14,6 +14,8 @@ class TestRouteInformationParser
     if (pathSegments.length < 3) {
       if (pathSegments[0] == ClockTestPagePath.pathFragment) {
         return ClockTestPagePath();
+      } else if (pathSegments[0] == TimeLineTestPath.pathFragment) {
+        return TimeLineTestPath();
       }
     }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:world_clock/service/extension.dart';
 
 class TwoBreakPage extends StatelessWidget {
   const TwoBreakPage({
@@ -14,7 +15,7 @@ class TwoBreakPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
+    final screenWidth = context.mediaSize.width;
 
     return screenWidth < point ? child2 : child1;
   }

@@ -6,7 +6,7 @@ abstract class AppRouteConfig {
 
   final String domain = pathFragment;
 
-  String getPath() => domain;
+  String getPath() => '/$domain';
 
   @override
   bool operator ==(Object other) =>

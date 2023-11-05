@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:world_clock/service/extension.dart';
 
 import '../service/theme/theme.dart';
 import '../widget/clock/clock.dart';
@@ -13,8 +14,8 @@ class ClockTest extends StatefulWidget {
 }
 
 class _ClockTestState extends State<ClockTest> {
-  late var _maxRadius = math.min(MediaQuery.of(context).size.width - 40,
-      MediaQuery.of(context).size.height - 40);
+  late var _maxRadius =
+      math.min(context.mediaSize.width - 40, context.mediaSize.height - 40);
   late var _minRadius = math.min(_maxRadius - 1, 100.0);
 
   late double _radius = _maxRadius;
@@ -23,8 +24,8 @@ class _ClockTestState extends State<ClockTest> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    _maxRadius = math.min(MediaQuery.of(context).size.width - 40,
-        MediaQuery.of(context).size.height - 40);
+    _maxRadius =
+        math.min(context.mediaSize.width - 40, context.mediaSize.height - 40);
 
     _minRadius = math.min(_maxRadius - 1, 100.0);
   }
@@ -47,9 +48,9 @@ class _ClockTestState extends State<ClockTest> {
             ),
           ),
           Positioned(
-            bottom: MediaQuery.of(context).size.height * 0.02,
-            left: MediaQuery.of(context).size.width * 0.3,
-            right: MediaQuery.of(context).size.width * 0.3,
+            bottom: context.mediaSize.height * 0.02,
+            left: context.mediaSize.width * 0.3,
+            right: context.mediaSize.width * 0.3,
             child: Row(
               children: [
                 Expanded(

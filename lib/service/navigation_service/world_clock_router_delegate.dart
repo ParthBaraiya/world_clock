@@ -1,11 +1,12 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:world_clock/service/extension.dart';
 
 import '../../feature/error_404.dart';
 import '../../feature/favorites/favorites_list_page.dart';
+import '../../feature/home/desktop_home_page.dart';
 import '../../feature/home/home.dart';
-import '../../feature/responsive_home_page.dart';
 import '../../feature/timezones/timezone_details.dart';
 import '../../feature/timezones/timezones.dart';
 import '../../values/breakpoints.dart';
@@ -27,7 +28,7 @@ class WorldClockRouterDelegate extends AppRouterDelegate {
   /// Generates the navigator stack and store it in pages variable.
   @override
   void generateNavigatorStack(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
+    final width = context.mediaSize.width;
     _pages.clear();
     _pages = <Page>[];
 

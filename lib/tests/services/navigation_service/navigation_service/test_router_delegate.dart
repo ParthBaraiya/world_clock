@@ -26,6 +26,8 @@ class TextRouterDelegate extends AppRouterDelegate {
       _pages.add(_getPage(const TestHomePage(), currentConfiguration));
     } else if (currentConfiguration is ClockTestPagePath) {
       _pages.add(_getPage(const ClockTest(), currentConfiguration));
+    } else if (currentConfiguration is TimeLineTestPath) {
+      _pages.add(_getPage(const TimeLineTest(), currentConfiguration));
     }
   }
 

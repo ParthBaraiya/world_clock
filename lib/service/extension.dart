@@ -27,6 +27,16 @@ extension ComparisonExtension on Size {
   double get min => math.min(width, height);
 
   Offset toOffset() => Offset(width, height);
+
+  Size copyWith({
+    double? height,
+    double? width,
+  }) {
+    return Size(
+      width ?? this.width,
+      height ?? this.height,
+    );
+  }
 }
 
 extension DateFormatExtension on DateTime {
@@ -40,7 +50,7 @@ extension DateFormatExtension on DateTime {
 extension NavigationExtension on BuildContext {
   void previousPage() => Navigator.of(this).pop();
 
-  Size get mediaSize => MediaQuery.of(this).size;
+  Size get mediaSize => MediaQuery.sizeOf(this);
 }
 
 extension SplitGradient on Color {

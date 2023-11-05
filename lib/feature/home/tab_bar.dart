@@ -1,4 +1,11 @@
-part of 'home.dart';
+import 'package:flutter/material.dart';
+import 'package:world_clock/app_services.dart';
+import 'package:world_clock/feature/favorites/favorite.dart';
+import 'package:world_clock/feature/timezones/timezones.dart';
+import 'package:world_clock/service/navigation_service/navigation_service.dart';
+import 'package:world_clock/service/theme/theme.dart';
+import 'package:world_clock/widget/buttons.dart';
+import 'package:world_clock/widget/decorations.dart';
 
 enum TimezoneTabType {
   favorite,

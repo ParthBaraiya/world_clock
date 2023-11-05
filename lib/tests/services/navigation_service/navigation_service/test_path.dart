@@ -13,3 +13,10 @@ class TestHomePagePath extends AppRouteConfig {
   @override
   final String domain = pathFragment;
 }
+
+class TimeLineTestPath extends AppRouteConfig {
+  static const pathFragment = 'time-line-test';
+
+  @override
+  final String domain = pathFragment;
+}

@@ -1,4 +1,12 @@
-part of 'home.dart';
+import 'package:flutter/material.dart';
+import 'package:world_clock/providers/current_location_provider.dart';
+import 'package:world_clock/service/extension.dart';
+import 'package:world_clock/service/theme/theme.dart';
+import 'package:world_clock/service/timezone.dart';
+import 'package:world_clock/values/breakpoints.dart';
+import 'package:world_clock/widget/clock/clock.dart';
+import 'package:world_clock/widget/time_zone_info.dart';
+import 'package:world_clock/widget/timer_indicator.dart';
 
 class HomePageClock extends StatelessWidget {
   const HomePageClock({

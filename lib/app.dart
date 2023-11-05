@@ -6,8 +6,6 @@ import 'package:timezone/timezone.dart';
 import 'app_services.dart';
 import 'providers/current_location_provider.dart';
 import 'service/theme/theme.dart';
-import 'service/timezone.dart';
-import 'widget/location_selector_dialog.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -20,23 +18,23 @@ class AppState extends State<App> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback(
-      (timeStamp) async {
-        final hive = AppServices.hive;
-
-        setLocation(
-          // Set location from Hive
-          await hive.getCurrentLocation() ??
-
-              // Ask user to set the location if no location is set in hive.
-              await const LocationSelectorDialog().show() ??
-
-              // This is for fallback. If something unexpected happened then
-              // set first location in the list.
-              TimeZoneUtility.i.locations.first,
-        );
-      },
-    );
+    // WidgetsBinding.instance.addPostFrameCallback(
+    //   (timeStamp) async {
+    //     final hive = AppServices.hive;
+    //
+    //     setLocation(
+    //       // Set location from Hive
+    //       await hive.getCurrentLocation() ??
+    //
+    //           // Ask user to set the location if no location is set in hive.
+    //           await const LocationSelectorDialog().show() ??
+    //
+    //           // This is for fallback. If something unexpected happened then
+    //           // set first location in the list.
+    //           TimeZoneUtility.i.locations.first,
+    //     );
+    //   },
+    // );
   }
 
   late Location _location = local;

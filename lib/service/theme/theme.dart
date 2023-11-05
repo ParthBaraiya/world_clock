@@ -58,3 +58,7 @@ class CustomTheme extends ChangeNotifier {
     }
   }
 }
+
+extension CustomThemeContextExtension on Object {
+  _ThemeData get theme => CustomTheme.instance._data;
+}

@@ -10,7 +10,6 @@ export 'package:timezone/standalone.dart'
 
 class TimeZoneUtility {
   static final TimeZoneUtility i = TimeZoneUtility._();
-
   TimeZoneUtility._();
 
   // Gives the status whether timezone utility is initialized or not.
@@ -24,6 +23,7 @@ class TimeZoneUtility {
   UnmodifiableListView<Location> get locations =>
       UnmodifiableListView(timeZoneDatabase.locations.values);
 
+  // TODO: Move this to state class...
   Iterable<Location> getFilteredLocations(String query) {
     if (query.isEmpty) return locations;
 

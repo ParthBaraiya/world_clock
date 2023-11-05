@@ -15,7 +15,7 @@ class TimezonePath extends AppRouteConfig {
 
   @override
   String getPath() {
-    return '$domain/${timezone == null ? subPathFragment : timezone!.abbreviation}';
+    return '/$domain/${timezone == null ? subPathFragment : timezone!.abbreviation}';
   }
 
   @override
