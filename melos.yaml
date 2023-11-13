@@ -1,0 +1,18 @@
+name: world_clock
+packages:
+  - plugins/*
+
+scripts:
+  get:
+    name: Get Dependencies
+    description: Fetches the pub dependency for current and underlying projects.
+    exec: dart pub get
+    packageFilters:
+      fileExists: pubspec.yaml
+  clean:
+    name: Clean Project Data
+    description: Cleans current and underlying projects.
+    exec: flutter clean
+    packageFilters:
+      fileExists: pubspec.yaml
+      flutter: true
