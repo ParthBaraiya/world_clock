@@ -7,76 +7,72 @@ class TimezoneList extends StatefulWidget {
   _TimezoneListState createState() => _TimezoneListState();
 }
 
-class _TimezoneListState extends State<TimezoneList>
-    with LocationTileExpansionSettingsMixin, TimeZoneListBackend {
+class _TimezoneListState extends State<TimezoneList> with TimeZoneListBackend {
   @override
   Widget build(BuildContext context) {
-    final locations = TimeZoneUtility.i.locationMap.keys.toList();
-
     return TimeZoneUtility.i.initialized.value
-        ? LocationTileExpansionSettings(
-            onShrink: onShrink,
-            onExpand: onExpand,
-            shrinkedZones: shrinkedZones,
-            child: DecoratedBox(
-              position: DecorationPosition.foreground,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.black,
-                    Colors.transparent,
-                    Colors.transparent,
-                    Colors.transparent,
-                    Colors.black
-                  ],
-                  stops: [0, 0.15, 0.5, 0.9, 1],
-                ),
+        ? DecoratedBox(
+            position: DecorationPosition.foreground,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.black,
+                  Colors.transparent,
+                  Colors.transparent,
+                  Colors.transparent,
+                  Colors.black
+                ],
+                stops: [0, 0.15, 0.5, 0.9, 1],
               ),
-              child: ValueListenableBuilder<bool?>(
-                valueListenable: AppServices.hive,
-                builder: (_, value, child) {
-                  if (value ?? false) return child!;
+            ),
+            child: ValueListenableBuilder<bool?>(
+              valueListenable: AppServices.hive,
+              builder: (_, value, child) {
+                if (value ?? false) return child!;
 
-                  return const Text('Hive is not initialized.');
-                },
-                child: ValueListenableBuilder(
-                  valueListenable: AppServices.hive.favoriteTimezonesBox,
-                  builder: (_, value, __) {
-                    if (value == null) {
-                      return const Text('Loading favorites...');
-                    }
-                    return ListView.separated(
-                      padding: const EdgeInsets.symmetric(vertical: 50),
-                      controller: _controller,
-                      itemBuilder: (_, index) {
+                return const Text('Hive is not initialized.');
+              },
+              child: ValueListenableBuilder(
+                valueListenable: AppServices.hive.favoriteTimezonesBox,
+                builder: (_, value, __) {
+                  if (value == null) {
+                    return const Text('Loading favorites...');
+                  }
+                  return ListView.separated(
+                    padding: const EdgeInsets.symmetric(vertical: 50),
+                    controller: _controller,
+                    itemBuilder: (_, index) {
+                      try {
                         return LocationTile(
-                          key: ValueKey(locations[index]),
-                          timezone: locations[index],
+                          key: ValueKey(timezones[index]),
+                          timezone: timezones[index],
                           selected: value.values
-                              .contains(locations[index].hiveTimezone),
+                              .contains(timezones[index].hiveTimezone),
                         );
-                      },
-                      separatorBuilder: (_, __) => Container(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Colors.transparent,
-                              CustomTheme.instance.accentTextColor,
-                              Colors.transparent,
-                            ],
-                            begin: const Alignment(-2.2, 0),
-                            end: const Alignment(2.2, 0),
-                          ),
+                      } catch (e) {
+                        return Text("No Timezones found...");
+                      }
+                    },
+                    separatorBuilder: (_, __) => Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Colors.transparent,
+                            CustomTheme.instance.accentTextColor,
+                            Colors.transparent,
+                          ],
+                          begin: const Alignment(-2.2, 0),
+                          end: const Alignment(2.2, 0),
                         ),
-                        height: 0.2,
-                        width: double.infinity,
                       ),
-                      itemCount: TimeZoneUtility.i.locationMap.length,
-                    );
-                  },
-                ),
+                      height: 0.2,
+                      width: double.infinity,
+                    ),
+                    itemCount: TimeZoneUtility.i.locationMap.length,
+                  );
+                },
               ),
             ),
           )

@@ -54,6 +54,8 @@ class TimeZoneUtility {
       }
     }
 
+    print(locationMap);
+
     initialized.value = true;
   }
 }

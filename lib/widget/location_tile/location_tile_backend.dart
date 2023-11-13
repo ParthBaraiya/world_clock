@@ -2,7 +2,6 @@ part of 'location_tile.dart';
 
 mixin LocationTileBackend on State<LocationTile> {
   final saving = ValueNotifier(false);
-  final isExpanded = ValueNotifier(true);
 
   late final isFavorite = ValueNotifier<bool>(widget.selected);
   late List<Location> _locations;
@@ -19,7 +18,6 @@ mixin LocationTileBackend on State<LocationTile> {
   void dispose() {
     CustomTicker.minuteTicker.removeListener(_tickerCallback);
     saving.dispose();
-    isExpanded.dispose();
     isFavorite.dispose();
     _dateTime.dispose();
     super.dispose();
@@ -30,19 +28,6 @@ mixin LocationTileBackend on State<LocationTile> {
     super.didUpdateWidget(oldWidget);
 
     _updateWidgetData();
-    _updateExpansion();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _updateExpansion();
-  }
-
-  void _updateExpansion() {
-    isExpanded.value = !LocationTileExpansionSettings.of(context)
-        .shrinkedZones
-        .contains(widget.timezone);
   }
 
   void _updateWidgetData() {
@@ -57,15 +42,6 @@ mixin LocationTileBackend on State<LocationTile> {
 
   void _tickerCallback() {
     _updateDateTime(TZDateTime.now(_locations[0]));
-  }
-
-  void _toggleExpanded() {
-    isExpanded.value = !isExpanded.value;
-    if (isExpanded.value) {
-      LocationTileExpansionSettings.of(context).expand(widget.timezone);
-    } else {
-      LocationTileExpansionSettings.of(context).shrink(widget.timezone);
-    }
   }
 
   Future<void> _toggleFavorite() async {

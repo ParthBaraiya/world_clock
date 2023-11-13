@@ -10,8 +10,6 @@ import '../../service/theme/theme.dart';
 import '../../service/timezone.dart';
 import '../../typedefs.dart';
 import '../../values/enumerations.dart';
-import '../../values/world_clock_icons.dart';
-import 'location_tile_expansion_settings.dart';
 
 part 'location_tile_backend.dart';
 
@@ -52,8 +50,7 @@ class _LocationTileState extends State<LocationTile> with LocationTileBackend {
           }
 
           return InkWell(
-            onTap: _toggleExpanded,
-            onDoubleTap: () {
+            onTap: () {
               // TODO: Improve this...
               if (_locations.isNotEmpty) {
                 AppServices.app.currentState?.setLocation(_locations.first);
@@ -63,141 +60,128 @@ class _LocationTileState extends State<LocationTile> with LocationTileBackend {
               mainAxisSize: MainAxisSize.min,
               children: [
                 ValueListenableBuilder(
-                    valueListenable: _dateTime,
-                    builder: (_, value, __) {
-                      final timeWidget = Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            _dateTime.value.format(Constants.hhMM),
-                            style: CustomTheme.instance.timezoneTitleStyle,
+                  valueListenable: _dateTime,
+                  builder: (_, value, __) {
+                    final timeWidget = Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          _dateTime.value.format(Constants.hhMM),
+                          style: CustomTheme.instance.timezoneTitleStyle,
+                        ),
+                        const SizedBox(width: 10),
+                        Text(
+                          Constants.a.format(_dateTime.value),
+                          style: CustomTheme.instance.timezoneSubTitleStyle,
+                        ),
+                      ],
+                    );
+
+                    final offsetWidget = Text(
+                      '${widget.timezone.offsetInHour} HRS',
+                      style: CustomTheme.instance.timezoneSubTitleAccentStyle,
+                    );
+
+                    final locationWidget = Text(
+                      _locations[0].name,
+                      style: CustomTheme.instance.timezoneSubTitleAccentStyle,
+                      textAlign: TextAlign.end,
+                      overflow: TextOverflow.ellipsis,
+                    );
+
+                    final zoneDetails = Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        if (isDeskTop) locationWidget else timeWidget,
+                        const SizedBox(height: 7),
+                        if (isDeskTop)
+                          offsetWidget
+                        else
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Expanded(child: locationWidget),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 5),
+                                child: Text(
+                                  '|',
+                                  style: CustomTheme
+                                      .instance.timezoneSubTitleAccentStyle,
+                                ),
+                              ),
+                              offsetWidget,
+                            ],
                           ),
-                          const SizedBox(width: 10),
-                          Text(
-                            Constants.a.format(_dateTime.value),
-                            style: CustomTheme.instance.timezoneSubTitleStyle,
-                          ),
-                        ],
-                      );
-
-                      final offsetWidget = Text(
-                        '${widget.timezone.offsetInHour} HRS',
-                        style: CustomTheme.instance.timezoneSubTitleAccentStyle,
-                      );
-
-                      final locationWidget = Text(
-                        _locations[0].name,
-                        style: CustomTheme.instance.timezoneSubTitleAccentStyle,
-                        textAlign: TextAlign.end,
-                        overflow: TextOverflow.ellipsis,
-                      );
-
-                      final zoneDetails = Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          if (isDeskTop) locationWidget else timeWidget,
-                          const SizedBox(height: 7),
-                          if (isDeskTop)
-                            offsetWidget
-                          else
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Expanded(child: locationWidget),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 5),
-                                  child: Text(
-                                    '|',
-                                    style: CustomTheme
-                                        .instance.timezoneSubTitleAccentStyle,
+                      ],
+                    );
+                    return Row(
+                      children: [
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Row(
+                            children: [
+                              Text(
+                                widget.timezone.abbreviation,
+                                style: CustomTheme
+                                    .instance.timezoneTitleAccentStyle,
+                              ),
+                              Tooltip(
+                                message: 'Reset',
+                                child: IconButton(
+                                  onPressed: _updateWidgetData,
+                                  icon: const Icon(
+                                    Icons.refresh_rounded,
+                                    color: Colors.white,
                                   ),
                                 ),
-                                offsetWidget,
-                              ],
-                            ),
-                        ],
-                      );
-                      return Row(
-                        children: [
-                          ValueListenableBuilder(
-                            valueListenable: isExpanded,
+                              ),
+                            ],
+                          ),
+                        ),
+                        if (isDeskTop) timeWidget,
+                        SizedBox(
+                          width: zoneWidth,
+                          child: zoneDetails,
+                        ),
+                        const SizedBox(width: 20),
+                        InkWell(
+                          onTap: _toggleFavorite,
+                          child: ValueListenableBuilder(
+                            valueListenable: isFavorite,
                             builder: (_, value, __) {
                               return Icon(
-                                value
-                                    ? WorldClockIcons.chevron_down
-                                    : WorldClockIcons.chevron_up,
-                                size: 15,
-                                color: CustomTheme.instance.primaryTextColor,
+                                value ? Icons.bookmark : Icons.bookmark_outline,
                               );
                             },
                           ),
-                          const SizedBox(width: 10),
-                          Expanded(
-                            child: Row(
-                              children: [
-                                Text(
-                                  widget.timezone.abbreviation,
-                                  style: CustomTheme
-                                      .instance.timezoneTitleAccentStyle,
-                                ),
-                                Tooltip(
-                                  message: 'Reset',
-                                  child: IconButton(
-                                    onPressed: _updateWidgetData,
-                                    icon: const Icon(
-                                      Icons.refresh_rounded,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          if (isDeskTop) timeWidget,
-                          SizedBox(
-                            width: zoneWidth,
-                            child: zoneDetails,
-                          ),
-                          const SizedBox(width: 20),
-                          InkWell(
-                            onTap: _toggleFavorite,
-                            child: ValueListenableBuilder(
-                              valueListenable: isFavorite,
-                              builder: (_, value, __) {
-                                return Icon(
-                                  value
-                                      ? Icons.bookmark
-                                      : Icons.bookmark_outline,
-                                );
-                              },
-                            ),
-                          )
-                        ],
-                      );
-                    }),
-                ValueListenableBuilder(
-                  valueListenable: isExpanded,
-                  builder: (_, value, __) {
-                    return AnimatedSize(
-                      duration: const Duration(milliseconds: 300),
-                      child: value
-                          ? ValueListenableBuilder(
-                              valueListenable: _dateTime,
-                              builder: (_, value, __) {
-                                return TimeLinePageView(
-                                  viewPortWidth: width - 40,
-                                  location: _locations[0],
-                                  onTimeChanged: _updateDateTime,
-                                  initialTime: _dateTime.value,
-                                  timezone: widget.timezone,
-                                );
-                              })
-                          : const SizedBox.shrink(),
+                        )
+                      ],
                     );
                   },
                 ),
+                // ValueListenableBuilder(
+                //   valueListenable: isExpanded,
+                //   builder: (_, value, __) {
+                //     return AnimatedSize(
+                //       duration: const Duration(milliseconds: 300),
+                //       child: value
+                //           ? ValueListenableBuilder(
+                //               valueListenable: _dateTime,
+                //               builder: (_, value, __) {
+                //                 return TimeLinePageView(
+                //                   viewPortWidth: width - 40,
+                //                   location: _locations[0],
+                //                   onTimeChanged: _updateDateTime,
+                //                   initialTime: _dateTime.value,
+                //                   timezone: widget.timezone,
+                //                 );
+                //               })
+                //           : const SizedBox.shrink(),
+                //     );
+                //   },
+                // ),
               ],
             ),
           );

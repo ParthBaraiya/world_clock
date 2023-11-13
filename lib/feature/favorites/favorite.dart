@@ -4,7 +4,6 @@ import '../../app_services.dart';
 import '../../models/hive_timezone/hive_timezone.dart';
 import '../../service/theme/theme.dart';
 import '../../widget/location_tile/location_tile.dart';
-import '../../widget/location_tile/location_tile_expansion_settings.dart';
 
 part 'favorite_page.dart';
 
@@ -52,8 +51,7 @@ class TimeZoneTileList extends StatefulWidget {
   State<TimeZoneTileList> createState() => _TimeZoneTileListState();
 }
 
-class _TimeZoneTileListState extends State<TimeZoneTileList>
-    with LocationTileExpansionSettingsMixin {
+class _TimeZoneTileListState extends State<TimeZoneTileList> {
   @override
   Widget build(BuildContext context) {
     if (widget.timezones.isEmpty) {
@@ -64,20 +62,15 @@ class _TimeZoneTileListState extends State<TimeZoneTileList>
         ),
       );
     }
-    return LocationTileExpansionSettings(
-      child: ListView.builder(
-        itemBuilder: (_, index) {
-          return LocationTile(
-            key: ValueKey(widget.timezones[index].timezone),
-            timezone: widget.timezones[index].timezone,
-            selected: true,
-          );
-        },
-        itemCount: widget.timezones.length,
-      ),
-      shrinkedZones: shrinkedZones,
-      onExpand: onExpand,
-      onShrink: onShrink,
+    return ListView.builder(
+      itemBuilder: (_, index) {
+        return LocationTile(
+          key: ValueKey(widget.timezones[index].timezone),
+          timezone: widget.timezones[index].timezone,
+          selected: true,
+        );
+      },
+      itemCount: widget.timezones.length,
     );
   }
 }

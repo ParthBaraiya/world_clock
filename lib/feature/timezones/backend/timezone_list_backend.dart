@@ -1,8 +1,8 @@
 part of '../timezones.dart';
 
-mixin TimeZoneListBackend
-    on State<TimezoneList> {
+mixin TimeZoneListBackend on State<TimezoneList> {
   late final ScrollController _controller;
+  var timezones = <TimeZone>[];
 
   @override
   void initState() {
@@ -10,6 +10,7 @@ mixin TimeZoneListBackend
 
     _controller = ScrollController();
     TimeZoneUtility.i.initialized.addListener(_reload);
+    timezones = TimeZoneUtility.i.locationMap.keys.toList();
   }
 
   @override
@@ -20,6 +21,8 @@ mixin TimeZoneListBackend
   }
 
   void _reload() {
+    timezones = TimeZoneUtility.i.locationMap.keys.toList();
+
     if (mounted) {
       setState(() {});
     }
