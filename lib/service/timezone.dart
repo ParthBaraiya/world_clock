@@ -1,9 +1,11 @@
+import 'dart:async';
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:timezone/data/latest_all.dart';
 import 'package:timezone/standalone.dart'
     if (dart.library.html) 'package:timezone/browser.dart';
+import 'package:world_clock_widgets/utility/async_method_debouncer.dart';
 
 export 'package:timezone/standalone.dart'
     if (dart.library.html) 'package:timezone/browser.dart';
@@ -13,6 +15,7 @@ class TimeZoneUtility {
   TimeZoneUtility._();
 
   // Gives the status whether timezone utility is initialized or not.
+  @Deprecated('This is deprecated...')
   final ValueNotifier<bool> initialized = ValueNotifier(false);
 
   final _locationMap = <TimeZone, List<Location>>{};
@@ -35,7 +38,12 @@ class TimeZoneUtility {
     });
   }
 
-  Future<void> initialize() async {
+  late final _debouncer = AsyncMethodCallDebouncer(callback: _initialize);
+
+  /// NOTE: Force variable is not functional yet.
+  Future<void> initialize({bool force = false}) => _debouncer();
+
+  Future<void> _initialize() async {
     initializeTimeZones();
 
     final locations = timeZoneDatabase.locations.values.toList();
@@ -53,8 +61,6 @@ class TimeZoneUtility {
         _locationMap[timezone]!.add(location);
       }
     }
-
-    print(locationMap);
 
     initialized.value = true;
   }
