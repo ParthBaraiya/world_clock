@@ -47,7 +47,7 @@ abstract class WorldClockFutureListWidgetState<T extends StatefulWidget,
       return Text(loadingDataMessage);
     }
 
-    if (_error != null || _error!.isNotEmpty) {
+    if (_error != null && _error!.isNotEmpty) {
       return Text(_error!);
     }
 

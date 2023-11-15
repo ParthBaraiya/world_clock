@@ -18,8 +18,11 @@ dependencies:
   timezone: ^0.9.2
   flutter_svg: ^2.0.9
   flutter_spinkit: ^5.2.0
+  #TODO: Remove Hive and use isar instead.
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  world_clock_widgets:
+    path: packages/world_clock_widgets
   # Enable this in future.
   #  bitsdojo_window: ^0.1.1+1
 
