@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:world_clock/widget/timezone_listing_widgets/favorites_timezones/favorites_timezone_list_widget.dart';
 
 import '../../app_services.dart';
 import '../../models/hive_timezone/hive_timezone.dart';
@@ -64,7 +65,7 @@ class _TimeZoneTileListState extends State<TimeZoneTileList> {
     }
     return ListView.builder(
       itemBuilder: (_, index) {
-        return LocationTile(
+        return TimezoneDetailsTile(
           key: ValueKey(widget.timezones[index].timezone),
           timezone: widget.timezones[index].timezone,
           selected: true,

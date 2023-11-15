@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import '../../app_services.dart';
@@ -9,19 +8,18 @@ import '../../service/extension.dart';
 import '../../service/theme/theme.dart';
 import '../../service/timezone.dart';
 import '../../typedefs.dart';
-import '../../values/enumerations.dart';
 
 part 'location_tile_backend.dart';
 
 // This defines that there will be 1 pixel every minute.
 const _kTimeLineWidth = 1440.0;
 
-class LocationTile extends StatefulWidget {
+class TimezoneDetailsTile extends StatefulWidget {
   final TimeZone timezone;
   final FavoriteChangeCallback? onBookmark;
   final bool selected;
 
-  const LocationTile({
+  const TimezoneDetailsTile({
     Key? key,
     required this.timezone,
     required this.selected,
@@ -29,10 +27,11 @@ class LocationTile extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<LocationTile> createState() => _LocationTileState();
+  State<TimezoneDetailsTile> createState() => _TimezoneDetailsTileState();
 }
 
-class _LocationTileState extends State<LocationTile> with LocationTileBackend {
+class _TimezoneDetailsTileState extends State<TimezoneDetailsTile>
+    with LocationTileBackend {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -161,27 +160,6 @@ class _LocationTileState extends State<LocationTile> with LocationTileBackend {
                     );
                   },
                 ),
-                // ValueListenableBuilder(
-                //   valueListenable: isExpanded,
-                //   builder: (_, value, __) {
-                //     return AnimatedSize(
-                //       duration: const Duration(milliseconds: 300),
-                //       child: value
-                //           ? ValueListenableBuilder(
-                //               valueListenable: _dateTime,
-                //               builder: (_, value, __) {
-                //                 return TimeLinePageView(
-                //                   viewPortWidth: width - 40,
-                //                   location: _locations[0],
-                //                   onTimeChanged: _updateDateTime,
-                //                   initialTime: _dateTime.value,
-                //                   timezone: widget.timezone,
-                //                 );
-                //               })
-                //           : const SizedBox.shrink(),
-                //     );
-                //   },
-                // ),
               ],
             ),
           );
@@ -189,243 +167,4 @@ class _LocationTileState extends State<LocationTile> with LocationTileBackend {
       ),
     );
   }
-}
-
-class TimeLinePageView extends StatefulWidget {
-  const TimeLinePageView({
-    super.key,
-    required this.viewPortWidth,
-    required this.location,
-    this.onTimeChanged,
-    this.initialTime,
-    required this.timezone,
-  });
-
-  final double viewPortWidth;
-  final Location location;
-  final ValueChanged<TZDateTime>? onTimeChanged;
-  final TZDateTime? initialTime;
-  final TimeZone timezone;
-
-  @override
-  State<TimeLinePageView> createState() => _TimeLinePageViewState();
-}
-
-class _TimeLinePageViewState extends State<TimeLinePageView> {
-  var _controller = PageController();
-  double _width = 0.0;
-  int itemCount = 1;
-  late TZDateTime _scrolledDate;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _updateController(widget.viewPortWidth, shouldAnimate: false);
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  void didUpdateWidget(covariant TimeLinePageView oldWidget) {
-    super.didUpdateWidget(oldWidget);
-
-    if (_width != widget.viewPortWidth ||
-        oldWidget.onTimeChanged != widget.onTimeChanged ||
-        oldWidget.location != widget.location ||
-        _scrolledDate != widget.initialTime) {
-      _updateController(
-        widget.viewPortWidth,
-        shouldAnimate: oldWidget.initialTime != widget.initialTime,
-      );
-    }
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    if (_width != widget.viewPortWidth) {
-      _updateController(widget.viewPortWidth);
-    }
-  }
-
-  void _updateController(double newWidth, {bool shouldAnimate = true}) {
-    _controller.dispose();
-    itemCount = AppTimeConfigs.instance.timelineDays;
-    _scrolledDate = widget.initialTime ?? TZDateTime.now(widget.location);
-    final viewportFraction = _kTimeLineWidth / newWidth;
-    _controller = PageController(viewportFraction: viewportFraction);
-    _controller.addListener(() {
-      final ms = ((_controller.position.pixels + (newWidth / 2)) * 60000 -
-              _scrolledDate.timeZoneOffset.inMilliseconds)
-          .toInt();
-      _scrolledDate =
-          TZDateTime.fromMillisecondsSinceEpoch(widget.location, ms);
-
-      widget.onTimeChanged?.call(_scrolledDate);
-    });
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      final offset = ((_scrolledDate.millisecondsSinceEpoch +
-                  _scrolledDate.timeZoneOffset.inMilliseconds) /
-              60000) -
-          (newWidth / 2);
-      if (shouldAnimate) {
-        _controller.animateTo(
-          offset,
-          duration: Constants.defaultAnimationDurationLong,
-          curve: Constants.defaultAnimationCurve,
-        );
-      } else {
-        _controller.jumpTo(offset);
-      }
-    });
-    _width = newWidth;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 110,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 10,
-        ),
-        child: Stack(
-          alignment: Alignment.topCenter,
-          children: [
-            DecoratedBox(
-              position: DecorationPosition.foreground,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Colors.black,
-                    Colors.transparent,
-                    Colors.transparent,
-                    Colors.transparent,
-                    Colors.black
-                  ],
-                  stops: [0, 0.3, 0.5, 0.7, 1],
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: SizedBox(
-                  height: 50,
-                  child: PageView.builder(
-                    controller: _controller,
-                    pageSnapping: false,
-                    physics: const BouncingScrollPhysics(),
-                    dragStartBehavior: DragStartBehavior.down,
-                    itemCount: itemCount,
-                    itemBuilder: (_, index) => SizedBox(
-                      height: 50,
-                      width: _kTimeLineWidth,
-                      child: FittedBox(
-                        child: CustomPaint(
-                          size: const Size(_kTimeLineWidth, 50),
-                          painter: TimeLinePainter(
-                            timeZone: widget.timezone,
-                            format: TimeFormat.hour12,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const Center(
-              child: ColoredBox(
-                color: Colors.blue,
-                child: SizedBox(
-                  height: 90,
-                  width: 1.5,
-                ),
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: FractionalTranslation(
-                translation: const Offset(0.5, 0),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    ListenableBuilder(
-                      listenable: _controller,
-                      builder: (_, __) {
-                        return Text(
-                          _scrolledDate.descriptiveDate,
-                          style:
-                              CustomTheme.instance.timezoneSubTitleAccentStyle,
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-// TODO: Update this logic to paint the canvas based on timezone offset.
-class TimeLinePainter extends CustomPainter {
-  final TimeZone timeZone;
-  final TimeFormat format;
-
-  TimeLinePainter({
-    required this.timeZone,
-    required this.format,
-  });
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final singleOffset = size.width / 1440;
-
-    final numberStyle = const TextStyle(
-      fontSize: 15,
-      color: Colors.white,
-    );
-
-    for (var i = 15; i < 1441; i += 15) {
-      var top = size.height * 0.7;
-      final x = singleOffset * i;
-
-      if (i % 60 == 0) {
-        final text = '${((i ~/ 60) % format.maxPossibleTime)}';
-        top = size.height * 0.5;
-        canvas.paintText(
-          text: text == '0' && i != 1440 ? '12' : text,
-          minWidth: 2,
-          maxWidth: 300,
-          offset: Offset(x, top - 12),
-          style: numberStyle,
-        );
-      }
-
-      canvas.drawLine(
-        Offset(x, top),
-        Offset(x, size.height),
-        Paint()
-          ..color = Colors.white
-          ..strokeWidth = 2
-          ..strokeCap = StrokeCap.round,
-      );
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant TimeLinePainter oldDelegate) => false;
 }

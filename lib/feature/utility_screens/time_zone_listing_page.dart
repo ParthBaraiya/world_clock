@@ -18,7 +18,7 @@ class _TimeZoneListingPageState extends State<TimeZoneListingPage>
     with SearchableListingPageMixin<TimeZoneListingPage, TimeZone> {
   @override
   Widget builder(BuildContext context, int index) {
-    return Text('timezone');
+    return const Text('timezone');
   }
 
   @override

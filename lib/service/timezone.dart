@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
 
-import 'package:flutter/material.dart';
 import 'package:timezone/data/latest_all.dart';
 import 'package:timezone/standalone.dart'
     if (dart.library.html) 'package:timezone/browser.dart';
@@ -13,10 +12,6 @@ export 'package:timezone/standalone.dart'
 class TimeZoneUtility {
   static final TimeZoneUtility i = TimeZoneUtility._();
   TimeZoneUtility._();
-
-  // Gives the status whether timezone utility is initialized or not.
-  @Deprecated('This is deprecated...')
-  final ValueNotifier<bool> initialized = ValueNotifier(false);
 
   final _locationMap = <TimeZone, List<Location>>{};
 
@@ -61,7 +56,5 @@ class TimeZoneUtility {
         _locationMap[timezone]!.add(location);
       }
     }
-
-    initialized.value = true;
   }
 }

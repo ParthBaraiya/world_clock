@@ -8,6 +8,8 @@ abstract class AppRouteConfig {
 
   String getPath() => '/$domain';
 
+  Uri get uri => Uri.parse(getPath());
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||

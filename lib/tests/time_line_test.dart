@@ -58,7 +58,7 @@ class CustomPainterDemo extends CustomPainter {
 
     /// Range of time that will be covered in current size of custom painter.
     final start = offset.value * 0 - (size.width / (2 * offsetPerMinute));
-    final end = offset.value * 0 + (size.width / (2 * offsetPerMinute));
+    // final end = offset.value * 0 + (size.width / (2 * offsetPerMinute));
 
     // offset from where we need to start drawing...
     final sOffset = (sectionSize * offsetPerMinute) -

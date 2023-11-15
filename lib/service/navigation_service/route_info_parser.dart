@@ -5,7 +5,7 @@ class WorldClockRouteInformationParser
   @override
   Future<AppRouteConfig> parseRouteInformation(
       RouteInformation routeInformation) async {
-    final uri = Uri.parse(routeInformation.location ?? '');
+    final uri = routeInformation.uri;
     final pathSegments = uri.pathSegments;
     debugPrint(pathSegments.toString());
 
@@ -36,7 +36,7 @@ class WorldClockRouteInformationParser
 
   @override
   RouteInformation restoreRouteInformation(AppRouteConfig configuration) {
-    return RouteInformation(location: configuration.getPath());
+    return RouteInformation(uri: configuration.uri);
   }
 
   TimeZone? getTimezoneFromAbbr(String? abbr) {

@@ -49,8 +49,7 @@ linter:
     empty_statements: true
     empty_constructor_bodies: true
     hash_and_equals: false
-    iterable_contains_unrelated_type: true
-    list_remove_unrelated_type: true
+    collection_methods_unrelated_type: true
     literal_only_boolean_expressions: true
     always_require_non_null_named_parameters: true
     omit_local_variable_types: true

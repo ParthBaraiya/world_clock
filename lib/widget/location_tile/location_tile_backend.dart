@@ -1,6 +1,6 @@
 part of 'location_tile.dart';
 
-mixin LocationTileBackend on State<LocationTile> {
+mixin LocationTileBackend on State<TimezoneDetailsTile> {
   final saving = ValueNotifier(false);
 
   late final isFavorite = ValueNotifier<bool>(widget.selected);
@@ -24,7 +24,7 @@ mixin LocationTileBackend on State<LocationTile> {
   }
 
   @override
-  void didUpdateWidget(LocationTile oldWidget) {
+  void didUpdateWidget(TimezoneDetailsTile oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     _updateWidgetData();
