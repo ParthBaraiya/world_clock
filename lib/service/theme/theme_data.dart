@@ -18,6 +18,8 @@ abstract class _ThemeData {
 
   late TextStyle timezoneTitleAccentStyle;
   late TextStyle timezoneSubTitleAccentStyle;
+
+  late TextStyle searchBarHintStyle;
 }
 
 class _LightThemeData implements _ThemeData {
@@ -91,6 +93,13 @@ class _LightThemeData implements _ThemeData {
     color: Color(0xffffffff),
     fontSize: 15,
   );
+
+  @override
+  TextStyle searchBarHintStyle = const TextStyle(
+    color: Color(0xB32a00ff),
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
+  );
 }
 
 class _DarkThemeData implements _ThemeData {
@@ -161,5 +170,12 @@ class _DarkThemeData implements _ThemeData {
   TextStyle timezoneSubTitleAccentStyle = const TextStyle(
     color: Color(0xffffffff),
     fontSize: 15,
+  );
+
+  @override
+  TextStyle searchBarHintStyle = const TextStyle(
+    color: Color(0xB32a00ff),
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
   );
 }

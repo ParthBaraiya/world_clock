@@ -36,6 +36,7 @@ class CustomTheme extends ChangeNotifier {
 
   TextStyle get timezoneTitleStyle => _data.timezoneTitleStyle;
   TextStyle get timezoneSubTitleStyle => _data.timezoneSubTitleStyle;
+  TextStyle get searchBarHintStyle => _data.searchBarHintStyle;
 
   TextStyle get timezoneTitleAccentStyle => _data.timezoneTitleAccentStyle;
   TextStyle get timezoneSubTitleAccentStyle =>

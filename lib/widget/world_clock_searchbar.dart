@@ -32,7 +32,7 @@ class WorldClockSearchBar extends StatelessWidget {
               focusedBorder: InputBorder.none,
               focusedErrorBorder: InputBorder.none,
               hintText: hintText,
-              hintStyle: CustomTheme.instance.subtitleStyle,
+              hintStyle: CustomTheme.instance.searchBarHintStyle,
             ),
             onChanged: onSearch,
           ),

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:world_clock/app_services.dart';
-import 'package:world_clock/feature/favorites/favorite.dart';
-import 'package:world_clock/feature/timezones/timezones.dart';
 import 'package:world_clock/service/navigation_service/navigation_service.dart';
 import 'package:world_clock/service/theme/theme.dart';
 import 'package:world_clock/widget/buttons.dart';
 import 'package:world_clock/widget/decorations.dart';
+import 'package:world_clock/widget/timezone_listing_widgets/all_timezones/all_timezone_list_widget.dart';
+import 'package:world_clock/widget/timezone_listing_widgets/favorites_timezones/favorites_timezone_list_widget.dart';
 
 enum TimezoneTabType {
   favorite,
@@ -71,8 +71,12 @@ class _TimeZoneTabState extends State<TimeZoneTab>
           padding: const EdgeInsets.only(left: 20),
           child: TabBar(
             controller: _tabController,
+            labelColor: CustomTheme.instance.accentTextColor,
+            unselectedLabelColor:
+                CustomTheme.instance.primaryTextColor.withOpacity(0.8),
             isScrollable: true,
             indicatorSize: TabBarIndicatorSize.label,
+            dividerHeight: 0,
             indicator: RoundedUnderlinedIndicator(
               borderSide: BorderSide(
                 width: 5,
@@ -104,8 +108,8 @@ class _TimeZoneTabState extends State<TimeZoneTab>
           child: TabBarView(
             controller: _tabController,
             children: [
-              const Favorites(),
-              const TimezoneList(),
+              const FavoritesTimezonesListWidget(),
+              const AllTimezonesListWidget(),
             ],
           ),
         ),

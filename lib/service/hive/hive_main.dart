@@ -30,8 +30,8 @@ class HiveService extends WorldClockService<bool> {
         ..registerAdapter(HiveTimezoneAdapter())
         ..registerAdapter(HiveLocationAdapter());
       value = true;
-      Hive.openBox<HiveTimezone>(favoritesBox)
-          .then((value) => favoriteTimezonesBox.value = value);
+      favoriteTimezonesBox.value =
+          await Hive.openBox<HiveTimezone>(favoritesBox);
     });
   }
 

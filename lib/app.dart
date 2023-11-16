@@ -18,6 +18,8 @@ class AppState extends State<App> {
   @override
   void initState() {
     super.initState();
+    // TODO: Uncomment this to select the default timezone.
+    // TODO: Add logic to select the timezone based on the current offset.
     // WidgetsBinding.instance.addPostFrameCallback(
     //   (timeStamp) async {
     //     final hive = AppServices.hive;

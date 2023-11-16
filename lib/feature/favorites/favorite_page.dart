@@ -9,7 +9,7 @@ class FavoritesPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Favorites...'),
       ),
-      body: const Favorites(),
+      body: const FavoritesTimezonesListWidget(),
     );
   }
 }
