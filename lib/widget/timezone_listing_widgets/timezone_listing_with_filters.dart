@@ -35,7 +35,7 @@ abstract class TimezoneListingWithFiltersWidgetState<T extends StatefulWidget>
             children: [
               Expanded(
                 child: WorldClockSearchBar(
-                  hintText: 'Search by Timezone or Location',
+                  hintText: 'Search by Timezone',
                   onSearch: (value) {
                     if (value != _search.value) {
                       _setFilters(_filters.copyWith(search: value));
@@ -169,14 +169,16 @@ class WorldClockTimeZoneFilters extends WorldClockDataFilter<TimeZone> {
   Iterable<TimeZone> apply(Iterable<TimeZone> timezones) {
     var filtered = timezones;
 
+    // Applies search
     if (search != null && search!.isNotEmpty) {
-      final expr = RegExp(search!);
-      filtered =
-          filtered.where((element) => expr.hasMatch(element.abbreviation));
+      final expr = RegExp(search!.toLowerCase());
+      filtered = filtered.where(
+          (element) => expr.hasMatch(element.abbreviation.toLowerCase()));
     }
 
     final list = filtered.toList();
 
+    /// Applies sorting
     switch (sortBy) {
       case TimezoneSortBy.location:
         list.sort((t1, t2) {
@@ -198,6 +200,7 @@ class WorldClockTimeZoneFilters extends WorldClockDataFilter<TimeZone> {
         break;
     }
 
+    // Applies order
     switch (order) {
       case SortingOrder.asc:
         return list;

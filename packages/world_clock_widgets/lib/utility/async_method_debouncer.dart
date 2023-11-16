@@ -1,6 +1,6 @@
 import 'dart:async';
 
-class AsyncMethodCallDebouncer<T> {
+class AsyncMethodCallDebouncer<T extends Object?> {
   final Future<T> Function() callback;
   final bool cacheResult;
 
