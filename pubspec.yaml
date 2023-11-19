@@ -21,6 +21,7 @@ dependencies:
   #TODO: Remove Hive and use isar instead.
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  url_launcher: ^6.2.1
   world_clock_widgets:
     path: packages/world_clock_widgets
   # Enable this in future.

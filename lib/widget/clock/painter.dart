@@ -15,7 +15,7 @@ class ClockMarkings extends CustomPainter {
     final pointerPaint = Paint()
       ..strokeWidth = markerSize
       ..strokeCap = StrokeCap.round;
-    final pointers = _getPointerOffsets(radius);
+    final pointers = _getPointerOffsets(radius, 0.87);
 
     final shadow = BoxShadow(
       blurRadius: 35,
@@ -50,7 +50,7 @@ class ClockMarkings extends CustomPainter {
       color: Colors.white,
     );
 
-    final offsets = _getPointerOffsets(radius, 0.77);
+    final offsets = _getPointerOffsets(radius, 0.70);
 
     for (var i = 1; i < 13; i++) {
       late final Offset offset;

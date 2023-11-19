@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:world_clock/feature/home/home_page_clock.dart';
-import 'package:world_clock/feature/home/tab_bar.dart';
+import 'package:world_clock/feature/home_old/home_page_clock.dart';
+import 'package:world_clock/feature/home_old/tab_bar.dart';
 
 import '../../service/extension.dart';
 import '../../service/theme/theme.dart';

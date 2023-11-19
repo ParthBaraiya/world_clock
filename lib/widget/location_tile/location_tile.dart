@@ -65,12 +65,12 @@ class _TimezoneDetailsTileState extends State<TimezoneDetailsTile>
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          _dateTime.value.format(Constants.hhMM),
+                          _dateTime.value.format(WorldClockDateFormats.hhMM),
                           style: CustomTheme.instance.timezoneTitleStyle,
                         ),
                         const SizedBox(width: 10),
                         Text(
-                          Constants.a.format(_dateTime.value),
+                          _dateTime.value.format(WorldClockDateFormats.a),
                           style: CustomTheme.instance.timezoneSubTitleStyle,
                         ),
                       ],

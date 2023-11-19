@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:timezone/timezone.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 // TODO: Use proper way to get the height and width data...
 double get _screenHeight =>
@@ -104,6 +105,18 @@ extension TimeZoneExtension on TimeZone {
 
     return '${offset < 0 ? "-" : "+"}${offset.abs()}';
   }
+}
+
+extension UrlExtensions on Uri {
+  Future<void> launch() async {
+    if (await canLaunchUrl(this)) {
+      launchUrl(this);
+    }
+  }
+}
+
+extension StringExtension on String {
+  Uri get uri => Uri.parse(this);
 }
 
 abstract class PrintUtility {

@@ -52,7 +52,7 @@ class _TimeIndicatorState extends State<TimeIndicator> {
       text: TextSpan(
         children: [
           TextSpan(
-            text: '${time.format(Constants.hhMMa)} ',
+            text: '${time.format(WorldClockDateFormats.hhMMa)} ',
             style: CustomTheme.instance.titleStyle.copyWith(
               fontSize: 55,
             ),
