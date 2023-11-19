@@ -1,12 +1,14 @@
 import 'dart:collection';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:world_clock/feature/home/home_screen.dart';
 import 'package:world_clock/service/extension.dart';
 
 import '../../feature/error_404.dart';
 import '../../feature/favorites/favorites_list_page.dart';
-import '../../feature/home/desktop_home_page.dart';
-import '../../feature/home/home.dart';
+import '../../feature/home_old/desktop_home_page.dart';
+import '../../feature/home_old/home.dart';
 import '../../feature/timezones/timezone_details.dart';
 import '../../feature/timezones/timezones.dart';
 import '../../values/breakpoints.dart';
@@ -39,17 +41,25 @@ class WorldClockRouterDelegate extends AppRouterDelegate {
 
     // Add home page if width is less then 800 px or current route is HomePage.
     if (width < HomeScreenBreakPoints.point800) {
-      _pages.add(_getPage(const HomePage(), HomePagePath()));
+      _pages.add(_getPage(kDebugMode ? const HomePageOld() : const HomeScreen(),
+          HomePagePath()));
     } else if (currentConfiguration is HomePagePath) {
-      _pages.add(
-        _getPage(
-          const DesktopHomePage(
-            widget: TimezoneListPage(),
-            index: 0,
-          ),
+      if (kDebugMode) {
+        _pages.add(_getPage(
+          const HomeScreen(),
           currentConfiguration,
-        ),
-      );
+        ));
+      } else {
+        _pages.add(
+          _getPage(
+            const DesktopHomePage(
+              widget: TimezoneListPage(),
+              index: 0,
+            ),
+            currentConfiguration,
+          ),
+        );
+      }
     }
 
     if (currentConfiguration is FavoritesPath) {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:world_clock/feature/home/home_page_clock.dart';
+import 'package:world_clock/feature/home_old/home_page_clock.dart';
 
 // import 'package:go_router/go_router.dart';
 
@@ -9,11 +9,11 @@ import '../../service/theme/theme.dart';
 import '../../values/world_clock_icons.dart';
 import '../../widget/buttons.dart';
 
-class HomePage extends StatelessWidget {
+class HomePageOld extends StatelessWidget {
   /// Defines home page for all type of devices...
   /// i.e. Mobile, Web and Desktop
   ///
-  const HomePage({Key? key}) : super(key: key);
+  const HomePageOld({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
