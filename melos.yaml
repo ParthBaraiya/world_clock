@@ -6,13 +6,26 @@ scripts:
   get:
     name: Get Dependencies
     description: Fetches the pub dependency for current and underlying projects.
-    exec: dart pub get
+    run: dart pub get
     packageFilters:
       fileExists: pubspec.yaml
   clean:
     name: Clean Project Data
     description: Cleans current and underlying projects.
-    exec: flutter clean
+    run: flutter clean
     packageFilters:
       fileExists: pubspec.yaml
       flutter: true
+  analyse:
+    name: Analyse Projects
+    description: Analyses all the projects and throws respective errors if analysis fails.
+    run: flutter analyze
+    packageFilters:
+      fileExists: pubspec.yaml
+  generate:
+    name: Generate Files
+    description: Generates files using build runner.
+    run: flutter pub run build_runner build --delete-conflicting-outputs
+    packageFilters:
+      fileExists: pubspec.yaml
+      dependsOn: build_runner
