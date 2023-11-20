@@ -58,3 +58,21 @@ class AutoAnimateOpacityTween extends AutoAnimateWidgetTween<double> {
     return super.builder(context, value, transparent);
   }
 }
+
+class AutoAnimateScaleTween extends AutoAnimateWidgetTween<double> {
+  const AutoAnimateScaleTween({
+    required super.begin,
+    required super.end,
+    super.child,
+  });
+
+  @override
+  Widget builder(BuildContext context, double value, Widget initialChild) {
+    final transformed = Transform.scale(
+      scale: tween.transform(value),
+      child: initialChild,
+    );
+
+    return super.builder(context, value, transformed);
+  }
+}

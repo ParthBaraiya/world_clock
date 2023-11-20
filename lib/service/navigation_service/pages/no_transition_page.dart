@@ -1,4 +1,5 @@
-part of 'navigation_service.dart';
+import 'package:flutter/material.dart';
+import 'package:world_clock/service/interfaces/navigation_utility_interface/app_route_config.dart';
 
 class NoTransitionPage<T> extends Page<T> {
   const NoTransitionPage({

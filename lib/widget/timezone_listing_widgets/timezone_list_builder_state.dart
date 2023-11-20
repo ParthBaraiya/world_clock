@@ -4,16 +4,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:world_clock/service/timezone.dart';
 import 'package:world_clock/widget/location_tile/location_tile.dart';
+import 'package:world_clock_widgets/widgets/auto_animate_widget/auto_animate_tweens.dart';
+import 'package:world_clock_widgets/widgets/auto_animate_widget/auto_animate_widget.dart';
 import 'package:world_clock_widgets/widgets/world_clock_future_list_widget.dart';
 
 abstract class TimeZoneListState<T extends StatefulWidget>
     extends WorldClockFutureListWidgetState<T, TimeZone> {
   @override
   Widget itemBuilder(BuildContext context, TimeZone item, int index) {
-    return TimezoneDetailsTile(
-      key: ValueKey(item),
-      timezone: item,
-      selected: isInFavorites(item, index),
+    return AutoAnimatedWidget(
+      tween: const AutoAnimateScaleTween(
+        begin: 0.4,
+        end: 1,
+        child: AutoAnimateOpacityTween(
+          begin: 0.4,
+          end: 1,
+        ),
+      ),
+      duration: Duration(milliseconds: 700),
+      child: TimezoneDetailsTile(
+        key: ValueKey(item),
+        timezone: item,
+        selected: isInFavorites(item, index),
+      ),
     );
   }
 

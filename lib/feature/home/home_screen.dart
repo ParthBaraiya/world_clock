@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:world_clock/app_services.dart';
 import 'package:world_clock/providers/current_location_provider.dart';
 import 'package:world_clock/service/constants.dart';
 import 'package:world_clock/service/extension.dart';
+import 'package:world_clock/service/navigation_service/navigation_service.dart';
 import 'package:world_clock/service/theme/theme.dart';
 import 'package:world_clock/service/timezone.dart';
 import 'package:world_clock/values/world_clock_icons.dart';
@@ -181,9 +183,12 @@ class _Menu extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const HomePageMenuItem(
+          HomePageMenuItem(
             title: 'Favorites',
             leading: Icons.bookmark,
+            onTap: () {
+              AppServices.navigationService.navigate(FavoritesPath.list());
+            },
           ),
           const HomePageMenuItem(
             title: 'Timezones',
@@ -197,6 +202,7 @@ class _Menu extends StatelessWidget {
             title: 'Github',
             leading: WorldClockIcons.github,
             onTap: 'https://github.com/ParthBaraiya/world_clock'.uri.launch,
+            action: Icons.open_in_new,
           ),
         ],
       ),
@@ -210,11 +216,13 @@ class HomePageMenuItem extends StatelessWidget {
     required this.leading,
     required this.title,
     this.onTap,
+    this.action,
   });
 
   final IconData leading;
   final String title;
   final VoidCallback? onTap;
+  final IconData? action;
 
   @override
   Widget build(BuildContext context) {
@@ -236,9 +244,20 @@ class HomePageMenuItem extends StatelessWidget {
             ),
             const SizedBox(width: 20),
             AnimatedUnderlinedWidget(
-              child: Text(
-                title,
-                style: CustomTheme.instance.heading4,
+              child: Row(
+                children: [
+                  Text(
+                    title,
+                    style: CustomTheme.instance.heading4,
+                  ),
+                  if (action != null) ...[
+                    SizedBox(width: 10),
+                    Icon(
+                      action,
+                      size: 24,
+                    ),
+                  ]
+                ],
               ),
               underlineColor: CustomTheme.instance.accentTextColor,
             ),
