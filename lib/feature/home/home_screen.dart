@@ -1,7 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:world_clock/app_services.dart';
 import 'package:world_clock/providers/current_location_provider.dart';
 import 'package:world_clock/service/constants.dart';
 import 'package:world_clock/service/extension.dart';
+import 'package:world_clock/service/navigation_service/navigation_service.dart';
 import 'package:world_clock/service/theme/theme.dart';
 import 'package:world_clock/service/timezone.dart';
 import 'package:world_clock/values/world_clock_icons.dart';
@@ -36,45 +40,113 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            Row(
-              children: [
-                const Expanded(
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: _TimeDetails(),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: MediaQuery.sizeOf(context).width * 0.065,
-                  ),
-                  child: AutoAnimatedWidget(
-                    curve: Constants.defaultAnimationCurve,
-                    duration: const Duration(seconds: 1),
-                    tween: const AutoAnimateTranslateTween(
-                      begin: Offset(0, 150.0),
-                      end: Offset.zero,
-                      child: AutoAnimateOpacityTween(
-                        begin: 0.2,
-                        end: 1,
-                      ),
-                    ),
-                    child: Clock(
-                      radius: MediaQuery.sizeOf(context).width * 0.2,
+            Padding(
+              padding: const EdgeInsets.all(30),
+              child: Column(
+                children: [
+                  const Text(
+                    'World Clock',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 54,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
-                const Expanded(
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: _Menu(),
+                  Expanded(
+                    child: Center(
+                      child: LayoutBuilder(builder: (_, constraints) {
+                        return Row(
+                          children: [
+                            const Expanded(
+                              child: Align(
+                                alignment: Alignment.centerRight,
+                                child: _TimeDetails(),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal:
+                                    MediaQuery.sizeOf(context).width * 0.065,
+                              ),
+                              child: AutoAnimatedWidget(
+                                curve: Constants.defaultAnimationCurve,
+                                duration: const Duration(seconds: 1),
+                                tween: const AutoAnimateTranslateTween(
+                                  begin: Offset(0, 150.0),
+                                  end: Offset.zero,
+                                  child: AutoAnimateOpacityTween(
+                                    begin: 0.2,
+                                    end: 1,
+                                  ),
+                                ),
+                                child: Clock(
+                                  radius: min(
+                                    400,
+                                    MediaQuery.sizeOf(context).width * 0.3,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const Expanded(
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: _Menu(),
+                              ),
+                            ),
+                          ],
+                        );
+                      }),
+                    ),
                   ),
-                ),
-              ],
-            )
+                ],
+              ),
+            ),
+            const Align(
+              alignment: Alignment.topRight,
+              child: _GithubIcon(),
+            ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class _GithubIcon extends StatelessWidget {
+  const _GithubIcon({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.topRight,
+      children: [
+        Transform.translate(
+          offset: const Offset(75, -75),
+          child: Transform.rotate(
+            angle: pi / 4,
+            child: const ColoredBox(
+              color: Color(0xff07002D),
+              child: SizedBox(
+                height: 150,
+                width: 150,
+              ),
+            ),
+          ),
+        ),
+        InkWell(
+          onTap: 'https://github.com/ParthBaraiya/world_clock'.uri.launch,
+          child: const Padding(
+            padding: EdgeInsets.only(
+              top: 16,
+              right: 16,
+            ),
+            child: Icon(
+              WorldClockIcons.github,
+              size: 24,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -181,9 +253,12 @@ class _Menu extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const HomePageMenuItem(
+          HomePageMenuItem(
             title: 'Favorites',
             leading: Icons.bookmark,
+            onTap: () {
+              AppServices.navigationService.navigate(FavoritesPath.list());
+            },
           ),
           const HomePageMenuItem(
             title: 'Timezones',
@@ -192,11 +267,6 @@ class _Menu extends StatelessWidget {
           const HomePageMenuItem(
             title: 'Compare',
             leading: WorldClockIcons.exchange,
-          ),
-          HomePageMenuItem(
-            title: 'Github',
-            leading: WorldClockIcons.github,
-            onTap: 'https://github.com/ParthBaraiya/world_clock'.uri.launch,
           ),
         ],
       ),
@@ -210,17 +280,19 @@ class HomePageMenuItem extends StatelessWidget {
     required this.leading,
     required this.title,
     this.onTap,
+    this.action,
   });
 
   final IconData leading;
   final String title;
   final VoidCallback? onTap;
+  final IconData? action;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      overlayColor: MaterialStatePropertyAll(Colors.transparent),
+      overlayColor: const MaterialStatePropertyAll(Colors.transparent),
       splashColor: Colors.transparent,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10),
@@ -236,9 +308,20 @@ class HomePageMenuItem extends StatelessWidget {
             ),
             const SizedBox(width: 20),
             AnimatedUnderlinedWidget(
-              child: Text(
-                title,
-                style: CustomTheme.instance.heading4,
+              child: Row(
+                children: [
+                  Text(
+                    title,
+                    style: CustomTheme.instance.heading4,
+                  ),
+                  if (action != null) ...[
+                    const SizedBox(width: 10),
+                    Icon(
+                      action,
+                      size: 24,
+                    ),
+                  ]
+                ],
               ),
               underlineColor: CustomTheme.instance.accentTextColor,
             ),

@@ -5,7 +5,6 @@ import '../interfaces/navigation_utility_interface/app_route_config.dart';
 import '../timezone.dart';
 import 'world_clock_router_delegate.dart';
 
-part 'no_transition_page.dart';
 part 'route_arguments.dart';
 part 'route_info_parser.dart';
 part 'world_clock_path.dart';

@@ -4,14 +4,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:world_clock/feature/home/home_screen.dart';
 import 'package:world_clock/service/extension.dart';
+import 'package:world_clock/service/navigation_service/pages/dialog_page.dart';
+import 'package:world_clock/service/navigation_service/pages/no_transition_page.dart';
 
 import '../../feature/error_404.dart';
-import '../../feature/favorites/favorites_list_page.dart';
 import '../../feature/home_old/desktop_home_page.dart';
-import '../../feature/home_old/home.dart';
 import '../../feature/timezones/timezone_details.dart';
 import '../../feature/timezones/timezones.dart';
-import '../../values/breakpoints.dart';
 import '../interfaces/navigation_utility_interface/app_route_config.dart';
 import '../interfaces/navigation_utility_interface/app_router_delegate.dart';
 import 'navigation_service.dart';
@@ -40,38 +39,35 @@ class WorldClockRouterDelegate extends AppRouterDelegate {
     }
 
     // Add home page if width is less then 800 px or current route is HomePage.
-    if (width < HomeScreenBreakPoints.point800) {
-      _pages.add(_getPage(kDebugMode ? const HomePageOld() : const HomeScreen(),
-          HomePagePath()));
-    } else if (currentConfiguration is HomePagePath) {
-      if (kDebugMode) {
-        _pages.add(_getPage(
-          const HomeScreen(),
-          currentConfiguration,
-        ));
-      } else {
-        _pages.add(
-          _getPage(
-            const DesktopHomePage(
-              widget: TimezoneListPage(),
-              index: 0,
-            ),
-            currentConfiguration,
+    // if (width < HomeScreenBreakPoints.point800) {
+    //   _pages.add(_getPage(kDebugMode ? const HomePageOld() : const HomeScreen(),
+    //       HomePagePath()));
+    // } else if (currentConfiguration is HomePagePath) {
+    if (kDebugMode) {
+      _pages.add(_getPage(
+        const HomeScreen(),
+        currentConfiguration,
+      ));
+    } else {
+      _pages.add(
+        _getPage(
+          const DesktopHomePage(
+            widget: TimezoneListPageOld(),
+            index: 0,
           ),
-        );
-      }
+          currentConfiguration,
+        ),
+      );
     }
+    // }
 
     if (currentConfiguration is FavoritesPath) {
       final path = currentConfiguration as FavoritesPath;
 
       _pages.add(
-        _getPage(
+        _getDialog(
           path.timezone == null
-              ? const DesktopHomePage(
-                  widget: FavoritesListPage(),
-                  index: 0,
-                )
+              ? const TimeZoneListPage()
               : TimezoneDetails(
                   timeZone: path.timezone!,
                 ),
@@ -85,7 +81,7 @@ class WorldClockRouterDelegate extends AppRouterDelegate {
         _getPage(
           path.timezone == null
               ? const DesktopHomePage(
-                  widget: TimezoneListPage(),
+                  widget: TimezoneListPageOld(),
                   index: 1,
                 )
               : TimezoneDetails(
@@ -99,6 +95,13 @@ class WorldClockRouterDelegate extends AppRouterDelegate {
 
   //#region PrivateMethods
   Page _getPage(Widget child, AppRouteConfig config) => child.page(
+        // Defines when a page can update.
+        key: ValueKey(pages.length),
+        routeName: config.getPath(),
+        config: config,
+      );
+
+  Page _getDialog(Widget child, AppRouteConfig config) => child.dialog(
         // Defines when a page can update.
         key: ValueKey(pages.length),
         routeName: config.getPath(),
