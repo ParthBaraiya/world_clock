@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../app_services.dart';
-import '../../models/hive_timezone/hive_timezone.dart';
 import '../../service/constants.dart';
 import '../../service/custom_ticker.dart';
 import '../../service/extension.dart';
@@ -51,9 +49,9 @@ class _TimezoneDetailsTileState extends State<TimezoneDetailsTile>
           return InkWell(
             onTap: () {
               // TODO: Improve this...
-              if (_locations.isNotEmpty) {
-                AppServices.app.currentState?.setLocation(_locations.first);
-              }
+              // if (_locations.isNotEmpty) {
+              //   AppServices.app.currentState?.setLocation(_locations.first);
+              // }
             },
             child: Column(
               mainAxisSize: MainAxisSize.min,

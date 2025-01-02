@@ -47,12 +47,12 @@ mixin LocationTileBackend on State<TimezoneDetailsTile> {
   Future<void> _toggleFavorite() async {
     saving.value = true;
 
-    if (isFavorite.value) {
-      await AppServices.hive
-          .removeFavoriteTimeZone(widget.timezone.hiveTimezone);
-    } else {
-      await AppServices.hive.addFavoriteTimeZone(widget.timezone.hiveTimezone);
-    }
+    // if (isFavorite.value) {
+    //   await AppServices.hive
+    //       .removeFavoriteTimeZone(widget.timezone.hiveTimezone);
+    // } else {
+    //   await AppServices.hive.addFavoriteTimeZone(widget.timezone.hiveTimezone);
+    // }
     await widget.onBookmark?.call(widget.timezone, !isFavorite.value);
 
     saving.value = false;

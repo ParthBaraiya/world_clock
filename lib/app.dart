@@ -41,17 +41,17 @@ class AppState extends State<App> {
 
   late Location _location = local;
 
-  Future<void> setLocation(Location location) {
-    _location = location;
+  // Future<void> setLocation(Location location) {
+  //   _location = location;
+  //
+  //   if (mounted) {
+  //     setState(() {});
+  //   }
 
-    if (mounted) {
-      setState(() {});
-    }
-
-    return AppServices.hive.setCurrentLocation(
-      location,
-    );
-  }
+  // return AppServices.hive.setCurrentLocation(
+  //   location,
+  // );
+  // }
 
   @override
   Widget build(BuildContext context) {

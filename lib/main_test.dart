@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'app.dart';
 import 'app_services.dart';
 import 'service/extension.dart';
-import 'service/hive/hive_main.dart';
 import 'service/shared_preferences.dart';
 import 'service/theme/theme.dart';
 import 'service/timezone.dart';
@@ -19,10 +18,10 @@ Future<void> main() async {
   await SPService.i.initialize();
 
   AppServices.init(
-    hive: HiveService(
-      favoritesBox: 'favorites-test',
-      appLocationBox: 'selected-app-location-test',
-    )..initialize(),
+    // hive: HiveService(
+    //   favoritesBox: 'favorites-test',
+    //   appLocationBox: 'selected-app-location-test',
+    // )..initialize(),
     navigator: TestNavigationService(),
   );
 

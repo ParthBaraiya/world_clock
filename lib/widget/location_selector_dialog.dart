@@ -117,14 +117,14 @@ class _LocationSelectorDialogState extends State<LocationSelectorDialog> {
 
                                 return InkWell(
                                   onTap: () {
-                                    final navigator =
-                                        AppServices.navigationService.navigator;
+                                    // final navigator =
+                                    //     AppServices.navigationService.navigator;
 
-                                    AppServices.app.currentState
-                                        ?.setLocation(location)
-                                        .then((value) {
-                                      navigator?.pop(location);
-                                    });
+                                    // AppServices.app.currentState
+                                    //     ?.setLocation(location)
+                                    //     .then((value) {
+                                    //   navigator?.pop(location);
+                                    // });
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.only(
